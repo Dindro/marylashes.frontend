@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div>
+      <btn :button="{ text: 'Привет', to: '/articles', color: 'outline-dark'}"></btn>
       <h1 class="title">
         marylashes.frontend
       </h1>
@@ -27,7 +28,12 @@
 </template>
 
 <script>
-export default {}
+import Btn from '@/components/@atoms/Button';
+export default {
+  components: {
+    Btn
+  }
+}
 </script>
 
 <style>
