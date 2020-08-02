@@ -1,0 +1,17 @@
+$color-white: #fff !default;
+$color-black: #000 !default;
+
+$color-dark: #0D0D0D !default;
+$color-light: #F8F8F8 !default;
+$color-blue: #045577 !default;
+$color-saphire: #CCFFFF !default;
+
+// Color system:
+$colors: (
+  "white": $color-white,
+  "black": $color-black,
+  "dark": $color-dark,
+  "light": $color-light,
+  "blue": $color-blue,
+  "saphire": $color-saphire,
+);

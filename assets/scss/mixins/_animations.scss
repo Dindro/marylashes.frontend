@@ -1,0 +1,14 @@
+@mixin line-animate($color: currentColor) {
+  background-size: 0% 1px;
+  background-position: 0% 100%;
+  background-image: linear-gradient($color, $color);
+  background-repeat: no-repeat;
+  padding-bottom: rem(2);
+
+  @include defaultTransition(background-size);
+  will-change: background-size;
+
+  &:hover {
+    background-size: 100% 1px;
+  }
+}

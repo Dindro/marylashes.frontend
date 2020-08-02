@@ -1,0 +1,22 @@
+@mixin make-wrapper {
+  width: 100%;
+  max-width: rem($grid-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+* Миксин который действует с разрешения 2150px
+* $last-breakpoint-font-size  - самый высокий font-size для lg в файле src/base/_scale-html.scss
+* $wrapper-rem                - превращаем в rem при font-size:16px (без добавления слово rem)
+* $breakpoint                 - получем значение в px (тоесть rem($grid-max-width) - это и есть 2150px)
+*/
+@mixin media-wrapper-up {
+  $last-breakpoint-font-size: 21.5;
+  $wrapper-rem: $grid-max-width / 16;
+  $breakpoint: #{$last-breakpoint-font-size * $wrapper-rem}px;
+
+  @media (min-width: $breakpoint) {
+    @content;
+  }
+}
