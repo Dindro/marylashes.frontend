@@ -5,7 +5,10 @@
       "~/*": ["./*"],
       "@/*": ["./*"],
       "~~/*": ["./*"],
-      "@@/*": ["./*"]
+      "@@/*": ["./*"],
+      "&/*": ["./components/&organisms/*"],
+      "+/*": ["./components/+atoms/*"],
+      "^/*": ["./components/^molecules/*"]
     }
   },
   "exclude": ["node_modules", ".nuxt", "dist"]

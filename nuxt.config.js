@@ -1,3 +1,4 @@
+import path from 'path';
 
 export default {
   /*
@@ -74,5 +75,15 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    /*
+    ** You can extend webpack config here
+    */
+    extend(config, ctx) {
+
+      // Alias
+      config.resolve.alias['&'] = path.join(__dirname, 'components/&organisms');
+      config.resolve.alias['^'] = path.join(__dirname, 'components/^molecules');
+      config.resolve.alias['+'] = path.join(__dirname, 'components/+atoms');
+    },
   }
 }
