@@ -1,4 +1,4 @@
-@mixin make-wrapper {
+@mixin make-container {
   width: 100%;
   max-width: rem($grid-max-width);
   margin-left: auto;
@@ -11,7 +11,7 @@
 * $wrapper-rem                - превращаем в rem при font-size:16px (без добавления слово rem)
 * $breakpoint                 - получем значение в px (тоесть rem($grid-max-width) - это и есть 2150px)
 */
-@mixin media-wrapper-up {
+@mixin media-container-up {
   $last-breakpoint-font-size: 21.5;
   $wrapper-rem: $grid-max-width / 16;
   $breakpoint: #{$last-breakpoint-font-size * $wrapper-rem}px;

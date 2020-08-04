@@ -1,0 +1,5 @@
+.container {
+  @include make-container;
+  padding-right: rem(120);
+  padding-left: rem(120);
+}
