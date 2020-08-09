@@ -71,6 +71,10 @@ export default {
   */
   axios: {},
   /*
+  ** Loading
+  */
+  loading: '~/components/&organisms/Preloader.vue',
+  /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
