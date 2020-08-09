@@ -6,12 +6,14 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "analyze": "nuxt build --analyze"
   },
   "dependencies": {
     "@csstools/normalize.css": "^10.1.0",
     "@nuxtjs/axios": "^5.12.0",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "swiper": "^6.1.1"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.0.0",

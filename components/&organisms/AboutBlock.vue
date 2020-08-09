@@ -1,7 +1,9 @@
 <template>
   <div class="about">
     <div class="about__content">
-      <div class="about__photo"></div>
+      <div class="about__photo">
+        <image-vue :image="about.image"></image-vue>
+      </div>
       <p class="about__title">
         «Привет, меня зовут Мария Ижуткина, я лучший lasheмейкер в городе и я подчеркну твою индвидуальность»
       </p>
@@ -18,15 +20,23 @@
 <script>
 import FactoidList from "&/FactoidList";
 import Socials from "^/Socials";
+import Image from '+/Image';
 
 export default {
   components: {
     FactoidList,
-    Socials
+    Socials,
+    ImageVue: Image,
   },
 
   data: () => {
     return {
+      about: {
+        image: {
+          src: "./img/cards/lashes-classic-2.jpg",
+          alt: "Мрия"
+        }
+      },
       factoid: {
         text: "90",
         top: "2",
@@ -123,7 +133,12 @@ $indent-between: 104 / 2;
   &__photo {
     margin-left: rem(-40);
     height: rem(264);
-    background-color: $color-black;
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   &__title {

@@ -1,16 +1,19 @@
 <template>
-  <component
-    class="image"
-    :is="is"
-    :src="image.src"
-    :srcset="srcset"
-    :alt="alt"
-    :title="image.title"
-  >
-  </component>
+  <picture>
+     <source
+      media="(max-width: {{ devices.md - 1 }}px)"
+      :is="is"
+      :src="image.src"
+      :srcset="srcset"
+      :alt="alt"
+      :title="image.title"
+    />
+  </picture>
 </template>
 
 <script>
+  import { devices } from '@/utils/breakpoints';
+
   export default {
     data: () => {
       return {

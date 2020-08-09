@@ -12,14 +12,22 @@
 
 <script>
   export default {
-    data: () => {
-      return {
-        is: this.image.type === 'bg' ? 'div' : 'img',
-        alt: this.image.alt || this.image.caption || 'image',
+    props: {
+      image: {
+        type: Object,
+        required: true,
       }
     },
 
     computed: {
+      is() {
+        return this.image.type === 'bg' ? 'div' : 'img';
+      },
+
+      alt() {
+        return this.image.alt || this.image.caption || 'image';
+      },
+
       srcset() {
         if (!Array.isArray(this.image.srcset)) return;
 
@@ -38,16 +46,11 @@
         return srcset;
       },
     },
-
-    props: {
-      image: {
-        type: Object,
-        required: true,
-      }
-    }
   }
 </script>
 
 <style lang="scss" scoped>
+.image {
 
+}
 </style>

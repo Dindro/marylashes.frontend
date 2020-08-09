@@ -4,30 +4,10 @@
       <div class="container">
         <about-block></about-block>
       </div>
-    </div>
-    <div>
-      <btn :button="{ text: 'Привет', to: '/articles', color: 'outline-dark'}"></btn>
-      <h1 class="title">
-        marylashes.frontend
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+      <div class="container">
+        <card-service-list></card-service-list>
       </div>
+      <nuxt-link to="/articles">articles</nuxt-link>
     </div>
   </div>
 </template>
@@ -36,9 +16,12 @@
 import Btn from '+/Button';
 
 import AboutBlock from '&/AboutBlock';
+import CardServiceList from '&/CardServiceList';
+
 export default {
   components: {
-    Btn
+    Btn,
+    CardServiceList
   }
 }
 </script>
