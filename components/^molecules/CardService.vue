@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <nav-count v-if="card.type !== 'full'" ref="navCount" :navCount="navCount"></nav-count>
+      <nav-count v-if="card.type !== 'full'" ref="navCount" :nav_count="nav_count"></nav-count>
 
       <!-- IF Full -->
       <image-vue v-if="card.type === 'full'" class="card-service__image" :image="card.photos[0]"></image-vue>
@@ -65,7 +65,7 @@
     data: (context) => {
       return {
         slider: null,
-        navCount: {
+        nav_count: {
           current: 1,
           total: context.card.photos.length,
         }
@@ -93,8 +93,8 @@
           el: this.$refs.navCount.$el,
           type: 'custom',
           renderCustom: (swiper, current, total) => {
-            this.navCount.current = current;
-            this.navCount.total = total;
+            this.nav_count.current = current;
+            this.nav_count.total = total;
           }
         },
       });

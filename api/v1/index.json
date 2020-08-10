@@ -1,0 +1,107 @@
+{
+  "card_hero_slider": {
+    "items": [
+      {
+        "title": "Ресницы для тебя<br>и для неё",
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "href": "#",
+              "color": "outline-saphire",
+              "text": "Записаться онлайн"
+            },
+            {
+              "type": "button",
+              "href": "#",
+              "color": "saphire",
+              "text": "Задать вопрос онлайн"
+            }
+          ]
+        },
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        }
+      },
+      {
+        "title": "Ресницы для тебя<br>и для неё",
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "href": "#",
+              "color": "outline-saphire",
+              "text": "Записаться онлайн"
+            },
+            {
+              "type": "button",
+              "href": "#",
+              "color": "saphire",
+              "text": "Задать вопрос онлайн"
+            }
+          ]
+        },
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        }
+      }
+    ]
+  },
+  "about": {
+    "image": {
+      "src": "./img/cards/lashes-classic-2.jpg",
+      "alt": ""
+    },
+    "title": "«Привет, меня зовут Мария Ижуткина, я лучший lasheмейкер в городе и я подчеркну твою индвидуальность»",
+    "socials": {
+      "title": "Я в социальных сетях",
+      "items": [
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vk"
+        }
+      ]
+    },
+    "factoids": {
+      "items": [
+        {
+          "text": "2",
+          "top": "от",
+          "sub": "часов",
+          "label": "наращивание<br>ресниц"
+        },
+        {
+          "text": "100",
+          "top": "больше",
+          "sub": "работ",
+          "label": "сделано с лучшими<br>отзывами"
+        },
+        {
+          "text": "900",
+          "top": "от",
+          "sub": "руб",
+          "label": "достижение цели<br>красоты"
+        },
+        {
+          "text": "11",
+          "sub": "разных",
+          "label": "эффектов<br>к вашим ресницам"
+        },
+        {
+          "text": "1",
+          "top": "больше",
+          "sub": "года",
+          "label": "опыта работы<br>lashe-мейкером"
+        },
+        {
+          "text": "15",
+          "after": "%",
+          "sub": "скидка",
+          "label": "при приглашении<br>подруги"
+        }
+      ]
+    }
+  }
+}

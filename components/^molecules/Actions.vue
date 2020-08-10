@@ -1,5 +1,5 @@
 <template>
-  <div class="actions">
+  <div class="actions" :class="{ 'actions--column': actions.column }">
     <component
       class="actions__item"
       v-for="(item, index) in actions.items"
@@ -43,6 +43,11 @@
 
   &__item {
     margin: rem(16) 0 0 rem(24);
+  }
+
+  &--column {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

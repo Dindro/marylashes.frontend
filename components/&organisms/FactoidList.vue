@@ -1,6 +1,6 @@
 <template>
   <div class="factoid-list">
-    <div class="factoid-list__item" v-for="(item, index) in factoidList.items" :key="index">
+    <div class="factoid-list__item" v-for="(item, index) in factoids.items" :key="index">
       <factoid :factoid="item"></factoid>
     </div>
   </div>
@@ -14,7 +14,7 @@
     },
 
     props: {
-      factoidList: {
+      factoids: {
         type: Object,
         required: true,
       }

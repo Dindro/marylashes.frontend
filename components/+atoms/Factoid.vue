@@ -8,7 +8,7 @@
       <p class="factoid__sup" v-if="factoid.sup">{{ factoid.sup }}</p>
       <p class="factoid__sub" v-if="factoid.sub">{{ factoid.sub }}</p>
     </div>
-    <p class="factoid__label" v-if="factoid.label">{{ factoid.label }}</p>
+    <p class="factoid__label" v-if="factoid.label" v-html="factoid.label"></p>
   </div>
 </template>
 

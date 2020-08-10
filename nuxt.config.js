@@ -71,6 +71,12 @@ export default {
   */
   axios: {},
   /*
+  ** Server Middleware
+  */
+  serverMiddleware: [
+    '@/api'
+  ],
+  /*
   ** Loading
   */
   // loading: '~/components/&organisms/Preloader.vue', // TODO: Uncomment

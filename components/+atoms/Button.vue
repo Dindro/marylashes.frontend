@@ -130,5 +130,19 @@
         color: $color-white;
       }
     }
+
+    &--outline-saphire {
+      border: 1px solid $color-saphire;
+      background-color: transparent;
+      color: $color-saphire;
+
+      &::before {
+        background-color: $color-saphire;
+      }
+
+      &:hover {
+        color: $color-dark;
+      }
+    }
   }
 </style>

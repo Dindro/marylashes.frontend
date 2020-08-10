@@ -4,15 +4,13 @@
       <div class="about__photo">
         <image-vue :image="about.image"></image-vue>
       </div>
-      <p class="about__title">
-        «Привет, меня зовут Мария Ижуткина, я лучший lasheмейкер в городе и я подчеркну твою индвидуальность»
-      </p>
+      <p class="about__title" v-html="about.title"></p>
       <div class="about__socials">
-        <socials :socials="socials"></socials>
+        <socials :socials="about.socials"></socials>
       </div>
     </div>
     <div class="about__facts">
-      <factoid-list :factoidList="factoidList"></factoid-list>
+      <factoid-list :factoids="about.factoids"></factoid-list>
     </div>
   </div>
 </template>
@@ -29,76 +27,11 @@ export default {
     ImageVue: Image,
   },
 
-  data: () => {
-    return {
-      about: {
-        image: {
-          src: "./img/cards/lashes-classic-2.jpg",
-          alt: "Мрия"
-        }
-      },
-      factoid: {
-        text: "90",
-        top: "2",
-        sup: "от",
-        sub: "d",
-        label: "wdqwdqwd qwdq qdw qwwdw",
-        after: "%",
-      },
-      factoidList: {
-        items: [
-          {
-            text: "90",
-            top: "2",
-            sup: "от",
-            sub: "d",
-            label: "wdqwdqwd qwdq qdw qwwdw",
-            after: "%",
-          },
-          {
-            text: "90",
-            top: "2",
-            sup: "от",
-            sub: "d",
-            label: "wdqwdqwd qwdq qdw qwwdw",
-            after: "%",
-          },
-          {
-            text: "90",
-            top: "2",
-            sup: "от",
-            sub: "d",
-            label: "wdqwdqwd qwdq qdw qwwdw",
-            after: "%",
-          },
-        ],
-      },
-      socials: {
-        title: 'Я в социальных сетях',
-        items: [
-          {
-            text: 'Vk',
-            href: 'vk.com'
-          },
-          {
-            text: 'In',
-            href: 'vk.com'
-          },
-          {
-            text: 'Fb',
-            href: 'vk.com'
-          },
-          {
-            text: 'Vb',
-            href: 'vk.com'
-          },
-          {
-            text: 'Wa',
-            href: 'vk.com'
-          }
-        ]
-      },
-    };
+  props: {
+    about: {
+      type: Object,
+      require: true,
+    },
   },
 };
 </script>
