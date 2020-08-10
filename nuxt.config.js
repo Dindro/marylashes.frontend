@@ -73,7 +73,7 @@ export default {
   /*
   ** Loading
   */
-  loading: '~/components/&organisms/Preloader.vue',
+  // loading: '~/components/&organisms/Preloader.vue', // TODO: Uncomment
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
