@@ -1,0 +1,46 @@
+{
+  "header": {
+    "phone": {
+      "href": "tel:+79373941802",
+      "text": "89373941802"
+    },
+    "mail": {
+      "href": "mailto:mariaizhutkina@gmail.com",
+      "text": "mariaizhutkina@gmail.com"
+    },
+    "items": [
+      {
+        "href": "/#price",
+        "text": "цена"
+      },
+      {
+        "href": "/#reviews",
+        "text": "отзывы"
+      },
+      {
+        "href": "/#action",
+        "text": "акции"
+      },
+      {
+        "href": "/#photo",
+        "text": "фото"
+      },
+      {
+        "href": "/#video",
+        "text": "видео"
+      },
+      {
+        "href": "/#contacts",
+        "text": "контакты"
+      },
+      {
+        "href": "/articles",
+        "text": "статьи"
+      },
+      {
+        "href": "/themes",
+        "text": "темы"
+      }
+    ]
+  }
+}

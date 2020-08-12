@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="link.to || link.href || {}" :tag="tag || link.tag || 'a'">
+  <nuxt-link :to="link.href || {}" :tag="tag || link.tag || 'a'">
     <slot></slot>
   </nuxt-link>
 </template>
