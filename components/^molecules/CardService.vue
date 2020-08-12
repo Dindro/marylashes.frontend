@@ -219,6 +219,12 @@
     #{$b}__content {
       padding-left: rem($indent-full);
     }
+
+    #{$b}__swiper {
+      @include media-breakpoint-up(lg) {
+        margin-right: rem(-$indent-full);
+      }
+    }
   }
 
   // Прижиматься
@@ -228,14 +234,19 @@
     #{$b}__content {
       padding-right: rem($indent-full);
     }
+
+    #{$b}__swiper {
+      @include media-breakpoint-up(lg) {
+        margin-left: rem(-$indent-full);
+      }
+    }
   }
 
   &--full {
     display: block;
-    transform: translateX(rem(40));
     position: relative;
     height: rem(590);
-    margin-left: rem($indent-between);
+    margin-left: rem($indent-full);
 
     #{$b}__illustration {
       z-index: -1;
