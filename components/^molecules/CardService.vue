@@ -277,6 +277,7 @@
     }
 
     #{$b}__content {
+      width: auto;
       height: 100%;
       padding: rem(64) 0 rem(80) rem(120);
       color: $color-white;

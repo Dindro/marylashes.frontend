@@ -1,8 +1,11 @@
 {
   "header": {
+    "logo": {
+      "href": "/"
+    },
     "phone": {
       "href": "tel:+79373941802",
-      "text": "89373941802"
+      "text": "+7 937 394 18 02"
     },
     "mail": {
       "href": "mailto:mariaizhutkina@gmail.com",
