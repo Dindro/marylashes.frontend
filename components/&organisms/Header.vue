@@ -41,7 +41,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: $z-index-header;
   color: $color-white;
 
   &__container {
