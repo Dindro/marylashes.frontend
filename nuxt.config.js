@@ -64,6 +64,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/style-resources',
     '@nuxtjs/axios',
+    '@nuxtjs/svg'
   ],
   /*
   ** Axios module configuration

@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <nav-count v-if="card.type !== 'full'" ref="navCount" :nav_count="nav_count"></nav-count>
+      <nav-count v-if="card.type !== 'full'" ref="nav_count" :nav_count="nav_count"></nav-count>
 
       <!-- IF Full -->
       <image-vue v-if="card.type === 'full'" class="card-service__image" :image="card.photos[0]"></image-vue>
@@ -90,7 +90,7 @@
 
       this.slider = new Swiper(this.$refs.swiper, {
         pagination: {
-          el: this.$refs.navCount.$el,
+          el: this.$refs.nav_count.$el,
           type: 'custom',
           renderCustom: (swiper, current, total) => {
             this.nav_count.current = current;
