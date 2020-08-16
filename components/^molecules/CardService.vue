@@ -10,11 +10,11 @@
           </div>
         </div>
 
-        <div class="hover-change">
+        <div class="card-service__hover hover-change">
           <div class="hover-change__item"
             v-for="(item, index) in card.photos"
             :key="index"
-            @mouseover="changeSlide(item, index)"
+            @mouseenter="changeSlide(item, index)"
           >
           </div>
         </div>
@@ -54,6 +54,8 @@
 
   import { Swiper, Pagination } from 'swiper';
   Swiper.use([Pagination]);
+
+  import { devices } from '@/utils/breakpoints';
 
   export default {
     components: {
@@ -97,6 +99,14 @@
             this.nav_count.total = total;
           }
         },
+        breakpoints: {
+          [devices.md]: {
+            spaceBetween: 24,
+          },
+          [devices.lg]: {
+            spaceBetween: 0,
+          }
+        }
       });
     },
 
@@ -111,22 +121,45 @@
 
 .card-service {
   $b: #{&};
-
   display: flex;
   height: rem(400);
+
+  @include media-breakpoint-down(md) {
+    display: block;
+    height: auto;
+  }
 
   &__illustration,
   &__content {
     width: 50%;
+
+    @include media-breakpoint-down(md) {
+      width: rem(590);
+    }
+
+    @include media-breakpoint-down(sm) {
+      width: auto;
+    }
   }
 
   $indent-full: 104;
   $indent-between: $indent-full / 2;
+  $swiper-cuddle-width: 640;
 
   &__illustration {
     position: relative;
+
     @include media-breakpoint-up(lg) {
       padding-right: rem($indent-between);
+    }
+
+    @include media-breakpoint-down(md) {
+      height: rem(400);
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: rem(244);
+      width: 100%;
     }
   }
 
@@ -139,6 +172,14 @@
 
     @include media-breakpoint-up(lg) {
       padding-left: rem($indent-between);
+    }
+
+    @include media-breakpoint-down(md) {
+      padding-bottom: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding-top: rem(24);
     }
   }
 
@@ -162,26 +203,90 @@
     margin-left: rem(-40);
     height: 100%;
     overflow: hidden;
+
+    @include media-breakpoint-down(md) {
+      margin: 0;
+      overflow: visible;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-left: rem(-$wrapper-gutter-sm-1);
+      margin-right: rem(-$wrapper-gutter-sm-1);
+    }
+  }
+
+  &__actions {
+    @include media-breakpoint-down(md) {
+      margin-top: rem(48);
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: rem(24);
+    }
+  }
+
+  &__hover {
+    @include media-breakpoint-down(md) {
+      display: none !important;
+    }
   }
 
   .swiper-wrapper {
     z-index: auto;
   }
 
+  .swiper-container-initialized {
+    .swiper-slide {
+      @include media-breakpoint-only(md) {
+        @include defaultTransition(opacity);
+        opacity: 0.3;
+
+        &-active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   .nav-count {
+    opacity: 0.65;
     position: absolute;
     bottom: calc(100% + #{rem(16)});
     right: rem($indent-between);
+
+    @include media-breakpoint-down(md) {
+      right: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+      left: 0;
+      right: auto;
+    }
   }
 
   // Реверсивный
-  &--reverse-cuddle,
-  &--reverse {
+  &--reverse,
+  &--reverse-cuddle {
     flex-direction: row-reverse;
+
+    @include media-breakpoint-down(md) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
 
     #{$b}__swiper {
       margin-left: 0;
       margin-right: rem(-40);
+
+      @include media-breakpoint-down(md) {
+        margin-right: 0;
+      }
+
+      @include media-breakpoint-down(sm) {
+        margin-left: rem(-$wrapper-gutter-sm-1);
+        margin-right: rem(-$wrapper-gutter-sm-1);
+      }
     }
 
     #{$b}__title,
@@ -210,19 +315,44 @@
     .nav-count {
       left: rem($indent-between);
       right: auto;
+
+      @include media-breakpoint-down(md) {
+        left: 0;
+      }
+
+      @include media-breakpoint-down(sm) {
+        left: auto;
+        right: 0;
+      }
     }
   }
 
   &--reverse-cuddle {
-    transform: translateX(rem(-$indent-full));
+    @include media-breakpoint-up(lg) {
+      transform: translateX(rem(-$indent-full));
+    }
 
     #{$b}__content {
       padding-left: rem($indent-full);
+
+      @include media-breakpoint-down(sm) {
+        padding-left: 0;
+      }
     }
 
     #{$b}__swiper {
       @include media-breakpoint-up(lg) {
         margin-right: rem(-$indent-full);
+      }
+    }
+
+    #{$b}__illustration {
+      @include media-breakpoint-down(md) {
+        width: rem($swiper-cuddle-width);
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
       }
     }
   }
@@ -231,13 +361,29 @@
   &--cuddle {
     transform: translateX(rem($indent-full));
 
+    @include media-breakpoint-down(md) {
+      transform: none;
+    }
+
     #{$b}__content {
-      padding-right: rem($indent-full);
+      @include media-breakpoint-up(lg) {
+        padding-right: rem($indent-full);
+      }
     }
 
     #{$b}__swiper {
       @include media-breakpoint-up(lg) {
         margin-left: rem(-$indent-full);
+      }
+    }
+
+    #{$b}__illustration {
+      @include media-breakpoint-down(md) {
+        width: rem($swiper-cuddle-width);
+      }
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
       }
     }
   }
@@ -248,8 +394,18 @@
     height: rem(590);
     margin-left: rem($indent-full);
 
+    @include media-breakpoint-down(md) {
+      margin-left: rem(-$wrapper-gutter-md-1);
+      margin-right: rem(-$wrapper-gutter-md-1);
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-left: rem(-$wrapper-gutter-sm-1);
+      margin-right: rem(-$wrapper-gutter-sm-1);
+    }
+
     #{$b}__illustration {
-      z-index: -1;
+      z-index: auto;
       position: absolute;
       padding: 0;
       top: 0;
@@ -257,6 +413,10 @@
       bottom: 0;
       right: 0;
       width: auto;
+
+      @include media-breakpoint-down(md) {
+        height: auto !important;
+      }
 
       &::after {
         content: '';
@@ -268,7 +428,6 @@
         right: 0;
         background-color: $color-dark;
         opacity: 0.5;
-        z-index: 2;
       }
     }
 
@@ -277,10 +436,19 @@
     }
 
     #{$b}__content {
+      position: relative;
       width: auto;
       height: 100%;
       padding: rem(64) 0 rem(80) rem(120);
       color: $color-white;
+
+      @include media-breakpoint-down(md) {
+        padding: rem(64) rem($wrapper-gutter-md-1) rem(80) rem($wrapper-gutter-md-1);
+      }
+
+      @include media-breakpoint-down(sm) {
+        padding: rem(64) rem($wrapper-gutter-sm-1) rem(80) rem($wrapper-gutter-sm-1);;
+      }
     }
   }
 }

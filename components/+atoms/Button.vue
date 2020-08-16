@@ -56,6 +56,7 @@
     &__text {
       position: relative;
       @include defaultTransition(transform);
+      @include text-default;
     }
 
     &::before {

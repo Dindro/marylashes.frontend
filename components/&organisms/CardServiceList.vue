@@ -1,6 +1,6 @@
 <template>
   <div class="card-service-list">
-    <div class="pt-112 pb-112" v-for="(item, index) in cardServiceList.items" :key="index">
+    <div class="pt-lg-112 pt-md-96 pb-lg-112 pt-0 pb-64" v-for="(item, index) in cardServiceList.items" :key="index">
       <card-service :card="item"></card-service>
     </div>
   </div>

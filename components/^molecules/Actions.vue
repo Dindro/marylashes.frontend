@@ -41,8 +41,16 @@
   flex-wrap: wrap;
   margin: rem(-16) 0 0 rem(-24);
 
+  @include media-breakpoint-down(sm) {
+    margin-top: rem(-8);
+  }
+
   &__item {
     margin: rem(16) 0 0 rem(24);
+
+    @include media-breakpoint-down(sm) {
+      margin-top: rem(8);
+    }
   }
 
   &--column {
