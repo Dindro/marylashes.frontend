@@ -10,7 +10,7 @@
 
     <div class="bg-white">
       <div class="container">
-        <card-service-list></card-service-list>
+        <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
     </div>
 

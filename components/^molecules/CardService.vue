@@ -435,6 +435,10 @@
       margin-left: 0;
     }
 
+    #{$b}__header {
+      max-width: rem(500);
+    }
+
     #{$b}__content {
       position: relative;
       width: auto;

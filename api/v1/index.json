@@ -49,6 +49,7 @@
       }
     ]
   },
+
   "about": {
     "image": {
       "src": "./img/cards/lashes-classic-2.jpg",
@@ -61,6 +62,22 @@
         {
           "href": "https://vk.com/i7enov",
           "text": "Vk"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Fb"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "In"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Wt"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vb"
         }
       ]
     },
@@ -103,5 +120,204 @@
         }
       ]
     }
+  },
+
+  "card_service_list": {
+    "items": [
+      {
+        "name": "Classic",
+        "price": "900₽",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-2.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-3.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-dark"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      },
+      {
+        "type": "reverse",
+        "name": "1.5D",
+        "price": "1000₽",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-2.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-3.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-dark"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      },
+      {
+        "type": "cuddle",
+        "name": "2D",
+        "price": "1200₽",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-2.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-3.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-dark"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      },
+      {
+        "type": "reverse-cuddle",
+        "name": "2.5D",
+        "price": "1300₽",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-2.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-3.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-dark"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      },
+      {
+        "name": "3D",
+        "price": "1400₽",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-2.jpg",
+            "alt": "lashes"
+          },
+          {
+            "src": "img/cards/lashes-classic-3.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-dark"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      },
+      {
+        "type": "full",
+        "name": "Снятие",
+        "price": "200₽*",
+        "text": "Если вы любите натуральность, то вам подойдет классический объем. Время наращивания занимает примерно ~1.5 часа",
+        "photos": [
+          {
+            "src": "img/cards/lashes-classic-1.jpg",
+            "alt": "lashes"
+          }
+        ],
+        "actions": {
+          "items": [
+            {
+              "type": "button",
+              "text": "Подробнее",
+              "color": "outline-white"
+            },
+            {
+              "type": "button",
+              "text": "Записаться онлайн",
+              "color": "saphire"
+            }
+          ]
+        }
+      }
+    ]
   }
 }
