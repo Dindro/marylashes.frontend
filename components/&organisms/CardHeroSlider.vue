@@ -9,7 +9,7 @@
 
     <div class="card-hero-slider__controls container" v-if="!isOnly">
       <nav-count ref="nav_count" :nav_count="nav_count"></nav-count>
-      <nav-arrows ref="nav_arrows"></nav-arrows>
+      <nav-arrows ref="nav_arrows" class="card-hero-slider__arrows"></nav-arrows>
     </div>
   </div>
 </template>
@@ -91,6 +91,10 @@ export default {
     > * + * {
       margin-left: rem(32);
     }
+  }
+
+  &__arrows {
+    margin-right: rem(-$indent-arrows-x);
   }
 }
 </style>
