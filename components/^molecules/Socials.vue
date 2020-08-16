@@ -37,6 +37,10 @@
   &__title {
     margin-right: rem(56);
     opacity: 0.3;
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
   }
 
   &__list {

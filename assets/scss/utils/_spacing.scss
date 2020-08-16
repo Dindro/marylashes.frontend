@@ -4,12 +4,6 @@
 
     @each $prop, $abbrev in (margin: m, padding: p) {
       @each $size, $length in $spacers {
-
-        //.#{$abbrev}#{$infix}-#{$size} {
-        //  #{$prop}: $length !important;
-        //  если понадобится значение отступов во все стороны
-        //}
-
         .#{$abbrev}t#{$infix}-#{$size} {
           #{$prop}-top: rem($length) !important;
         }

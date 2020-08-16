@@ -61,11 +61,30 @@ $indent-between: 104 / 2;
     @include media-breakpoint-up(lg) {
       padding-left: rem($indent-between);
     }
+
+    @include media-breakpoint-down(md) {
+      padding-top: rem(56);
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding-top: rem(40);
+    }
   }
 
   &__photo {
     margin-left: rem(-40);
     height: rem(264);
+
+    @include media-breakpoint-down(md) {
+      margin-left: rem(-$wrapper-gutter-md-1);
+      margin-right: rem(-$wrapper-gutter-md-1);
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: auto;
+      margin-left: rem(-$wrapper-gutter-sm-1);
+      margin-right: rem(-$wrapper-gutter-sm-1);
+    }
 
     .image {
       width: 100%;
@@ -80,6 +99,8 @@ $indent-between: 104 / 2;
     margin-top: rem(40);
 
     @include media-breakpoint-down(sm) {
+      margin-top: rem(24);
+      text-align: center;
       @include text-default-charter;
     }
   }
@@ -87,6 +108,15 @@ $indent-between: 104 / 2;
   &__socials {
     margin-top: rem(48);
     text-align: right;
+
+    @include media-breakpoint-down(md) {
+      margin-top: rem(40);
+    }
+
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+      margin-top: rem(16);
+    }
   }
 }
 </style>

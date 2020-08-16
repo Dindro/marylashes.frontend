@@ -1,0 +1,15 @@
+@each $colorName, $colorValue in $colors {
+  .bg-#{$colorName} {
+    background-color: $colorValue !important;
+  }
+
+  // .color-#{$colorName} {
+  //   color: $colorValue !important;
+  // }
+}
+
+*::selection {
+  background-color: $color-saphire;
+}
+
+
