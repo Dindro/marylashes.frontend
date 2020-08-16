@@ -18,5 +18,6 @@ export default {
 <style lang="scss">
 .layout {
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 </style>

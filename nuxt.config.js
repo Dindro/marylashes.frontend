@@ -72,6 +72,12 @@ export default {
   */
   axios: {},
   /*
+  ** Server settings
+  */
+  server: {
+    host: '0.0.0.0'
+  },
+  /*
   ** Server Middleware
   */
   serverMiddleware: [

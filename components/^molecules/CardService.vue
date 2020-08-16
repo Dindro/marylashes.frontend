@@ -91,6 +91,7 @@
       if (this.card.type === 'full') return;
 
       this.slider = new Swiper(this.$refs.swiper, {
+        spaceBetween: 16,
         pagination: {
           el: this.$refs.nav_count.$el,
           type: 'custom',

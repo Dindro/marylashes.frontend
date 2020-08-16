@@ -26,9 +26,11 @@
   $b: #{&};
   width: rem(125);
   height: rem(25);
+  pointer-events: none;
 
   path {
     @include defaultTransition(transform, opacity);
+    transition-duration: .5s;
   }
 
   // 20px так выгрузилось
