@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <header-vue></header-vue>
     <Nuxt />
   </div>
@@ -14,3 +14,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.layout {
+  overflow-x: hidden;
+}
+</style>

@@ -88,13 +88,25 @@ export default {
     left: 0;
     z-index: 2;
 
+    @include media-breakpoint-down(sm) {
+      bottom: rem(8);
+    }
+
     > * + * {
       margin-left: rem(32);
+
+      @include media-breakpoint-down(sm) {
+        margin-left: rem(24);
+      }
     }
   }
 
   &__arrows {
     margin-right: rem(-$indent-arrows-x);
+
+    @include media-breakpoint-down(sm) {
+      margin-right: rem(-$indent-arrows-x-sm);
+    }
   }
 }
 </style>

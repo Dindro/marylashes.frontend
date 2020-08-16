@@ -402,6 +402,8 @@
     @include media-breakpoint-down(sm) {
       margin-left: rem(-$wrapper-gutter-sm-1);
       margin-right: rem(-$wrapper-gutter-sm-1);
+      min-height: 100vh;
+      height: 1px;
     }
 
     #{$b}__illustration {

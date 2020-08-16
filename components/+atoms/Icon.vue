@@ -35,6 +35,11 @@
   &--24 {
     width: rem(24);
     height: rem(24);
+
+    @include media-breakpoint-down(sm) {
+      width: rem(20);
+      height: rem(20);
+    }
   }
 
   svg {

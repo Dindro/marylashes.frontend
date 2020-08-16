@@ -54,6 +54,11 @@ export default {
 
     @include defaultTransition(color, opacity);
 
+    @include media-breakpoint-down(sm) {
+      width: rem(64);
+      height: rem(64);
+    }
+
     &::before {
       content: '';
       position: absolute;
