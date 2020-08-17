@@ -138,7 +138,7 @@
         const currentPosition = window.pageYOffset || document.documentElement.scrollTop;
         const screenHeight = window.window.innerHeight;
         // Фиксируем меню или нет
-        const isFixed = currentPosition >= screenHeight;
+        const isFixed = currentPosition >= 100;
         if (isFixed === this.isMenuFixed) return;
         this.isMenuFixed = isFixed;
         if (this.isMenuFixed) this.animateFixMenu();
@@ -147,30 +147,38 @@
 
       animateFixMenu() {
         // Анимация фиксирования
-        const { logo } = this.$refs;
-        logo.style.opacity = 0;
-        logo.style.position = 'fixed';
 
-        this.$nextTick().then(() => {
-          logo.style.transition = 'opacity .3s ease';
-          logo.style.opacity = 1;
-        });
+        // const { logo } = this.$refs;
+        // logo.style.opacity = 0;
+        // logo.style.position = 'fixed';
+
+        // this.$nextTick().then(() => {
+        //   logo.style.transition = 'opacity .3s ease';
+        //   logo.style.opacity = 1;
+        // });
+
+        // Анимация уходящей линии
+        this.menuAnimation.reverse();
+        // Анимация появление бургера
       },
 
       animateRemoveFixMenu() {
         // Анимация убирания фиксирования
-        const { logo } = this.$refs;
-        logo.style.opacity = 0;
-        logo.style.transition = 'opacity .2s ease';
+        // const { logo } = this.$refs;
+        // logo.style.opacity = 0;
+        // logo.style.transition = 'opacity .2s ease';
 
-        setTimeout(() => {
-          logo.style.removeProperty('transition');
-          logo.style.removeProperty('opacity');
-          logo.style.removeProperty('position');
-        }, 200);
+        // setTimeout(() => {
+        //   logo.style.removeProperty('transition');
+        //   logo.style.removeProperty('opacity');
+        //   logo.style.removeProperty('position');
+        // }, 200);
+        // Анимация появление линии
+        this.menuAnimation.play();
+        // Анимация изчезнование бургера
       },
 
-      createAnimateMenu() {
+      createMenuAnimation() {
         const { phone } = this.$refs;
         let links = this.$refs.link;
         const array = [ phone.$el, ...links.map((item) => item.$el).reverse() ];
@@ -189,6 +197,7 @@
     },
 
     mounted() {
+      this.menuAnimation = this.createMenuAnimation();
       this.calculateMenuFixedPosition();
       window.addEventListener('scroll', this.calculateMenuFixedPosition.bind(this), {
         capture: true,
@@ -236,7 +245,7 @@
 .header {
   $b: #{&};
 
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -246,7 +255,6 @@
 
   @at-root .is-fixed & {
     pointer-events: none;
-    position: fixed;
     opacity: 1;
 
     &__menu {
@@ -320,7 +328,7 @@
   left: 0;
   right: 0;
   padding-top: rem(32);
-  position: absolute;
+  position: fixed;
   mix-blend-mode: difference;
   z-index: $z-index-header-logo;
   pointer-events: none;

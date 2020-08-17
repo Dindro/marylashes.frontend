@@ -30,7 +30,6 @@
 
   path {
     @include defaultTransition(transform, opacity);
-    transition-duration: .5s;
   }
 
   // 20px так выгрузилось
