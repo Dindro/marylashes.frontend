@@ -19,6 +19,7 @@ import CardHero from '^/CardHero';
 import NavCount from '+/NavCount';
 import NavArrows from '+/NavArrows';
 
+import gsap from 'gsap';
 import { Swiper, Pagination } from 'swiper';
 Swiper.use([Pagination]);
 
@@ -48,8 +49,9 @@ export default {
     }
   },
 
-  mounted() {
-    if (!this.isOnly) {
+  methods: {
+    initSlider() {
+      if (this.isOnly) return;
       this.slider = new Swiper(this.$refs.swiper, {
         speed: 1000,
         pagination: {
@@ -66,7 +68,37 @@ export default {
           disabledClass: 'disabled',
         }
       });
+    },
+
+    initAnimation() {
+      const { swiper } = this.$refs;
+      const { ScrollTrigger } = require('gsap/ScrollTrigger');
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Установка PIN
+      const pin = ScrollTrigger.create({
+        trigger: swiper,
+        start: 'top top',
+        pin: true,
+        pinSpacing: false,
+      });
+
+      // Параллакс медленный вверх
+      gsap.to(swiper, {
+        scrollTrigger: {
+          trigger: pin.spacer,
+          start: 'top top',
+          scrub: true,
+        },
+        ease: 'none',
+        translateY: '-30%',
+      });
     }
+  },
+
+  mounted() {
+    this.initSlider();
+    this.initAnimation();
   }
 }
 </script>
