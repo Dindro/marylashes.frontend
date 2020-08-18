@@ -1,4 +1,5 @@
-.pin-spacer {
+.pin-spacer,
+.pin-spacer--imitate {
   & ~ * {
     position: relative;
   }

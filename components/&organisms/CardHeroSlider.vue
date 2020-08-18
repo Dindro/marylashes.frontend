@@ -1,5 +1,5 @@
 <template>
-  <div class="card-hero-slider" ref="swiper">
+  <div class="card-hero-slider pin-spacer--imitate" ref="swiper">
     <div class="swiper-wrapper" v-if="!isOnly">
       <div class="swiper-slide" v-for="(item, index) in card_hero_slider.items" :key="index">
         <card-hero :card="item"></card-hero>
@@ -75,23 +75,16 @@ export default {
       const { ScrollTrigger } = require('gsap/ScrollTrigger');
       gsap.registerPlugin(ScrollTrigger);
 
-      // Установка PIN
-      const pin = ScrollTrigger.create({
-        trigger: swiper,
-        start: 'top top',
-        pin: true,
-        pinSpacing: false,
-      });
-
-      // Параллакс медленный вверх
+      // Параллакс медленный вниз
       gsap.to(swiper, {
         scrollTrigger: {
-          trigger: pin.spacer,
+          trigger: swiper,
           start: 'top top',
+          end: () => window.innerHeight,
           scrub: true,
         },
         ease: 'none',
-        translateY: '-30%',
+        translateY: '65%',
       });
     }
   },
