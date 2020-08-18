@@ -21,6 +21,7 @@ import NavArrows from '+/NavArrows';
 
 import gsap from 'gsap';
 import { Swiper, Pagination } from 'swiper';
+import { isDesktop } from '~/utils/breakpoints';
 Swiper.use([Pagination]);
 
 export default {
@@ -75,17 +76,27 @@ export default {
       const { ScrollTrigger } = require('gsap/ScrollTrigger');
       gsap.registerPlugin(ScrollTrigger);
 
-      // Параллакс медленный вниз
-      gsap.to(swiper, {
-        scrollTrigger: {
+      if (isDesktop()) {
+        // Параллакс медленный вниз
+        gsap.to(swiper, {
+          scrollTrigger: {
+            trigger: swiper,
+            start: 'top top',
+            end: () => window.innerHeight,
+            scrub: true,
+          },
+          ease: 'none',
+          translateY: '65%',
+        });
+      } else {
+        // Установка PIN
+        const pin = ScrollTrigger.create({
           trigger: swiper,
           start: 'top top',
-          end: () => window.innerHeight,
-          scrub: true,
-        },
-        ease: 'none',
-        translateY: '65%',
-      });
+          pin: true,
+          pinSpacing: false,
+        });
+      }
     }
   },
 
