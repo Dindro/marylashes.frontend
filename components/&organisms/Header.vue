@@ -258,7 +258,7 @@
     opacity: 1;
 
     &__menu {
-      padding-right: rem(40 + 40);
+      transform: translateX(#{rem(-80)});
     }
 
     &__link {
@@ -277,6 +277,7 @@
   &__menu {
     margin-left: auto;
     display: flex;
+    @include defaultTransition(transform);
   }
 
   &__list {
