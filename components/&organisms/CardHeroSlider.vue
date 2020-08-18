@@ -121,7 +121,9 @@ export default {
     z-index: 2;
 
     @include media-breakpoint-down(sm) {
-      bottom: rem(8);
+      bottom: auto;
+      top: $height-screen;
+      transform: translateY(-100%) translateY(#{rem(-8)});
     }
 
     > * + * {

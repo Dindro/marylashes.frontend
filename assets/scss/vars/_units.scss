@@ -4,3 +4,5 @@ $z-index-preloader: $z-index-header-logo + 500;
 
 $indent-arrows-x: 28;
 $indent-arrows-x-sm: 20;
+
+$height-screen: calc(var(--vh, 1vh) * 100);

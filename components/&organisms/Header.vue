@@ -6,7 +6,7 @@
         <tag-link class="header-logo__link" :link="header.logo">
           <logo :small="isMenuFixed && !isMenuOpen" class="header-logo__icon"></logo>
         </tag-link>
-        <burger class="header-logo__burger" @click.native="openMenu" @mouseenter.native="openMenu" :isOpen="isMenuOpen"></burger>
+        <burger class="header-logo__burger" :class="{ 'is-visible': isBurgerVisible }" @click.native="openMenu" @mouseenter.native="openMenu" :isOpen="isBurgerOpen"></burger>
       </div>
     </div>
 
@@ -57,14 +57,37 @@
     data: () => ({
       isMenuFixed: false,
       isMenuOpen: false,
+      isBurgerVisible: false, // Добавляет класс is-visible
       menuAnimation: null,
+
+      leaveHeaderHandler: null,     // fn - callback при уходе из меню
     }),
 
-    computed: mapState([
-      'header'
-    ]),
+    computed: {
+      ...mapState([
+        'header',
+      ]),
+
+      isBurgerOpen() {
+        return process.client && !isDesktop() && this.isMenuOpen;
+      }
+    },
+
 
     methods: {
+      calculateMenuFixedPosition() {
+        // Вычесляем позиции
+        const currentPosition = window.pageYOffset || document.documentElement.scrollTop;
+        const screenHeight = window.window.innerHeight;
+        // Фиксируем меню или нет
+        const isFixed = currentPosition >= 100;
+        if (isFixed === this.isMenuFixed) return;
+        this.isMenuFixed = isFixed;
+
+        if (this.isMenuFixed) this.animateFixMenu();
+        else this.animateRemoveFixMenu();
+      },
+
       openMenu(e) {
          // Если ПК
           // Проигрываем анимацию
@@ -85,15 +108,19 @@
             if (!isDesktop()) return;
 
             this.isMenuOpen = true;
+            this.isBurgerVisible = false;
 
             // Проигрываем анимацию
             this.playMenuAnimation();
 
-            // Слушаем leave событие
-            this.$refs.header.addEventListener('mouseleave', ()=> {
+            // Создаем handler
+            const closeMenuHandler = () => {
               this.isMenuOpen = false;
               this.reverseMenuAnimation();
-            }, { once: true });
+            };
+
+            // Слушаем leave событие
+            this.$refs.header.addEventListener('mouseleave', this.leaveHeaderHandler = closeMenuHandler.bind(this), { once: true });
             break;
 
           case 'click':
@@ -121,61 +148,44 @@
 
       playFirstMenuAnimation() {
         // Анимация первого появление меню
+        this.menuAnimation.play();
       },
 
       playMenuAnimation() {
         // Для ПК появяление при hover
-        // Для ТАБ появление при нажатии
+        this.menuAnimation.play();
       },
 
       reverseMenuAnimation() {
         // Для ПК изчезнование
-        // Для ТАБ изчезнование
-      },
-
-      calculateMenuFixedPosition() {
-        // Вычесляем позиции
-        const currentPosition = window.pageYOffset || document.documentElement.scrollTop;
-        const screenHeight = window.window.innerHeight;
-        // Фиксируем меню или нет
-        const isFixed = currentPosition >= 100;
-        if (isFixed === this.isMenuFixed) return;
-        this.isMenuFixed = isFixed;
-        if (this.isMenuFixed) this.animateFixMenu();
-        else this.animateRemoveFixMenu();
+        this.menuAnimation.reverse();
+        this.menuAnimation.then(() => {
+          this.isBurgerVisible = true;
+        });
       },
 
       animateFixMenu() {
         // Анимация фиксирования
 
-        // const { logo } = this.$refs;
-        // logo.style.opacity = 0;
-        // logo.style.position = 'fixed';
-
-        // this.$nextTick().then(() => {
-        //   logo.style.transition = 'opacity .3s ease';
-        //   logo.style.opacity = 1;
-        // });
-
         // Анимация уходящей линии
         this.menuAnimation.reverse();
         // Анимация появление бургера
+        this.menuAnimation.then(() => {
+          this.isBurgerVisible = true;
+        });
       },
 
       animateRemoveFixMenu() {
         // Анимация убирания фиксирования
-        // const { logo } = this.$refs;
-        // logo.style.opacity = 0;
-        // logo.style.transition = 'opacity .2s ease';
 
-        // setTimeout(() => {
-        //   logo.style.removeProperty('transition');
-        //   logo.style.removeProperty('opacity');
-        //   logo.style.removeProperty('position');
-        // }, 200);
         // Анимация появление линии
         this.menuAnimation.play();
         // Анимация изчезнование бургера
+        this.isBurgerVisible = false;
+        // Убираем handler c шапки
+        this.$refs.header.removeEventListener('mouseleave', this.leaveHeaderHandler);
+        // Закрываем меню
+        if (isDesktop()) this.isMenuOpen = false;
       },
 
       createMenuAnimation() {
@@ -185,7 +195,7 @@
 
         return gsap.fromTo(array, {
           opacity: 0,
-          translateX: '1rem',
+          translateX: '1.5rem',
         }, {
           opacity: 1,
           translateX: 0,
@@ -232,6 +242,10 @@
     @include defaultTransition(opacity, transform);
     transition-duration: .6s;
     z-index: $z-index-header - 1;
+
+    @include media-breakpoint-down(md) {
+      content: none;
+    }
   }
 
   &.is-open {
@@ -253,13 +267,19 @@
   padding-top: rem(32);
   padding-bottom: rem(40);
 
+  @include media-breakpoint-down(md) {
+    padding-bottom: 0;
+    overflow-y: auto;
+    height: $height-screen;
+    transform: translateX(100%);
+    transition: transform .7s ease;
+    background-color: rgba($color-dark, 0.65);
+    backdrop-filter: blur(5px);
+  }
+
   @at-root .is-fixed & {
     pointer-events: none;
     opacity: 1;
-
-    &__menu {
-      transform: translateX(#{rem(-80)});
-    }
 
     &__link {
       opacity: 0;
@@ -268,16 +288,36 @@
 
   @at-root .is-open & {
     pointer-events: all;
+
+    @include media-breakpoint-down(md) {
+      transform: none;
+    }
   }
 
   &__container {
     display: flex;
+
+    @include media-breakpoint-down(md) {
+      height: 100%;
+    }
   }
 
   &__menu {
     margin-left: auto;
     display: flex;
-    @include defaultTransition(transform);
+
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+      justify-content: space-between;
+      margin-left: 0;
+      padding-top: rem(104);
+      padding-bottom: rem(104);
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding-top: rem(64);
+      padding-bottom: rem(64);
+    }
   }
 
   &__list {
@@ -289,11 +329,20 @@
 
     li:not(:first-child) {
       margin-left: rem(40);
-    }
-  }
 
-  &__contacts {
-    margin-left: rem(40);
+      @include media-breakpoint-down(md) {
+        margin-left: 0;
+        margin-top: rem(16);
+      }
+
+      @include media-breakpoint-down(sm) {
+        margin-top: rem(24);
+      }
+    }
+
+    @include media-breakpoint-down(md) {
+      display: block;
+    }
   }
 
   &__link {
@@ -301,10 +350,26 @@
     color: $color-white;
     padding: rem(8) 0; // Область клика
 
+    @include media-breakpoint-down(md) {
+      font-size: rem(26);
+    }
+
+    @include media-breakpoint-down(sm) {
+      font-size: rem(20);
+      padding: 0;
+    }
+
     &:hover {
       #{$b}__text {
-        transform: translateY(#{rem(-6)});
         opacity: 0.65;
+
+        @include media-breakpoint-up(lg) {
+          transform: translateY(#{rem(-6)});
+        }
+
+        @include media-breakpoint-down(md) {
+          transform: translateX(1em);
+        }
       }
     }
   }
@@ -314,12 +379,45 @@
     @include defaultTransition(opacity, transform);
   }
 
-  &__phone {
-    color: $color-white;
+  &__contacts {
+    margin-left: rem(40);
+
+    @include media-breakpoint-down(md) {
+      margin-top: rem(48);
+      margin-left: 0;
+      opacity: 0.65;
+    }
   }
 
   &__mail {
-    display: none;
+    @include media-breakpoint-up(lg) {
+      display: none;
+    }
+  }
+
+  &__phone,
+  &__mail {
+    color: $color-white;
+
+    @include media-breakpoint-down(md) {
+      font-size: rem(18);
+      display: block;
+      padding: rem(8) 0;
+
+      @include defaultTransition(opacity);
+
+      &:hover {
+        opacity: 0.65;
+      }
+
+      #{$b}__text {
+        transform: none !important;
+      }
+    }
+
+    @include media-breakpoint-down(sm) {
+      font-size: rem(14);
+    }
   }
 }
 
@@ -334,11 +432,17 @@
   z-index: $z-index-header-logo;
   pointer-events: none;
 
-  @at-root .is-open & {
-    mix-blend-mode: normal;
+  @include media-breakpoint-only(sm) {
+    padding-top: rem(16);
+  }
 
-    &__burger {
-      color: $color-dark;
+  @at-root .is-open & {
+    @include media-breakpoint-up(lg) {
+      mix-blend-mode: normal;
+
+      &__burger {
+        color: $color-dark;
+      }
     }
   }
 
@@ -373,12 +477,14 @@
     @include media-breakpoint-up(lg) {
       opacity: 0;
       pointer-events: none;
-      @include defaultTransition(opacity);
-    }
+      transform: translateX(#{rem(32)});
+      @include defaultTransition(opacity, transform);
 
-    @at-root .is-fixed & {
-      pointer-events: all;
-      opacity: 1;
+      &.is-visible {
+        pointer-events: all;
+        transform: none;
+        opacity: 1;
+      }
     }
   }
 }

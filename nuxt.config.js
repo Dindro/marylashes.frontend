@@ -46,6 +46,7 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    { src: '@/plugins/height', mode: 'client' },
   ],
   /*
   ** Auto import components
