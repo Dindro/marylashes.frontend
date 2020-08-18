@@ -201,7 +201,6 @@
           translateX: 0,
           stagger: 0.1,
           duration: 0.3,
-          transitionTimingFunction: 'ease',
           delay: 0.2,
         });
       }
