@@ -32,8 +32,10 @@
     @include defaultTransition(transform, opacity);
   }
 
+
   // 20px так выгрузилось
-  &--small {
+  // small не срабатывает при наведении
+  @at-root *:not(:hover) > &--small {
     #{$b}__ary {
       opacity: 0;
       transform: translate(0, 20px);

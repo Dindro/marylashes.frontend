@@ -272,8 +272,8 @@
     overflow-y: auto;
     height: $height-screen;
     transform: translateX(100%);
-    transition: transform .7s ease;
-    background-color: rgba($color-dark, 0.65);
+    transition: transform .7s ease-in-out;
+    background-color: rgba($color-white, 0.95);
     backdrop-filter: blur(5px);
   }
 
@@ -352,6 +352,7 @@
 
     @include media-breakpoint-down(md) {
       font-size: rem(26);
+      color: $color-dark;
     }
 
     @include media-breakpoint-down(sm) {
@@ -397,12 +398,11 @@
 
   &__phone,
   &__mail {
-    color: $color-white;
-
     @include media-breakpoint-down(md) {
       font-size: rem(18);
       display: block;
       padding: rem(8) 0;
+      color: $color-dark;
 
       @include defaultTransition(opacity);
 
