@@ -44,10 +44,10 @@
   }
 
   &__list {
-    margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
+    margin: 0 rem(-12);
   }
 
   &__item {

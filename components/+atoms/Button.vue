@@ -91,6 +91,17 @@
       color: $color-white;
     }
 
+    // --white при ховере
+    &--dark--white {
+      &:hover {
+        color: $color-dark;
+
+        &::before {
+          background-color: $color-white;
+        }
+      }
+    }
+
     &--outline-dark {
       border: 1px solid $color-dark;
       background-color: transparent;

@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="pt-96">
     Привет
+    <nuxt-link to="/">Домой</nuxt-link>
   </div>
 </template>
 

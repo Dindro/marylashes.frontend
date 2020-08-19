@@ -41,6 +41,7 @@ export default {
   data: (context) => {
     return {
       slider: null,
+      animation: null,
       isOnly: context.card_hero_slider.items.length <= 1,
       nav_count: {
         color: 'white',
@@ -78,7 +79,7 @@ export default {
 
       if (isDesktop()) {
         // Параллакс медленный вниз
-        gsap.to(swiper, {
+        this.animation = gsap.to(swiper, {
           scrollTrigger: {
             trigger: swiper,
             start: 'top top',
@@ -90,7 +91,7 @@ export default {
         });
       } else {
         // Установка PIN
-        const pin = ScrollTrigger.create({
+        this.animation = ScrollTrigger.create({
           trigger: swiper,
           start: 'top top',
           pin: true,
@@ -103,6 +104,15 @@ export default {
   mounted() {
     this.initSlider();
     this.initAnimation();
+  },
+
+  beforeDestroy() {
+    // Убираем slider и анимацию
+    if (this.slider) this.slider.destroy();
+    if (this.animation) {
+      this.animation.kill();
+      this.animation = null;
+    }
   }
 }
 </script>

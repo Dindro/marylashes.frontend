@@ -2,17 +2,29 @@
   <div>
     <card-hero-slider :card_hero_slider="card_hero_slider"></card-hero-slider>
 
-    <div class="bg-light pt-lg-112 pb-lg-160 pb-112">
+    <section class="bg-light pt-lg-112 pb-lg-160 pb-112">
       <div class="container">
         <about-block :about="about"></about-block>
       </div>
-    </div>
+    </section>
 
-    <div class="bg-white">
+    <section class="bg-white">
       <div class="container">
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
-    </div>
+    </section>
+
+    <section v-animate="'border'" class="bg-saphire pt-md-112 pb-md-112 pt-64 pb-96">
+      <div class="container">
+        <info-block :info="info"></info-block>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="container">
+        <card-service-list :card_service_list="card_service_list"></card-service-list>
+      </div>
+    </section>
 
     <nuxt-link to="/articles">articles</nuxt-link>
   </div>
@@ -24,12 +36,14 @@ import Btn from '+/Button';
 import AboutBlock from '&/AboutBlock';
 import CardServiceList from '&/CardServiceList';
 import CardHeroSlider from '&/CardHeroSlider';
+import InfoBlock from '&/InfoBlock';
 
 export default {
   components: {
     Btn,
     CardServiceList,
     CardHeroSlider,
+    InfoBlock,
   },
 
   asyncData(context) {

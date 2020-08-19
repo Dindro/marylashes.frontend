@@ -319,5 +319,48 @@
         }
       }
     ]
+  },
+
+  "info": {
+    "title": "Запишись онлайн,<br>задавай вопросы",
+    "socials": {
+      "title": "Я в социальных сетях",
+      "items": [
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vk"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Fb"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "In"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Wt"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vb"
+        }
+      ]
+    },
+    "actions": {
+      "items": [
+        {
+          "type": "button",
+          "text": "Записаться онлайн",
+          "color": "outline-dark"
+        },
+        {
+          "type": "button",
+          "text": "Задать вопрос онлайн",
+          "color": "dark--white"
+        }
+      ]
+    }
   }
 }
