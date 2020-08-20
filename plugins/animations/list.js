@@ -23,7 +23,7 @@ export default {
 			= insertAnimateBlock.style.left = '0';
 
 		// Вычесляем бордер при разных разрешениях
-		const border = getForBreakpoints('5rem', '1.5rem', '0.9rem');
+		const border = getForBreakpoints(...option.border || '5rem', '1.5rem', '0.9rem');
 		insertAnimateBlock.style.border = `${border} solid ${option.color}`;
 
 		// Вставим вспомогательный элемент

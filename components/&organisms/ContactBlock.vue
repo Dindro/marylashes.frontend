@@ -36,6 +36,7 @@
         name: 'border',
         start: 'top 80%',
         end: 'bottom 80%',
+        border: ['5rem', '5rem', '5rem']
       }
     }),
 
@@ -61,20 +62,43 @@
   grid-template-columns: 35% 15% 7% 43%;
   grid-template-rows: rem(96) auto rem(32) rem(16) auto rem(64) auto rem(32) auto rem(140);
 
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr rem(310);
+    grid-template-rows: rem(96) auto rem(32) auto rem(64) auto rem(48) auto rem($wrapper-gutter-md-1) rem(400);
+  }
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+    padding-top: rem(64);
+  }
+
   &__title {
     grid-column: 1 / 3;
     grid-row: 2 / 3;
     @include h2;
+
+    @include media-breakpoint-down(sm) {
+      margin-bottom: rem(16);
+    }
   }
 
   &__about {
     grid-column: 1 / 2;
     grid-row: 5 / 6;
+
+    @include media-breakpoint-down(md) {
+      grid-column: 1 / 3;
+      grid-row: 4 / 5;
+    }
   }
 
   &__socials {
     margin-top: rem(16);
     margin-bottom: rem(8);
+
+    @include media-breakpoint-down(sm) {
+      margin-top: rem(8);
+    }
   }
 
   &__map-text {
@@ -84,11 +108,33 @@
     padding: rem(32) rem(32) 0 25%;
     opacity: 0.3;
     @include text-small;
+
+    @include media-breakpoint-down(md) {
+      grid-column: 1 / 2;
+      grid-row: 8 / 9;
+      padding: 0 rem($wrapper-gutter-md-1) 0 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+      text-align: left;
+      padding: 0;
+      margin-top: rem(32);
+      margin-bottom: rem(16);
+    }
   }
 
   &__actions {
     grid-column: 1 / 2;
     grid-row: 7 / 8;
+
+    @include media-breakpoint-down(md) {
+      grid-column: 1 / 3;
+      grid-row: 6 / 7;
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-top: rem(40);
+    }
   }
 
   &__map {
@@ -100,6 +146,20 @@
     @include media-container-up {
       margin-right: $indent-container-up;
     }
+
+    @include media-breakpoint-down(md) {
+      grid-column: 1 / 3;
+      grid-row: 10 / 11;
+      margin-right: rem(-$wrapper-gutter-md-1);
+      margin-left: rem(-$wrapper-gutter-md-1);
+    }
+
+    @include media-breakpoint-down(sm) {
+      margin-right: rem(-$wrapper-gutter-sm-1);
+      margin-left: rem(-$wrapper-gutter-sm-1);
+      height: rem(400);
+      max-height: 70vh;
+    }
   }
 
   &__photo {
@@ -108,10 +168,19 @@
     z-index: 1;
     grid-column: 2 / 4;
     grid-row: 4 / 9;
-  }
+    min-width: rem(300);
 
-  &__logo {
-    margin-bottom: rem(16);
+    @include media-breakpoint-down(md) {
+      grid-column: 2 / 3;
+      grid-row: 3 / 10;
+      height: rem(400);
+      margin-top: auto;
+      margin-bottom: rem(-$wrapper-gutter-md-1);
+    }
+
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
   }
 
   &__name {
