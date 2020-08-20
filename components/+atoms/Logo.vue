@@ -81,5 +81,15 @@
       fill: $color-white;
     }
   }
+
+  &--dark-saphire {
+    #{$b}__mary {
+      fill: $color-dark;
+    }
+
+    #{$b}__lashes {
+      fill: $color-saphire;
+    }
+  }
 }
 </style>

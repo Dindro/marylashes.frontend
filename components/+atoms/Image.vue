@@ -51,6 +51,6 @@
 
 <style lang="scss" scoped>
 .image {
-
+  object-fit: cover;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="link.href || {}" :tag="tag || link.tag || 'a'">
-    <slot></slot>
+    <slot>{{ link.text }}</slot>
   </nuxt-link>
 </template>
 

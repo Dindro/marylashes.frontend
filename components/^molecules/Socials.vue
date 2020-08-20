@@ -1,5 +1,5 @@
 <template>
-  <div class="socials">
+  <div class="socials" :class="{ 'socials--column': socials.column }">
     <p class="socials__title" v-if="socials.title">{{ socials.title }}</p>
     <ul class="socials__list">
       <li v-for="(item, index) in socials.items" :key="index">
@@ -20,8 +20,11 @@
 
     props: {
       socials: {
-        type: Object,
-        required: true,
+        items: Array,
+        column: {
+          type: Boolean,
+          default: false,
+        }
       }
     }
   }
@@ -29,6 +32,7 @@
 
 <style lang="scss">
 .socials {
+  $b: #{&};
   display: inline-flex;
   align-items: center;
 
@@ -63,6 +67,15 @@
     &:hover {
       opacity: 1;
       transform: translateY(#{rem(-6)});
+    }
+  }
+
+  &--column {
+    flex-direction: column;
+    align-items: flex-start;
+
+    #{$b}__title {
+      margin-bottom: rem(8);
     }
   }
 }

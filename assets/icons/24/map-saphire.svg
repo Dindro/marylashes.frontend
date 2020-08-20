@@ -1,0 +1,8 @@
+<svg height="24" viewBox="0 0 24 24" width="24"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g fill="none" stroke="#CCFFFF" style="stroke-linecap:round; stroke-linejoin:round; stroke-width:2">
+    <path d="m20.665 9.583c0 6.286-8.083 11.675-8.083 11.675s-8.082-5.389-8.082-11.675a8.083 8.083 0 1 1 16.165 0z" transform="translate(-.083 1.121)"/>
+    <path d="m18.888 13.194a2.694 2.694 0 1 1 -2.694-2.694 2.694 2.694 0 0 1 2.694 2.694z" transform="translate(-3.694 -2.49)"/>
+  </g>
+</svg>

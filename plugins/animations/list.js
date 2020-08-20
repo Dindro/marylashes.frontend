@@ -23,7 +23,7 @@ export default {
 			= insertAnimateBlock.style.left = '0';
 
 		// Вычесляем бордер при разных разрешениях
-		const border = getForBreakpoints('4rem', '1.5rem', '0.9rem');
+		const border = getForBreakpoints('5rem', '1.5rem', '0.9rem');
 		insertAnimateBlock.style.border = `${border} solid ${option.color}`;
 
 		// Вставим вспомогательный элемент
@@ -33,8 +33,8 @@ export default {
 		const animation = gsap.to(insertAnimateBlock, {
 			scrollTrigger: {
 				trigger: el,
-				start: "top center",
-				end: "bottom center",
+				start: option.start || "top center",
+				end: option.end || "bottom center",
 				scrub: 0.6,
 			},
 			borderWidth: 0,

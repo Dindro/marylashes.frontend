@@ -362,5 +362,71 @@
         }
       ]
     }
+  },
+
+  "contact": {
+    "title": "Связаться со мной",
+    "socials": {
+      "items": [
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vk"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Fb"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "In"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Wt"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vb"
+        }
+      ]
+    },
+    "actions": {
+      "items": [
+        {
+          "type": "button",
+          "text": "Записаться онлайн",
+          "color": "outline-dark"
+        },
+        {
+          "type": "button",
+          "text": "Задать вопрос онлайн",
+          "color": "saphire"
+        }
+      ]
+    },
+    "name": "Мария Ижуткина",
+    "phone": {
+      "href": "tel:+79373941802",
+      "text": "+7 937 394 18 02"
+    },
+    "mail": {
+      "href": "mailto:mariaizhutkina@gmail.com",
+      "text": "mariaizhutkina@gmail.com"
+    },
+    "map_text": "Я принимаю в студии красоты B.Lashes&Browns по адресу г.Чебоксары, ул.Ярморочная 11",
+    "map": {
+      "controls": [],
+      "zoom": 14,
+      "center": [56.132238, 47.266359],
+      "points": [
+        {
+          "coords": [56.132238, 47.266359]
+        }
+      ]
+    },
+    "image": {
+      "src": "./img/photos/mary.jpg",
+      "alt": ""
+    }
   }
 }

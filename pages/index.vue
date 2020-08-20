@@ -22,6 +22,12 @@
 
     <section class="bg-white">
       <div class="container">
+        <contact-block :contact="contact"></contact-block>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="container">
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
     </section>
@@ -37,6 +43,7 @@ import AboutBlock from '&/AboutBlock';
 import CardServiceList from '&/CardServiceList';
 import CardHeroSlider from '&/CardHeroSlider';
 import InfoBlock from '&/InfoBlock';
+import ContactBlock from '&/ContactBlock';
 
 export default {
   components: {
@@ -44,6 +51,7 @@ export default {
     CardServiceList,
     CardHeroSlider,
     InfoBlock,
+    ContactBlock,
   },
 
   asyncData(context) {
