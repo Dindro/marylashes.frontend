@@ -51,7 +51,6 @@ export default {
 
   async mounted() {
     const settings = getSettings();
-
     await loadYmap(settings);
 
     this.instance = new ymaps.Map(this.$refs.map, {
