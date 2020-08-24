@@ -1,8 +1,8 @@
 <template>
   <div class="card-action-slider">
-    <div class="card-action-slider__animation">
-      <!-- <marquee behavior="" direction="">{{ card_action_slider.animation }}</marquee> -->
-      <marqu></marqu>
+    <div class="card-action-slider__marqu">
+      <marqu :marqu="card_action_slider.marqu"></marqu>
+      <marqu :marqu="Object.assign({}, card_action_slider.marqu, { direction: 'right', color: 'saphire' })"></marqu>
     </div>
 
     <!-- Title Slider -->
@@ -55,8 +55,7 @@ export default {
 
   props: {
     card_action_slider: {
-      animation: String,
-      animation_separator: String,
+      marqu: Object,
       items: Array,
     }
   },
@@ -67,7 +66,7 @@ export default {
     this.titleSlider = new Swiper(this.$refs.title, {
       allowTouchMove: false,
       slidesPerView: 'auto',
-      centeredSlides: true,
+      spaceBetween: 40,
     });
 
     this.contentSlider = new Swiper(this.$refs.content, {
@@ -79,7 +78,8 @@ export default {
       },
       allowTouchMove: false,
       thumbs: {
-        swiper:  this.titleSlider,
+        swiper: this.titleSlider,
+        autoScrollOffset: 1,
       }
     });
   },
@@ -106,7 +106,7 @@ export default {
 
   &__titles {
     display: flex;
-    width: 200px;
+    width: 100px;
 
     .swiper-slide {
       width: auto;
@@ -118,17 +118,13 @@ export default {
         opacity: 1;
       }
 
-      &:not(:first-child) {
-        margin-left: rem(40);
-      }
-
       &:hover {
         opacity: 1;
       }
     }
 
     .swiper-wrapper {
-      // width: 100px;
+      width: 100%;
     }
   }
 
@@ -149,6 +145,18 @@ export default {
           opacity: 1;
         }
       }
+    }
+  }
+
+  &__marqu {
+    overflow: hidden;
+    margin-left: rem(-$wrapper-gutter-lg-1);
+    margin-right: rem(-$wrapper-gutter-lg-1);
+    margin-bottom: rem(64);
+
+    @include media-container-up {
+      margin-left: $indent-container-up;
+      margin-right: $indent-container-up;
     }
   }
 }

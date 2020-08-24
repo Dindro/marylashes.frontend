@@ -431,8 +431,10 @@
   },
 
   "card_action_slider": {
-    "animation": "ACTION",
-    "separator": "•",
+    "marqu": {
+      "text": "ACTION",
+      "separator": "•"
+    },
     "items": [
       {
         "title": "Подружки",

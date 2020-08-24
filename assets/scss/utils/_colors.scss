@@ -3,9 +3,9 @@
     background-color: $colorValue !important;
   }
 
-  // .color-#{$colorName} {
-  //   color: $colorValue !important;
-  // }
+  .color-#{$colorName} {
+    color: $colorValue !important;
+  }
 }
 
 *::selection {
