@@ -26,11 +26,18 @@
       </div>
     </section>
 
+    <section class="bg-dark pb-lg-96">
+      <div class="container">
+        <card-action-slider :card_action_slider="card_action_slider"></card-action-slider>
+      </div>
+    </section>
+
     <section class="bg-white">
       <div class="container">
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
     </section>
+
 
     <nuxt-link to="/articles">articles</nuxt-link>
   </div>
@@ -44,6 +51,7 @@ import CardServiceList from '&/CardServiceList';
 import CardHeroSlider from '&/CardHeroSlider';
 import InfoBlock from '&/InfoBlock';
 import ContactBlock from '&/ContactBlock';
+import CardActionSlider from '&/CardActionSlider';
 
 export default {
   components: {
@@ -52,6 +60,7 @@ export default {
     CardHeroSlider,
     InfoBlock,
     ContactBlock,
+    CardActionSlider,
   },
 
   asyncData(context) {
