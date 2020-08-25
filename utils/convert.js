@@ -6,7 +6,7 @@ const getCurrentFontSize = () => +getComputedStyle(document.documentElement).fon
  * Перевод px в px при текущем font-size
  * @param {Number} value Значение в px
  */
-const convertToScalingPx = (value) => {
+const toScalingPx = (value) => {
 	const fontSize = getCurrentFontSize();
     if (fontSize === DEFAULT_FONT_SIZE) return value;
 
@@ -15,6 +15,6 @@ const convertToScalingPx = (value) => {
 };
 
 export {
-	convertToScalingPx,
+	toScalingPx as convertToScalingPx,
 };
 

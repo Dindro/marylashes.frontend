@@ -36,7 +36,7 @@
         name: 'border',
         start: 'top 80%',
         end: 'bottom 80%',
-        border: ['5rem', '5rem', '5rem']
+        border: ['5rem', '5rem', '5rem'] // Lg, Md, Sm
       }
     }),
 
@@ -157,7 +157,7 @@
     @include media-breakpoint-down(sm) {
       margin-right: rem(-$wrapper-gutter-sm-1);
       margin-left: rem(-$wrapper-gutter-sm-1);
-      height: rem(400);
+      height: 100vw;
       max-height: 70vh;
     }
   }

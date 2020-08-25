@@ -8,6 +8,6 @@ const getSettings = () => {
 };
 
 export {
-	getSettings,
+	getSettings as getMapSettings,
 };
 

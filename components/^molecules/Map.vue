@@ -6,7 +6,8 @@
 
 <script>
 import { loadYmap } from 'vue-yandex-maps';
-import { getSettings } from '@/utils/map';
+import { getMapSettings } from '@/utils/map';
+import { isTouch } from '@/utils/breakpoints';
 import { convertToScalingPx } from '@/utils/convert';
 
 export default {
@@ -54,17 +55,19 @@ export default {
 	},
 
   async mounted() {
-    const settings = getSettings();
-    await loadYmap(settings);
+		const settings = getMapSettings();
+		await loadYmap(settings);
 
-    this.instance = new ymaps.Map(this.$refs.map, {
-      center: this.map.center,
-      zoom: this.map.zoom,
-      controls: this.map.controls,
-    });
+		this.instance = new ymaps.Map(this.$refs.map, {
+			center: this.map.center,
+			zoom: this.map.zoom,
+			controls: this.map.controls,
+		});
 
-    const placemarks = this.getPlacemarks(this.map.points);
-    this.addPlacemarks(placemarks);
+		if (isTouch()) this.instance.behaviors.disable('drag');
+
+		const placemarks = this.getPlacemarks(this.map.points);
+		this.addPlacemarks(placemarks);
   },
 
   beforeDestroy() {
