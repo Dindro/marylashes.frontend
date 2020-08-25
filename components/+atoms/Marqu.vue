@@ -77,6 +77,14 @@ export default {
     font-size: rem(150);
     line-height: 0.66;
 
+	@include media-breakpoint-down(md) {
+		font-size: rem(100);
+	}
+
+	@include media-breakpoint-down(sm) {
+		font-size: rem(70);
+	}
+
     & + & {
       margin-left: 0.3em;
     }

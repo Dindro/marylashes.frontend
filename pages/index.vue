@@ -26,7 +26,7 @@
       </div>
     </section>
 
-    <section class="bg-dark pb-lg-96">
+    <section class="bg-dark pb-64 pb-md-96">
       <div class="container">
         <card-action-slider :card_action_slider="card_action_slider"></card-action-slider>
       </div>
