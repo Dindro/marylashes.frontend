@@ -1,6 +1,8 @@
 <template>
 	<div class="hero-article">
-		<div class="hero-article__article hero-article__item">2</div>
+		<div class="hero-article__article hero-article__item">
+			<card-article :card="hero_article.card"></card-article>
+		</div>
 		<div class="hero-article__themes hero-article__item">
 			1
 		</div>
@@ -8,8 +10,18 @@
 </template>
 
 <script>
-export default {
+import CardArticle from '^/CardArticle';
 
+export default {
+	components: {
+		CardArticle,
+	},
+
+	props: {
+		hero_article: {
+			card: Object,
+		}
+	}
 }
 </script>
 

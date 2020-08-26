@@ -1,0 +1,27 @@
+{
+  "hero_article": {
+    "card": {
+      "mode": "",
+      "image": {
+        "src": "./img/hero/girl-sleep.jpg",
+        "alt": ""
+      },
+      "title": "10 способов как выбрать ресницы для проффесионалов",
+      "info": {
+        "date": "2019",
+        "view": 201
+      },
+      "link": {
+        "href": "articles/desyt_sposobov"
+      },
+      "author": {
+        "name": "Кристина Агилера",
+        "position": "",
+        "image": {
+          "src": "",
+          "alt": ""
+        }
+      }
+    }
+  }
+}

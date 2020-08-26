@@ -1,13 +1,11 @@
 <template>
-	<div class="card-article" :class="[`card-article--${type ? type : 'default'}`]">
+	<div class="card-article" :class="[`card-article--${mode ? mode : 'default'}`]">
 		<div class="card-article__image">
 			<image-vue v-if="card.image" :image="card.image"></image-vue>
 		</div>
 		<div class="card-article__content">
 			<h3 class="card-article__title">{{ card.title }}</h3>
-			<div class="card-article__info">
-
-			</div>
+			<info-panel class="card-article__info" :info="card.info"></info-panel>
 		</div>
 		<tag-link class="card-article__link" :link="card.link"></tag-link>
 	</div>
@@ -15,28 +13,29 @@
 
 <script>
 import TagLink from '+/TagLink';
-import { Image as ImageVue } from '+/Image';
+import InfoPanel from '+/InfoPanel';
+import ImageVue from '+/Image';
 
 export default {
 	components: {
 		TagLink,
 		ImageVue,
+		InfoPanel,
 	},
 
 	props: {
 		card: {
-			type: String,
+			mode: String,
 			image: Object,
 			title: String,
-			data: Date,
-			view: Number,
+			info: Object,
 			author: Object,
 			link: Object,
 		}
 	},
 
 	data: (context) => ({
-		type: context.image ? context.type : 'gray',
+		mode: context.card.image ? context.card.mode : 'gray',
 	}),
 }
 </script>
