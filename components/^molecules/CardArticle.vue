@@ -41,5 +41,88 @@ export default {
 </script>
 
 <style lang="scss">
+.card-article {
+	$b: #{&};
+	position: relative;
 
+	&__info {
+		margin-top: rem(8);
+	}
+
+	&__link {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: none;
+	}
+
+	&--default {
+		color: $color-dark;
+
+		#{$b}__content {
+			margin-top: rem(16);
+		}
+
+		#{$b}__image {
+			border-radius: rem(2);
+		}
+	}
+
+	&--overlay,
+	&--gray {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		height: 100%;
+		border-radius: rem(2);
+		padding: rem(32) rem(32) rem(32) rem(24);
+
+		#{$b}__content {
+			position: relative;
+		}
+	}
+
+	&--overlay {
+		color: $color-white;
+
+		#{$b}__image {
+			&,
+			&::after {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+
+			&::after {
+				content: '';
+				background-color: rgba($color-dark, 0.5);
+			}
+		}
+	}
+
+	&--gray {
+		color: $color-dark;
+		background-color: $color-light;
+
+		#{$b}__image {
+			display: none;
+		}
+	}
+
+	&--present {
+		color: $color-dark;
+
+		#{$b}__content {
+			margin-top: rem(24);
+		}
+
+		#{$b}__title {
+			@include h1;
+		}
+	}
+}
 </style>

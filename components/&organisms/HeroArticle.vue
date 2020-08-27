@@ -1,7 +1,7 @@
 <template>
 	<div class="hero-article">
 		<div class="hero-article__article hero-article__item">
-			<card-article :card="hero_article.card"></card-article>
+			<card-article :card="Object.assign({}, hero_article.card, { mode: 'present' })"></card-article>
 		</div>
 		<div class="hero-article__themes hero-article__item">
 			1

@@ -30,21 +30,28 @@
 
 <style lang="scss">
 .icon {
-  &,
-  &--default,
-  &--24 {
-    width: rem(24);
-    height: rem(24);
+	display: inline-block;
 
-    @include media-breakpoint-down(sm) {
-      width: rem(20);
-      height: rem(20);
-    }
-  }
+	&,
+	&--default,
+	&--24 {
+		width: rem(24);
+		height: rem(24);
 
-  svg {
-    width: 100%;
-    height: 100%;
-  }
+		@include media-breakpoint-down(sm) {
+		width: rem(20);
+		height: rem(20);
+		}
+	}
+
+	&--16 {
+		width: rem(24);
+		height: rem(24);
+	}
+
+	svg {
+		width: 100%;
+		height: 100%;
+	}
 }
 </style>
