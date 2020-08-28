@@ -1,56 +1,58 @@
 <template>
-  <component
-    class="image"
-    :is="is"
-    :src="image.src"
-    :srcset="srcset"
-    :alt="alt"
-    :title="image.title"
-  >
-  </component>
+	<component
+		class="image"
+		:is="is"
+		:src="image.src"
+		:srcset="srcset"
+		:alt="alt"
+		:title="image.title"
+	>
+	</component>
 </template>
 
 <script>
-  export default {
-    props: {
-      image: {
-        type: Object,
-        required: true,
-      }
-    },
+	export default {
+		props: {
+			image: {
+				type: Object,
+				required: true,
+			}
+		},
 
-    computed: {
-      is() {
-        return this.image.type === 'bg' ? 'div' : 'img';
-      },
+		computed: {
+			is() {
+				return this.image.type === 'bg' ? 'div' : 'img';
+			},
 
-      alt() {
-        return this.image.alt || this.image.caption || 'image';
-      },
+			alt() {
+				return this.image.alt || this.image.caption || 'image';
+			},
 
-      srcset() {
-        if (!Array.isArray(this.image.srcset)) return;
+			srcset() {
+				if (!Array.isArray(this.image.srcset)) return;
 
-        let srcset = '';
-        this.image.srcset.forEach((item, index) => {
-          srcset += item.src;
-          if (item.scale && item.scale > 1) {
-            srcset += item.scale;
-            srcset += 'x';
-          }
-          if (index < this.image.srcset.lenght - 1) {
-            srcset += ', ';
-          }
-        });
+				let srcset = '';
+				this.image.srcset.forEach((item, index) => {
+				srcset += item.src;
+				if (item.scale && item.scale > 1) {
+					srcset += item.scale;
+					srcset += 'x';
+				}
+				if (index < this.image.srcset.lenght - 1) {
+					srcset += ', ';
+				}
+				});
 
-        return srcset;
-      },
-    },
-  }
+				return srcset;
+			},
+		},
+	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .image {
-  object-fit: cover;
+	object-fit: cover;
+	object-position: center;
+	max-width: 100%;
 }
 </style>

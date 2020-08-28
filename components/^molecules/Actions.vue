@@ -13,10 +13,12 @@
 
 <script>
   import Btn from '+/Button';
+  import LinkAction from '+/LinkAction';
 
   export default {
     components: {
-      Btn,
+	  Btn,
+	  LinkAction,
     },
 
     props: {

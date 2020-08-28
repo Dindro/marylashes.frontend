@@ -4,22 +4,25 @@
 			<card-article :card="Object.assign({}, hero_article.card, { mode: 'present' })"></card-article>
 		</div>
 		<div class="hero-article__themes hero-article__item">
-			1
+			<card-theme-list :card_theme_list="hero_article.card_theme_list"></card-theme-list>
 		</div>
 	</div>
 </template>
 
 <script>
+import CardThemeList from '&/CardThemeList';
 import CardArticle from '^/CardArticle';
 
 export default {
 	components: {
+		CardThemeList,
 		CardArticle,
 	},
 
 	props: {
 		hero_article: {
 			card: Object,
+			card_theme_list: Object,
 		}
 	}
 }
