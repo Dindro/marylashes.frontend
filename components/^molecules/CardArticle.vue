@@ -62,7 +62,6 @@ export default {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		display: none;
 	}
 
 	&--default {
@@ -84,6 +83,7 @@ export default {
 		flex-direction: column;
 		justify-content: flex-end;
 		height: 100%;
+		min-height: rem(220);
 		border-radius: rem(2);
 		padding: rem(32) rem(32) rem(32) rem(24);
 
@@ -130,7 +130,7 @@ export default {
 	&--overlay,
 	&--gray {
 		#{$b}__title {
-			@include line-clamp(1.125rem, 1.4, 2);
+			@include line-clamp(1.125rem, 1.4, 3);
 			font-weight: 600;
 		}
 	}

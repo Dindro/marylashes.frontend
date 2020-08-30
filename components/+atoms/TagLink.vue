@@ -35,8 +35,10 @@ export default {
 	methods: {
 		getParams(link) {
 			const { href } = link;
+
+			// Проверка на отсутсвтие ссылки
 			if (!href) return {
-				componentName: this.tag,
+				componentName: this.tag || 'span',
 			};
 
 			// Проверка на внешние ресурсы
@@ -45,6 +47,7 @@ export default {
 				href,
 				target: link.target || '_blank',
 				rel: link.rel || 'noopener',
+				title: link.title,
 			};
 
 			// Проверка на tel: mailto:
@@ -53,15 +56,17 @@ export default {
 				href,
 				target: link.target,
 				rel: link.rel,
+				title: link.title,
 			};
 
 			// Проверка на текущую ссылку
 			if (this.currentLink(href)) return {
 				componentName: 'nuxt-link',
-				tag: this.activeTag || 'span',
+				tag: this.activeTag || this.tag || 'span',
 				to: href,
 				target: link.target,
 				rel: link.rel,
+				title: link.title,
 			}
 
 			return {
@@ -69,7 +74,7 @@ export default {
 				to: href,
 				target: link.target,
 				rel: link.rel,
-				tag: this.tag || 'a',
+				title: link.title,
 			}
 		},
 
