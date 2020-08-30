@@ -4,12 +4,13 @@
 		:class="[`image-ratio--${ratio}`]"
 		:style="{ paddingTop: ratioStyle }"
 	>
-		<image-tag class="image-ratio__img" :image="image"></image-tag>
+		<component :is="componentName" class="image-ratio__img" :image="image"></component>
 	</div>
 </template>
 
 <script>
 import ImageTag from '+/ImageTag';
+import ImageAdaptive from '+/ImageAdaptive';
 
 const DEFAULT_RATIO = '16x9';
 
@@ -21,16 +22,21 @@ const ratios = [
 export default {
 	components: {
 		ImageTag,
+		ImageAdaptive,
 	},
+
 	props: {
 		image: {
 			type: Object,
 			required: true,
 		},
 	},
-	data: () => ({
+
+	data: (ctx) => ({
 		ratioStyle: null,
+		componentName: ctx.image.tab || ctx.image.mob ? 'image-adaptive' : 'image-tag',
 	}),
+
 	computed: {
 		ratio() {
 			const { ratio } = this.image;
@@ -45,7 +51,7 @@ export default {
 
 			const width = +values[0];
 			const heigth = +values[1];
-			this.ratioStyle = `${100 / width / heigth}%`;
+			this.ratioStyle = `${100 / (width / heigth)}%`;
 			return 'style';
 		}
 	}
@@ -53,7 +59,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 @function ratio($value) {
 	@return #{100 / $value}#{'%'};
 }

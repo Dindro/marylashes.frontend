@@ -1,21 +1,27 @@
 export default {
-	computed: {
-		srcset() {
-			if (!Array.isArray(this.image.srcset)) return;
+	methods: {
+		getSrcset(structure) {
+			if (!structure) return;
+			if (!Array.isArray(structure)) return;
 
 			let srcset = '';
-			this.image.srcset.forEach((item, index) => {
+			structure.forEach((item, index) => {
 				srcset += item.src;
 				if (item.scale && item.scale > 1) {
 					srcset += item.scale;
 					srcset += 'x';
 				}
-				if (index < this.image.srcset.lenght - 1) {
+				if (index < structure.lenght - 1) {
 					srcset += ', ';
 				}
 			});
 
 			return srcset;
+		}
+	},
+	computed: {
+		srcset() {
+			return this.getSrcset(this.image.srcset)
 		},
 
 		alt() {

@@ -1,7 +1,7 @@
 <template>
-	<nuxt-link :to="link.href || {}" :tag="tag || link.tag || 'a'">
+	<component :is="component.componentName" v-bind="component.params">
 		<slot>{{ link.text }}</slot>
-	</nuxt-link>
+	</component>
 </template>
 
 <script>
@@ -14,6 +14,82 @@ export default {
 		tag: {
 			type: String,
 		},
+		activeTag: {		// тэг в случае если является активным
+			type: String,
+		},
 	},
+
+	computed: {
+		component() {
+			const params = this.getParams(this.link);
+			const { componentName } = params;
+			delete params.componentName;
+
+			return {
+				componentName,
+				params,
+			}
+		}
+	},
+
+	methods: {
+		getParams(link) {
+			const { href } = link;
+			if (!href) return {
+				componentName: this.tag,
+			};
+
+			// Проверка на внешние ресурсы
+			if (this.linkOnOtherResources(href)) return {
+				componentName: 'a',
+				href,
+				target: link.target || '_blank',
+				rel: link.rel || 'noopener',
+			};
+
+			// Проверка на tel: mailto:
+			if (this.linkPhoneMail(href)) return {
+				componentName: 'a',
+				href,
+				target: link.target,
+				rel: link.rel,
+			};
+
+			// Проверка на текущую ссылку
+			if (this.currentLink(href)) return {
+				componentName: 'nuxt-link',
+				tag: this.activeTag || 'span',
+				to: href,
+				target: link.target,
+				rel: link.rel,
+			}
+
+			return {
+				componentName: 'nuxt-link',
+				to: href,
+				target: link.target,
+				rel: link.rel,
+				tag: this.tag || 'a',
+			}
+		},
+
+		// Проверка ссылки на остальные ресурсы
+		linkOnOtherResources(href) {
+			const regOtherResourse = /^(http(s)?|ftp):\/\//;
+			return href.match(regOtherResourse);
+		},
+
+		// Проверка ссылки на tel: и mailto:
+		linkPhoneMail(href) {
+			const regPhoneMail = /^(tel:|mailto:)/;
+			return href.match(regPhoneMail);
+		},
+
+		// Проверка ссылки на текущую страницу
+		currentLink(href) {
+			let pagePath = this.$route.path.replace(/\/$/, '');
+			return href.replace(/\/$/, '') === pagePath;
+		},
+	}
 };
 </script>

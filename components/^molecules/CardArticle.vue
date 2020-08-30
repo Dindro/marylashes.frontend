@@ -1,7 +1,14 @@
 <template>
 	<div class="card-article" :class="[`card-article--${mode ? mode : 'default'}`]">
 		<div class="card-article__image">
-			<image-vue v-if="card.image" :image="card.image"></image-vue>
+			<image-vue
+				v-if="card.image"
+				:image="Object.assign(
+					{},
+					card.image,
+					{ ratio: card.mode === 'overlay' ? undefined : '5x2' }
+				)"
+			></image-vue>
 		</div>
 		<div class="card-article__content">
 			<h3 class="card-article__title">{{ card.title }}</h3>
@@ -67,6 +74,7 @@ export default {
 
 		#{$b}__image {
 			border-radius: rem(2);
+			overflow: hidden;
 		}
 	}
 
@@ -101,6 +109,11 @@ export default {
 				content: '';
 				background-color: rgba($color-dark, 0.5);
 			}
+
+			.image {
+				height: 100%;
+				width: 100%;
+			}
 		}
 	}
 
@@ -113,6 +126,15 @@ export default {
 		}
 	}
 
+	&--default,
+	&--overlay,
+	&--gray {
+		#{$b}__title {
+			@include line-clamp(1.125rem, 1.4, 2);
+			font-weight: 600;
+		}
+	}
+
 	&--present {
 		color: $color-dark;
 
@@ -122,6 +144,11 @@ export default {
 
 		#{$b}__title {
 			@include h1;
+		}
+
+		#{$b}__image {
+			border-radius: rem(2);
+			overflow: hidden;
 		}
 	}
 }

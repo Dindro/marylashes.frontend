@@ -4,6 +4,7 @@
 
 <script>
 import image from '@/utils/mixins/image';
+
 export default {
 	mixins: [image],
 	props: {
@@ -16,5 +17,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+.image {
+	object-fit: cover;
+	object-position: center;
+	max-width: 100%;
+}
 </style>

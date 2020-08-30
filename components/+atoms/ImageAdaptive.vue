@@ -1,56 +1,39 @@
 <template>
-  <picture>
-     <source
-      media="(max-width: {{ devices.md - 1 }}px)"
-      :is="is"
-      :src="image.src"
-      :srcset="srcset"
-      :alt="alt"
-      :title="image.title"
-    />
-  </picture>
+	<picture>
+		<template v-for="(item, index) of [ image.tab, image.mob ]">
+			<source
+				v-if="item"
+				:media="medias[item]"
+				:srcset="getSrcset(item.srcset)"
+				:key="index"
+			/>
+		</template>
+		<image-tag :image="image"></image-tag>
+	</picture>
 </template>
 
 <script>
-  import { devices } from '@/utils/breakpoints';
+import ImageTag from '+/ImageTag';
+import image from '@/utils/mixins/image';
+import { devices } from '@/utils/breakpoints';
 
-  export default {
-    data: () => {
-      return {
-        is: this.image.type === 'bg' ? 'div' : 'img',
-        alt: this.image.alt || this.image.caption || 'image',
-      }
-    },
+export default {
+	components: {
+		ImageTag,
+	},
+	mixins: [image],
+	props: {
+		image: {
+			type: Object,
+			required: true,
+		}
+	},
 
-    computed: {
-      srcset() {
-        if (!Array.isArray(this.image.srcset)) return;
-
-        let srcset = '';
-        this.image.srcset.forEach((item, index) => {
-          srcset += item.src;
-          if (item.scale && item.scale > 1) {
-            srcset += item.scale;
-            srcset += 'x';
-          }
-          if (index < this.image.srcset.lenght - 1) {
-            srcset += ', ';
-          }
-        });
-
-        return srcset;
-      },
-    },
-
-    props: {
-      image: {
-        type: Object,
-        required: true,
-      }
-    }
-  }
+	data: (context) => ({
+		medias: {
+			[context.image.mob]: `(max-width: ${devices.md - 1 }px)`,
+			[context.image.tab]: `(max-width: ${devices.lg - 1 }px)`,
+		},
+	}),
+}
 </script>
-
-<style lang="scss" scoped>
-
-</style>

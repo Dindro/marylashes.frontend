@@ -1,58 +1,31 @@
 <template>
-	<component
-		class="image"
-		:is="is"
-		:src="image.src"
-		:srcset="srcset"
-		:alt="alt"
-		:title="image.title"
-	>
-	</component>
+	<component :is="componentName" :image="image"></component>
 </template>
 
 <script>
-	export default {
-		props: {
-			image: {
-				type: Object,
-				required: true,
-			}
+import ImageTag from '+/ImageTag';
+import ImageAdaptive from '+/ImageAdaptive';
+import ImageRatio from '+/ImageRatio';
+
+export default {
+	components: {
+		ImageTag,
+		ImageAdaptive,
+		ImageRatio
+	},
+	props: {
+		image: {
+			type: Object,
+			required: true,
+		}
+	},
+
+	computed: {
+		componentName() {
+			if (this.image.ratio) return 'image-ratio';
+			if (this.image.tab || this.image.mob) return 'image-adaptive';
+			return 'image-tag';
 		},
-
-		computed: {
-			is() {
-				return this.image.type === 'bg' ? 'div' : 'img';
-			},
-
-			alt() {
-				return this.image.alt || this.image.caption || 'image';
-			},
-
-			srcset() {
-				if (!Array.isArray(this.image.srcset)) return;
-
-				let srcset = '';
-				this.image.srcset.forEach((item, index) => {
-				srcset += item.src;
-				if (item.scale && item.scale > 1) {
-					srcset += item.scale;
-					srcset += 'x';
-				}
-				if (index < this.image.srcset.lenght - 1) {
-					srcset += ', ';
-				}
-				});
-
-				return srcset;
-			},
-		},
-	}
-</script>
-
-<style lang="scss">
-.image {
-	object-fit: cover;
-	object-position: center;
-	max-width: 100%;
+	},
 }
-</style>
+</script>
