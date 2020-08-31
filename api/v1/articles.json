@@ -181,5 +181,311 @@
         }
       }
     ]
+  },
+
+  "card_article_slider": {
+    "title": "Топ ответов на топ вопросов",
+    "count": 10,
+    "count_label": "статей",
+    "action": {
+      "href": "/#",
+      "icon": "16/link",
+      "text": "Смотреть все"
+    },
+    "items": [
+      {
+        "mode": "",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов 10 способов как выбрать ресницы для проффесионалов 10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "gray",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      }
+    ]
+  },
+
+  "card_topic_list": {
+    "title": "Дочитали и вам мало?",
+    "action": {
+      "href": "/themes",
+      "text": "Все темы",
+      "icon": {
+        "name": "16/link"
+      }
+    },
+    "items": [
+      {
+        "theme": {
+          "title": "Первое наращивание",
+          "image": {
+            "src": "./img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        "items": [
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "История как я нарастила в первый раз"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Какие бывают объемы?"
+          }
+        ]
+      },
+      {
+        "theme": {
+          "title": "Путь становления lash-мейкером",
+          "image": {
+            "src": "./img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        "items": [
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "История как я нарастила в первый раз"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Какие бывают объемы?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "История как я нарастила в первый раз"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Какие бывают объемы?"
+          }
+        ],
+        "action": {
+          "href": "/themes/23",
+          "text": "Смотреть все",
+          "icon": {
+            "name": "16/link"
+          }
+        }
+      },
+      {
+        "theme": {
+          "title": "Топ ответов на топ вопросов",
+          "image": {
+            "src": "./img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        "items": [
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать? Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "История как я нарастила в первый раз"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Какие бывают объемы?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "История как я нарастила в первый раз"
+          },
+          {
+            "href": "/articles/dsdsd",
+            "text": "Какие бывают объемы?"
+          }
+        ],
+        "action": {
+          "href": "/themes/23",
+          "text": "Смотреть все",
+          "icon": {
+            "name": "16/link"
+          }
+        }
+      },
+      {
+        "theme": {
+          "title": "Хитрости lashe-мейкеров",
+          "image": {
+            "src": "./img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        "items": [
+          {
+            "href": "/articles/dsdsd",
+            "text": "Плюсы и минусы наращивания ресниц и почему это нужно знать? Плюсы и минусы наращивания ресниц и почему это нужно знать?"
+          }
+        ]
+      }
+    ]
   }
 }

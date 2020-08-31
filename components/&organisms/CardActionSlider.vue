@@ -106,6 +106,11 @@ export default {
 				}
 			}
 		});
+
+		this.$on('hook:beforeDestroy', () => {
+			this.titleSlider.destroy();
+			this.contentSlider.destroy();
+		});
 	},
 }
 </script>

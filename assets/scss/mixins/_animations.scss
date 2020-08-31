@@ -12,3 +12,24 @@
     background-size: 100% 1px;
   }
 }
+
+
+/*
+ * Анимация линии поверх линии
+ * $color: цвет линии которая уже есть
+ * $hover: цвет линии котоая будет заполнять
+ */
+ @mixin line-animate-over($color: rgba($color-dark, 0.3), $hover: rgba($color-dark, 1)) {
+  background-size: 200% 1px;
+  background-position: 100% 100%;
+  background-image: linear-gradient(to right, $hover 50%, $color 50%);
+  background-repeat: no-repeat;
+  padding-bottom: 0.15em;
+
+  transition: background-position .5s $easing;
+  will-change: background-position;
+
+  &:hover {
+    background-position: left 100%; // Лучше left чем 0 - иначе проблемы с конвертацией и из за этого не работает в ie11
+  }
+}

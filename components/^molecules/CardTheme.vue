@@ -3,7 +3,7 @@
 		<image-vue class="card-theme__image" :image="card.image"></image-vue>
 		<div class="card-theme__content">
 			<h3 class="card-theme__title">
-				<tag-link :link="card.link">
+				<tag-link class="card-theme__link" :link="card.link">
 					{{ card.title }}
 				</tag-link>
 			</h3>
@@ -44,13 +44,21 @@ export default {
 	&__image {
 		width: rem(64);
 		height: rem(64);
-		border-radius: rem(8);
+		border-radius: rem(10);
 		margin-right: rem(16);
 	}
 
 	&__title {
 		max-width: rem(160);
 		@include h5;
+	}
+
+	&__link {
+		@include defaultTransition(opacity);
+
+		&:hover {
+			opacity: 0.65;
+		}
 	}
 
 	&__count {

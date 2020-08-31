@@ -25,11 +25,11 @@ export default {
 .card-article-list {
 	display: flex;
 	flex-wrap: wrap;
-	margin: rem(-24) rem(-20);
+	margin: rem(-32) rem(-20);
 
 	&__item {
 		width: calc(100% / 3);
-		padding: rem(24) rem(20);
+		padding: rem(32) rem(20);
 
 		@include media-breakpoint-down(md) {
 			width: 50%;

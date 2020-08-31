@@ -1,5 +1,5 @@
 <template>
-	<div class="card-article" :class="[`card-article--${mode ? mode : 'default'}`]">
+	<article class="card-article" :class="[`card-article--${mode ? mode : 'default'}`]">
 		<div class="card-article__image">
 			<image-vue
 				v-if="card.image"
@@ -15,7 +15,7 @@
 			<info-panel class="card-article__info" :info="card.info"></info-panel>
 		</div>
 		<tag-link class="card-article__link" :link="card.link"></tag-link>
-	</div>
+	</article>
 </template>
 
 <script>
@@ -64,6 +64,16 @@ export default {
 		bottom: 0;
 	}
 
+	&__title {
+		@include defaultTransition(opacity);
+	}
+
+	&:hover {
+		#{$b}__title {
+			opacity: 0.65;
+		}
+	}
+
 	&--default {
 		color: $color-dark;
 
@@ -75,6 +85,11 @@ export default {
 			border-radius: rem(2);
 			overflow: hidden;
 		}
+
+		#{$b}__title {
+			@include line-clamp(1.125rem, 1.4, 2);
+			font-weight: 600;
+		}
 	}
 
 	&--overlay,
@@ -85,10 +100,15 @@ export default {
 		height: 100%;
 		min-height: rem(220);
 		border-radius: rem(2);
-		padding: rem(32) rem(32) rem(32) rem(24);
+		padding: rem(32) rem(32) rem(24) rem(24);
 
 		#{$b}__content {
 			position: relative;
+		}
+
+		#{$b}__title {
+			@include line-clamp(1.125rem, 1.4, 3);
+			font-weight: 600;
 		}
 	}
 
@@ -123,15 +143,6 @@ export default {
 
 		#{$b}__image {
 			display: none;
-		}
-	}
-
-	&--default,
-	&--overlay,
-	&--gray {
-		#{$b}__title {
-			@include line-clamp(1.125rem, 1.4, 3);
-			font-weight: 600;
 		}
 	}
 

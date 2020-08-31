@@ -21,9 +21,7 @@ export default {
 
 	computed: {
 		component() {
-			const params = this.getParams(this.link);
-			const { componentName } = params;
-			delete params.componentName;
+			const { componentName, ...params } = this.getParams(this.link);
 
 			return {
 				componentName,

@@ -117,7 +117,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .card-hero-slider {
   min-height: 100vh;
   height: 1px;

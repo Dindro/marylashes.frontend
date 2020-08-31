@@ -36,7 +36,9 @@ body {
 
 hr {
   box-sizing: content-box;
-  height: 0;
+  height: 2px;
+  border: none;
+  background-color: $color-dark;
   overflow: visible;
 }
 
