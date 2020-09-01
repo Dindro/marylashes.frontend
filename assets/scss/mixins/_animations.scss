@@ -19,7 +19,7 @@
  * $color: цвет линии которая уже есть
  * $hover: цвет линии котоая будет заполнять
  */
- @mixin line-animate-over($color: rgba($color-dark, 0.3), $hover: rgba($color-dark, 1)) {
+ @mixin line-animate-over($color: rgba($color-dark, 0.3), $hover: rgba($color-dark, 0.65)) {
   background-size: 200% 1px;
   background-position: 100% 100%;
   background-image: linear-gradient(to right, $hover 50%, $color 50%);

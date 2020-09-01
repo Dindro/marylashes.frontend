@@ -1,0 +1,90 @@
+{
+  "hero_article": {
+    "title": "Первое наращивание",
+    "text": "Все о первом наращивании.<br>Для тех кто решается впервые получить постоянную красоту",
+    "card": {
+      "mode": "",
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      },
+      "title": "10 способов как выбрать ресницы для проффесионалов",
+      "info": {
+        "date": "2019",
+        "view": 201
+      },
+      "link": {
+        "href": "articles/desyt_sposobov"
+      },
+      "author": {
+        "name": "Кристина Агилера",
+        "position": "",
+        "image": {
+          "src": "",
+          "alt": ""
+        }
+      }
+    },
+    "card_theme_list": {
+      "title": "Популярные темы",
+      "items": [
+        {
+          "title": "Первое наращивание",
+          "image": {
+            "src": "/img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        {
+          "title": "Первое наращивание",
+          "image": {
+            "src": "/img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        {
+          "title": "Первое наращивание",
+          "image": {
+            "src": "/img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        },
+        {
+          "title": "Первое наращивание",
+          "image": {
+            "src": "/img/hero/girl-sleep.jpg",
+            "alt": ""
+          },
+          "count": 3,
+          "count_label": "статьи",
+          "link": {
+            "href": "#"
+          }
+        }
+      ],
+      "actions": {
+        "items": [
+          {
+            "href": "/themes",
+            "text": "Все темы"
+          }
+        ]
+      }
+    }
+  }
+}

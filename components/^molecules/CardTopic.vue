@@ -38,7 +38,7 @@ export default {
 		padding: 0;
 		list-style: none;
 
-		@include media-breakpoint-down(sm) {
+		@include media-breakpoint-down(md) {
 			margin-top: rem(16);
 		}
 

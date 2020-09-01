@@ -1,6 +1,8 @@
 <template>
 	<div class="hero-article">
 		<div class="hero-article__article hero-article__item">
+			<h1 v-if="hero_article.title" class="hero-article__title">{{ hero_article.title }}</h1>
+			<p class="hero-article__text" v-html="hero_article.text"></p>
 			<card-article :card="Object.assign({}, hero_article.card, { mode: 'present' })"></card-article>
 		</div>
 		<div class="hero-article__themes hero-article__item">
@@ -48,6 +50,17 @@ export default {
 
 	&__themes {
 		width: calc(100% / 3);
+	}
+
+	&__title {
+		margin-bottom: rem(24);
+		@include h2;
+		font-weight: 700;
+	}
+
+	&__text {
+		margin-bottom: rem(48);
+		@include text-lead;
 	}
 }
 </style>

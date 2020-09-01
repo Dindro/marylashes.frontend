@@ -1,0 +1,83 @@
+.user-text {
+  p {
+    @include text-default-charter;
+    margin-bottom: rem(16);
+
+    &.text-lead {
+      @include text-lead-charter;
+    }
+  }
+
+  h2 {
+    @include h2;
+    margin-top: rem(48);
+    margin-bottom: rem(16);
+  }
+
+  h3 {
+    @include h3;
+    margin-top: rem(40);
+    margin-bottom: rem(16);
+  }
+
+  b {
+    font-family: $ff-montserrat;
+    font-size: rem(19);
+    font-weight: 700;
+    line-height: 1.5;
+  }
+
+  figcaption {
+    @include text-default;
+    margin-top: rem(16);
+    max-width: rem(800);
+  }
+
+  figure {
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    &.is-native {
+      img {
+        width: auto;
+      }
+    }
+  }
+
+  figure,
+  & > img {
+    max-width: rem(990);
+    width: 100%;
+
+    &.is-wide {
+      max-width: 100%;
+    }
+
+    &.is-narrow {
+      max-width: rem(800);
+    }
+
+    &.is-native {
+      max-width: 100%;
+      width: auto;
+    }
+  }
+
+
+
+  > * {
+    max-width: rem(800);
+  }
+
+  > * {
+    &:first-child {
+      margin-top: 0 !important;
+    }
+
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+}
