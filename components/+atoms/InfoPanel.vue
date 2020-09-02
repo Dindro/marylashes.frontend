@@ -7,7 +7,7 @@
 		</p>
 		<ul v-if="info.tags" class="info-panel-tag">
 			<li v-for="(item, index) in info.tags" :key="index">
-				<tag-link class="info-panel-tag__item" :link="item">{{ item.text }}</tag-link>
+				<tag-link class="info-panel-tag__item" :link="item">#{{ item.text }}</tag-link>
 			</li>
 		</ul>
 	</div>
@@ -43,6 +43,26 @@ export default {
 
 		&:not(:last-child) {
 			margin-right: rem(8);
+		}
+	}
+}
+
+.info-panel-tag {
+	display: flex;
+	margin: 0 0 0 rem(16);
+	padding: 0;
+	list-style: none;
+
+	li + li {
+		margin-left: rem(8);
+	}
+
+	&__item {
+		opacity: 0.3;
+		@include defaultTransition(opacity);
+
+		&:hover {
+			opacity: 1;
 		}
 	}
 }

@@ -2,6 +2,16 @@
   "article_content": {
     "title": "Какое наращивание ресниц выбрать для себя",
     "subtitle": "И не только для себя",
+    "tags": [
+      {
+        "href": "/search",
+        "text": "наращивание"
+      },
+      {
+        "href": "/search",
+        "text": "ресницы"
+      }
+    ],
     "image": {
       "src": "/img/hero/girl-sleep.jpg",
       "alt": ""

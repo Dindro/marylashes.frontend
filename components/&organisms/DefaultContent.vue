@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex labore laborum nihil, accusantium facere iste fuga cupiditate incidunt nostrum quia alias rerum quibusdam minima, consectetur totam blanditiis reiciendis officia voluptates.</p>
+		<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing</a> elit. Ex labore laborum nihil, accusantium facere iste fuga cupiditate incidunt nostrum quia alias rerum quibusdam minima, consectetur totam blanditiis reiciendis officia voluptates.</p>
 		<p class="text-lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Omnis commodi placeat repellat illo enim maiores sapiente at id eveniet corporis deserunt, iste laudantium facilis aspernatur est fugit dolorem fugiat eos?</p>
 		<h2>Когда возникла техника объемного наращивания</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis, inventore aspernatur! Quo, culpa, minus fuga iusto voluptatum eveniet nostrum distinctio reprehenderit cumque recusandae consequuntur eaque corporis alias natus cum nulla.</p>
+		<p>На сегодняшний день с помощью наращивания ресниц можно не только увеличить их объем и добавить глазам выразительность, но и скорректировать разрез глаз, придав взгляду большую открытость. В настоящее время существуют многочисленные и разнообразные техники, большой выбор материалов для наращивания, множество вариантов получаемого эффекта, а также других параметров. Впрочем, девушкам достаточно обратиться к профессионалам, которые подскажут, какое наращивание ресниц выбрать, чтобы достичь максимального эффекта. подчеркнув красоту глаз.</p>
 		<a href="#">Text text</a>
 		<figure>
 			<img src="/img/hero/girl-sleep.jpg" alt="">
