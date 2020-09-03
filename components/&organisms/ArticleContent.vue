@@ -19,6 +19,7 @@ import DefaultContent from '&/DefaultContent';
 import SocialsSahre from '^/SocialsShare';
 import ImageVue from '+/Image';
 import InfoPanel from '+/InfoPanel';
+import VRuntimeTemplate from "v-runtime-template";
 
 export default {
 	components: {
@@ -26,6 +27,7 @@ export default {
 		SocialsSahre,
 		ImageVue,
 		InfoPanel,
+		VRuntimeTemplate,
 	},
 	props: {
 		article_content: {
@@ -38,7 +40,7 @@ export default {
 			title: ctx.article_content.title,
 			text: ctx.article_content.subtitle || '',
 			image: ctx.article_content.image.src || '',
-		}
+		},
 	}),
 }
 </script>

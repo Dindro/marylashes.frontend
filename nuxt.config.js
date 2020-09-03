@@ -99,11 +99,13 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+		// Packages alias - для vue-runtime-template
+		config.resolve.alias['vue'] = 'vue/dist/vue.common';
 
-      // Alias
-      config.resolve.alias['&'] = path.join(__dirname, 'components/&organisms');
-      config.resolve.alias['^'] = path.join(__dirname, 'components/^molecules');
-      config.resolve.alias['+'] = path.join(__dirname, 'components/+atoms');
+		// Alias
+		config.resolve.alias['&'] = path.join(__dirname, 'components/&organisms');
+		config.resolve.alias['^'] = path.join(__dirname, 'components/^molecules');
+		config.resolve.alias['+'] = path.join(__dirname, 'components/+atoms');
     },
   }
 }
