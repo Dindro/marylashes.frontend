@@ -1,5 +1,7 @@
+$content-width: 730;
+
 .user-text {
-  p {
+  & > p {
     @include text-default-charter;
     margin-bottom: rem(16);
 
@@ -8,13 +10,13 @@
     }
   }
 
-  h2 {
+  & > h2 {
     @include h2;
     margin-top: rem(48);
     margin-bottom: rem(16);
   }
 
-  h3 {
+  & > h3 {
     @include h3;
     margin-top: rem(40);
     margin-bottom: rem(16);
@@ -25,9 +27,14 @@
     font-size: rem(19);
     font-weight: 700;
     line-height: 1.5;
+
+    @include media-breakpoint-down(sm) {
+      font-size: rem(15);
+    }
   }
 
-  p a {
+  & > p a,
+  & > a {
     color: $color-blue;
     @include line-animate-over(rgba($color-blue, 0.3), rgba($color-blue, 1), 0.06em);
   }
@@ -35,7 +42,7 @@
   figcaption {
     @include text-default;
     margin-top: rem(16);
-    max-width: rem(800);
+    max-width: rem($content-width);
   }
 
   figure {
@@ -57,18 +64,52 @@
     width: 100%;
     margin-top: rem(48);
     margin-bottom: rem(48);
+    display: block;
 
     &.is-wide {
       max-width: 100%;
     }
 
     &.is-narrow {
-      max-width: rem(800);
+      max-width: rem($content-width);
     }
 
     &.is-native {
       max-width: 100%;
       width: auto;
+    }
+  }
+
+  .photo-slider {
+    max-width: rem(990);
+    margin-top: rem(48);
+    margin-bottom: rem(48);
+  }
+
+  .photo-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: rem(990);
+    margin: rem(48 - 24) rem(-24);
+
+    @include media-breakpoint-down(sm) {
+      display: block;
+      margin: rem(48) 0;
+    }
+
+    > * {
+      padding: rem(24);
+      width: 50%;
+      margin: 0;
+
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        padding: 0;
+
+        &:not(:last-child) {
+          margin-bottom: rem(32);
+        }
+      }
     }
   }
 
@@ -112,11 +153,15 @@
     }
   }
 
-  > * {
-    max-width: rem(800);
+  .around {
+    @include media-breakpoint-up(lg) {
+      display: inline-block;
+    }
   }
 
   > * {
+    max-width: rem($content-width);
+
     &:first-child {
       margin-top: 0 !important;
     }

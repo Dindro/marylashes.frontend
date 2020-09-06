@@ -41,8 +41,8 @@ export default {
 		}
 	},
 
-	data: (context) => ({
-		mode: context.card.image ? context.card.mode : 'gray',
+	data: (ctx) => ({
+		mode: ctx.card.image ? ctx.card.mode : 'gray',
 	}),
 }
 </script>

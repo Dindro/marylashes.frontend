@@ -20,9 +20,9 @@ import NavCount from '+/NavCount';
 import NavArrows from '+/NavArrows';
 
 import gsap from 'gsap';
-import { Swiper, Pagination } from 'swiper';
 import { isDesktop } from '~/utils/breakpoints';
-Swiper.use([Pagination]);
+import { Swiper, Pagination, Navigation } from 'swiper';
+Swiper.use([Pagination, Navigation]);
 
 export default {
   components: {

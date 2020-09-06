@@ -16,9 +16,6 @@
   import Actions from '^/Actions';
   import Image from '+/Image';
 
-  import { Swiper, Pagination, Navigation } from 'swiper';
-  Swiper.use([Pagination, Navigation]);
-
   export default {
     components: {
       Actions,
@@ -35,8 +32,6 @@
 </script>
 
 <style lang="scss">
-@import '~swiper/swiper.scss';
-
 .card-hero {
   height: 100%;
   position: relative;

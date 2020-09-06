@@ -88,7 +88,7 @@ export default {
 
 		&:active {
 			&::before {
-				transform: scale(1.1);
+				transform: scale(1.1) !important;
 				transition-duration: 0.1s;
 			}
 		}

@@ -38,6 +38,10 @@ export default {
 	align-items: center;
 	@include text-small;
 
+	@include media-breakpoint-down(sm) {
+		flex-wrap: wrap;
+	}
+
 	&__item {
 		opacity: 0.3;
 
@@ -49,11 +53,17 @@ export default {
 
 .info-panel-tag {
 	display: flex;
-	margin: 0 0 0 rem(16);
+	margin: 0 0 0 rem(8);
 	padding: 0;
 	list-style: none;
 
-	li + li {
+	@include media-breakpoint-down(sm) {
+		width: 100%;
+		flex-wrap: wrap;
+		margin: rem(8) 0 0 rem(-8);
+	}
+
+	li {
 		margin-left: rem(8);
 	}
 

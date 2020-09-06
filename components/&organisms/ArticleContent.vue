@@ -3,10 +3,12 @@
 		<info-panel class="article-content__info" :info="article_content.info"></info-panel>
 		<h1 class="article-content__title">{{ article_content.title }}</h1>
 		<p v-if="article_content.subtitle" class="article-content__subtitle">{{ article_content.subtitle }}</p>
-		<image-vue class="article-content__image" :image="Object.assign({}, article_content.image, { ratio: '5x2'})"></image-vue>
+		<div class="article-content__image">
+			<image-vue :image="Object.assign({}, article_content.image, { ratio: '5x2'})"></image-vue>
+		</div>
 		<div class="article-content__content">
 			<!-- Author -->
-			<div class="user-text" v-if="article_content.content" v-html="article_content.content"></div>
+			<v-runtime-template class="user-text" v-if="article_content.content" v-html="article_content.content"></v-runtime-template>
 			<default-content class="user-text"></default-content>
 		</div>
 		<info-panel class="article-content__tags" :info="Object.assign({}, article_content.info, { tags: article_content.tags })"></info-panel>
@@ -65,11 +67,25 @@ export default {
 
 	&__image {
 		margin-top: rem(40);
+
+		@include media-breakpoint-down(md) {
+			margin-left: rem(-$wrapper-gutter-md-1);
+			margin-right: rem(-$wrapper-gutter-md-1);
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-left: rem(-$wrapper-gutter-sm-1);
+			margin-right: rem(-$wrapper-gutter-sm-1);
+		}
 	}
 
 	&__content {
 		margin-top: rem(80);
 		margin-bottom: rem(64);
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(64);
+		}
 	}
 
 	&__share {
