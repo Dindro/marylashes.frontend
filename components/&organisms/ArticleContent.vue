@@ -7,7 +7,7 @@
 			<image-vue :image="Object.assign({}, article_content.image, { ratio: '5x2'})"></image-vue>
 		</div>
 		<div class="article-content__content">
-			<!-- Author -->
+			<author :author="article_content.author"></author>
 			<v-runtime-template class="user-text" v-if="article_content.content" v-html="article_content.content"></v-runtime-template>
 			<default-content class="user-text"></default-content>
 		</div>
@@ -18,7 +18,8 @@
 
 <script>
 import DefaultContent from '&/DefaultContent';
-import SocialsSahre from '^/SocialsShare';
+import SocialsShare from '^/SocialsShare';
+import Author from '^/Author';
 import ImageVue from '+/Image';
 import InfoPanel from '+/InfoPanel';
 import VRuntimeTemplate from "v-runtime-template";
@@ -26,7 +27,8 @@ import VRuntimeTemplate from "v-runtime-template";
 export default {
 	components: {
 		DefaultContent,
-		SocialsSahre,
+		SocialsShare,
+		Author,
 		ImageVue,
 		InfoPanel,
 		VRuntimeTemplate,

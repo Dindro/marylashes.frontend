@@ -1,5 +1,5 @@
 <template>
-  <div class="socials" :class="{ 'socials--column': socials.column }">
+  <div class="socials" :class="[{ 'socials--column': socials.column }, socials.size && `socials--${socials.size}` ]">
     <p class="socials__title" v-if="socials.title">{{ socials.title }}</p>
     <ul class="socials__list">
       <li v-for="(item, index) in socials.items" :key="index">
@@ -31,6 +31,7 @@
 </script>
 
 <style lang="scss">
+// TODO: Модификатор size
 .socials {
   $b: #{&};
   display: inline-flex;
