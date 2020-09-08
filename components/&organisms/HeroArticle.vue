@@ -32,10 +32,9 @@ export default {
 
 <style lang="scss">
 .hero-article {
-	display: flex;
-
 	@include media-breakpoint-up(lg) {
 		margin: 0 rem(-20);
+		display: flex;
 	}
 
 	&__item {
@@ -45,15 +44,27 @@ export default {
 	}
 
 	&__article {
-		width: calc(100% / 3 * 2);
+		@include media-breakpoint-up(lg) {
+			width: calc(100% / 3 * 2);
+		}
 	}
 
 	&__themes {
-		width: calc(100% / 3);
+		@include media-breakpoint-up(lg) {
+			width: calc(100% / 3);
+		}
+
+		@include media-breakpoint-down(md) {
+			margin-top: rem(64);
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(40);
+		}
 	}
 
 	&__title {
-		margin-bottom: rem(24);
+		margin-bottom: rem(16);
 		@include h2;
 		font-weight: 700;
 	}
@@ -61,6 +72,7 @@ export default {
 	&__text {
 		margin-bottom: rem(48);
 		@include text-lead;
+		max-width: rem(500);
 	}
 }
 </style>

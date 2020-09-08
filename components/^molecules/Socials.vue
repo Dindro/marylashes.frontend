@@ -1,33 +1,33 @@
 <template>
-  <div class="socials" :class="[{ 'socials--column': socials.column }, socials.size && `socials--${socials.size}` ]">
-    <p class="socials__title" v-if="socials.title">{{ socials.title }}</p>
-    <ul class="socials__list">
-      <li v-for="(item, index) in socials.items" :key="index">
-        <tag-link :link="item" tag="a" class="socials__item">
-          {{ item.text }}
-        </tag-link>
-      </li>
-    </ul>
-  </div>
+	<div class="socials" :class="[{ 'socials--column': socials.column }, socials.size && `socials--${socials.size}` ]">
+		<p class="socials__title" v-if="socials.title">{{ socials.title }}</p>
+		<ul class="socials__list">
+			<li v-for="(item, index) in socials.items" :key="index">
+				<tag-link :link="item" tag="a" class="socials__item">
+					{{ item.text }}
+				</tag-link>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
-  import TagLink from '+/TagLink';
-  export default {
-    components: {
-      TagLink,
-    },
+import TagLink from '+/TagLink';
+export default {
+	components: {
+		TagLink,
+	},
 
-    props: {
-      socials: {
-        items: Array,
-        column: {
-          type: Boolean,
-          default: false,
-        }
-      }
-    }
-  }
+	props: {
+		socials: {
+			items: Array,
+			column: {
+				type: Boolean,
+				default: false,
+			}
+		}
+	}
+}
 </script>
 
 <style lang="scss">
@@ -79,5 +79,16 @@
       margin-bottom: rem(8);
     }
   }
+
+	&--sm {
+		#{$b}__list {
+			margin: 0 rem(-8);
+		}
+
+		#{$b}__item {
+			width: rem(40);
+			height: rem(40);
+		}
+	}
 }
 </style>

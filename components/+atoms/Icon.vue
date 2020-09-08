@@ -22,7 +22,9 @@ export default {
 			const words = name.split('/');
 			if (words.length <= 1) return undefined;
 
-			const size = words[0];
+			const size = parseInt(words[0]);
+			if (!size || isNaN(size)) return undefined;
+
 			return size;
 		},
 

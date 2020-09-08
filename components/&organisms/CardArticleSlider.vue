@@ -52,10 +52,13 @@ export default {
 			const { prev: prevEl, next: nextEl } = this.$refs.nav_arrows.getNavigation();
 
 			this.slider = new Swiper(this.$refs.swiper, {
+				speed: 600,
 				slidesPerView: 1,
+				spaceBetween: convertToScalingPx(12),
 				breakpoints: {
 					[devices.md]: {
 						slidesPerView: 2,
+						spaceBetween: convertToScalingPx(24),
 					},
 					[devices.lg]: {
 						slidesPerView: 3,
@@ -93,17 +96,39 @@ export default {
 		"hr hr"
 		"slider slider";
 
+	@include media-breakpoint-down(md) {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto auto rem(84);
+		grid-template-areas:
+			"title title"
+			"hr hr"
+			"slider slider"
+			"action .";
+	}
+
+	@include media-breakpoint-down(sm) {
+		grid-template-rows: auto auto auto rem(68);
+	}
+
 	&__title {
 		display: flex;
 		align-items: center;
 		grid-area: title;
 		@include h2;
 		font-weight: 700;
+
+		@include media-breakpoint-down(md) {
+			display: inline;
+		}
 	}
 
 	&__hr {
 		grid-area: hr;
 		margin: rem(24) 0 rem(40);
+
+		@include media-breakpoint-down(md) {
+			margin-top: rem(16);
+		}
 	}
 
 	&__action {
@@ -124,6 +149,12 @@ export default {
 		padding: 0 rem(112);
 		overflow: hidden;
 
+		@include media-breakpoint-down(md) {
+			overflow: visible;
+			margin: 0;
+			padding: 0;
+		}
+
 		.swiper-wrapper {
 			z-index: auto;
 		}
@@ -141,6 +172,18 @@ export default {
 		bottom: 0;
 		pointer-events: none;
 
+		@include media-breakpoint-down(md) {
+			pointer-events: initial;
+			right: rem(-$indent-arrows-x);
+			left: auto;
+			bottom: auto;
+			top: calc(100% + #{rem(4)});
+		}
+
+		@include media-breakpoint-down(sm) {
+			right: rem(-$indent-arrows-x-sm);
+		}
+
 		* {
 			pointer-events: all;
 		}
@@ -151,6 +194,10 @@ export default {
 			bottom: 0;
 			margin: auto;
 			z-index: 1;
+
+			@include media-breakpoint-down(md) {
+				position: static;
+			}
 
 			&--prev {
 				left: rem(8);
@@ -169,6 +216,10 @@ export default {
 	bottom: rem(-48);
 	right: 0;
 	width: rem(96);
+
+	@include media-breakpoint-down(md) {
+		display: none;
+	}
 
 	// Тень
 	&::before {

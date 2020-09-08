@@ -27,16 +27,28 @@ export default {
 	flex-wrap: wrap;
 	margin: rem(-32) rem(-20);
 
+	@include media-breakpoint-down(md) {
+		margin: rem(-24) rem(-12);
+	}
+
+	@include media-breakpoint-down(sm) {
+		margin-top: rem(-16);
+		margin-bottom: rem(-16);
+	}
+
 	&__item {
 		width: calc(100% / 3);
 		padding: rem(32) rem(20);
 
 		@include media-breakpoint-down(md) {
 			width: 50%;
+			padding: rem(24) rem(12);
 		}
 
 		@include media-breakpoint-down(sm) {
 			width: 100%;
+			padding-top: rem(16);
+			padding-bottom: rem(16);
 		}
 	}
 }

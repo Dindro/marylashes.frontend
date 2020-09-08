@@ -7,7 +7,7 @@
 			<image-vue :image="Object.assign({}, article_content.image, { ratio: '5x2'})"></image-vue>
 		</div>
 		<div class="article-content__content">
-			<author :author="article_content.author"></author>
+			<author class="article-content__author" :author="article_content.author"></author>
 			<v-runtime-template class="user-text" v-if="article_content.content" v-html="article_content.content"></v-runtime-template>
 			<default-content class="user-text"></default-content>
 		</div>
@@ -76,17 +76,35 @@ export default {
 		}
 
 		@include media-breakpoint-down(sm) {
+			margin-top: rem(24);
 			margin-left: rem(-$wrapper-gutter-sm-1);
 			margin-right: rem(-$wrapper-gutter-sm-1);
 		}
 	}
 
 	&__content {
+		position: relative;
 		margin-top: rem(80);
 		margin-bottom: rem(64);
 
 		@include media-breakpoint-down(sm) {
 			margin-top: rem(64);
+		}
+	}
+
+	&__author {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: rem(374);
+
+		@include media-breakpoint-down(md) {
+			position: static;
+			margin-bottom: rem(24);
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-bottom: rem(8);
 		}
 	}
 

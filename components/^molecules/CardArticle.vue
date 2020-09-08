@@ -100,7 +100,12 @@ export default {
 		height: 100%;
 		min-height: rem(220);
 		border-radius: rem(2);
+		overflow: hidden;
 		padding: rem(32) rem(32) rem(24) rem(24);
+
+		@include media-breakpoint-down(sm) {
+			padding: rem(24) rem(16);
+		}
 
 		#{$b}__content {
 			position: relative;
@@ -133,6 +138,12 @@ export default {
 			.image {
 				height: 100%;
 				width: 100%;
+			}
+		}
+
+		.info-panel {
+			&__item {
+				opacity: 0.65;
 			}
 		}
 	}

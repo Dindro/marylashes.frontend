@@ -34,15 +34,27 @@ export default {
 	&__header {
 		display: flex;
 		justify-content: space-between;
+
+		@include media-breakpoint-down(sm) {
+			display: block;
+		}
 	}
 
 	&__title {
 		@include h2;
 		font-weight: 700;
+
+		@include media-breakpoint-down(sm) {
+			margin-bottom: rem(8);
+		}
 	}
 
 	&__hr {
 		margin: rem(24) 0 rem(40);
+
+		@include media-breakpoint-down(md) {
+			margin-top: rem(16);
+		}
 	}
 
 	&__items {
@@ -54,7 +66,7 @@ export default {
 
 		@include media-breakpoint-only(md) {
 			column-count: 2;
-			column-gap: rem(40);
+			column-gap: rem(24);
 		}
 	}
 

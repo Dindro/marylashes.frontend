@@ -1,0 +1,84 @@
+{
+  "footer": {
+    "logo": {
+      "href": "/"
+    },
+    "phone": {
+      "href": "tel:+79373941802",
+      "text": "+7 937 394 18 02"
+    },
+    "mail": {
+      "href": "mailto:mariaizhutkina@gmail.com",
+      "text": "mariaizhutkina@gmail.com"
+    },
+    "items": [
+      {
+        "href": "/#price",
+        "text": "цена"
+      },
+      {
+        "href": "/#reviews",
+        "text": "отзывы"
+      },
+      {
+        "href": "/#action",
+        "text": "акции"
+      },
+      {
+        "href": "/#photo",
+        "text": "фото"
+      },
+      {
+        "href": "/#video",
+        "text": "видео"
+      },
+      {
+        "href": "/#contacts",
+        "text": "контакты"
+      },
+      {
+        "href": "/articles",
+        "text": "статьи"
+      },
+      {
+        "href": "/themes",
+        "text": "темы"
+      }
+    ],
+    "socials": {
+      "items": [
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vk"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Fb"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "In"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Wt"
+        },
+        {
+          "href": "https://vk.com/i7enov",
+          "text": "Vb"
+        }
+      ]
+    },
+    "address": {
+      "city": "Чебоксары",
+      "street": "ул. Ярморочная 11"
+    },
+    "author": {
+      "href": "https://vk.com/i7enov",
+      "text": "Сделано",
+      "icon": {
+        "name": "logos/dindro"
+      }
+    }
+  }
+}

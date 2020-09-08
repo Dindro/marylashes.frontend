@@ -46,7 +46,7 @@ export default {
 		}
 
 		.icon--link svg {
-			animation: diagonal-animate .4s ease forwards;
+			animation: diagonal-animate .4s ease .1s forwards;
 		}
 	}
 }

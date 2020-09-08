@@ -38,6 +38,11 @@ export default {
 		border-radius: 50%;
 		overflow: hidden;
 		margin-right: rem(16);
+
+		@include media-breakpoint-down(sm) {
+			height: rem(64);
+			width: rem(64);
+		}
 	}
 
 	&__name {

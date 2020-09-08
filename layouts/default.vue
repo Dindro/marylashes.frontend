@@ -2,15 +2,18 @@
   <div class="layout">
     <header-vue></header-vue>
     <Nuxt />
+	<footer-vue></footer-vue>
   </div>
 </template>
 
 <script>
-import Header from '&/Header';
+import HeaderVue from '&/Header';
+import FooterVue from '&/Footer';
 
 export default {
   components: {
-    HeaderVue: Header,
+	HeaderVue,
+	FooterVue,
   }
 }
 </script>

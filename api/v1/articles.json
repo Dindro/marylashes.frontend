@@ -39,7 +39,7 @@
           }
         },
         {
-          "title": "Первое наращивание",
+          "title": "Топ популярных вопросов",
           "image": {
             "src": "./img/hero/girl-sleep.jpg",
             "alt": ""
@@ -51,7 +51,7 @@
           }
         },
         {
-          "title": "Первое наращивание",
+          "title": "Истории моей жизни",
           "image": {
             "src": "./img/hero/girl-sleep.jpg",
             "alt": ""
@@ -63,7 +63,7 @@
           }
         },
         {
-          "title": "Первое наращивание",
+          "title": "Жизнь лейщмейкера",
           "image": {
             "src": "./img/hero/girl-sleep.jpg",
             "alt": ""
@@ -188,7 +188,7 @@
     "count": 10,
     "count_label": "статей",
     "action": {
-      "href": "/#",
+      "href": "/themes/top_otvetov",
       "icon": "16/link",
       "text": "Смотреть все"
     },
