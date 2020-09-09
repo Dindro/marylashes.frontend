@@ -46,8 +46,6 @@ export default {
 	},
 
 	data: (context) => ({
-		titleSlider: null,
-		contentSlider: null,
 		isOnly: context.card_action_slider.items.length <= 1,
 		nav_count: {
 			color: 'white',
@@ -66,7 +64,7 @@ export default {
 	mounted() {
 		if (this.isOnly) return;
 
-		this.titleSlider = new Swiper(this.$refs.title, {
+		const titleSlider = new Swiper(this.$refs.title, {
 			allowTouchMove: false,
 			speed: 1000,
 			spaceBetween: convertToScalingPx(40),
@@ -81,7 +79,7 @@ export default {
 			},
 		});
 
-		this.contentSlider = new Swiper(this.$refs.content, {
+		const contentSlider = new Swiper(this.$refs.content, {
 			speed: 1000,
 			autoHeight: true,
 			spaceBetween: convertToScalingPx(72),
@@ -92,10 +90,10 @@ export default {
 				disabledClass: 'disabled',
 			},
 			thumbs: {
-				swiper: this.titleSlider,
+				swiper: titleSlider,
 			},
 			controller: {
-				control: this.titleSlider,
+				control: titleSlider,
 			},
 			breakpoints: {
 				[devices.md]: {
@@ -108,8 +106,8 @@ export default {
 		});
 
 		this.$on('hook:beforeDestroy', () => {
-			this.titleSlider.destroy();
-			this.contentSlider.destroy();
+			titleSlider.destroy();
+			contentSlider.destroy();
 		});
 	},
 }

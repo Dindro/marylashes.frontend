@@ -20,6 +20,12 @@
       </div>
     </section>
 
+	<section class="bg-white pt-md-112 pb-md-112 pt-64 pb-96">
+      <div class="container">
+        <card-review-slider :card_review_slider="card_review_slider"></card-review-slider>
+      </div>
+    </section>
+
     <section class="bg-white">
       <div class="container">
         <contact-block :contact="contact"></contact-block>
@@ -53,6 +59,8 @@ import InfoBlock from '&/InfoBlock';
 import ContactBlock from '&/ContactBlock';
 import CardActionSlider from '&/CardActionSlider';
 
+import CardReviewSlider from '&/CardReviewSlider';
+
 export default {
   components: {
     Btn,
@@ -60,7 +68,8 @@ export default {
     CardHeroSlider,
     InfoBlock,
     ContactBlock,
-    CardActionSlider,
+	CardActionSlider,
+	CardReviewSlider,
   },
 
   asyncData(context) {

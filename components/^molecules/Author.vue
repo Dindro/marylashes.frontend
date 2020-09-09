@@ -1,5 +1,5 @@
 <template>
-	<div class="author">
+	<div class="author" :class="[ author.inline && 'author--inline']">
 		<image-vue v-if="author.image" class="author__avatar" :image="author.image"></image-vue>
 		<div class="author__info">
 			<p class="author__name">{{ author.name }}</p>
@@ -29,6 +29,8 @@ export default {
 
 <style lang="scss">
 .author {
+	$b: #{&};
+
 	display: flex;
 
 	&__avatar {
@@ -48,6 +50,21 @@ export default {
 	&__name {
 		@include text-lead;
 		font-weight: 600;
+	}
+
+	&--inline {
+		#{$b}__info {
+			display: flex;
+			align-items: center;
+		}
+
+		#{$b}__name {
+			@include text-default;
+		}
+
+		#{$b}__socials {
+			margin-left: rem(32);
+		}
 	}
 }
 </style>

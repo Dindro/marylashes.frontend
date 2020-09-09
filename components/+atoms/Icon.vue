@@ -6,9 +6,9 @@
 export default {
 	props: {
 		icon: {
-		type: Object,
-		required: true,
-		}
+			type: Object,
+			required: true,
+		},
 	},
 
 	data: (context) => ({
