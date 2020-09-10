@@ -31,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-// TODO: Модификатор size
+
 .socials {
   $b: #{&};
   display: inline-flex;

@@ -56,6 +56,10 @@ export default {
 		#{$b}__info {
 			display: flex;
 			align-items: center;
+
+			@include media-breakpoint-down(sm) {
+				display: block;
+			}
 		}
 
 		#{$b}__name {
@@ -63,7 +67,9 @@ export default {
 		}
 
 		#{$b}__socials {
-			margin-left: rem(32);
+			@include media-breakpoint-up(md) {
+				margin-left: rem(32);
+			}
 		}
 	}
 }
