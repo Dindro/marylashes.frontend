@@ -22,7 +22,7 @@
 
 	<section class="bg-white pt-md-112 pb-md-112 pt-64 pb-96">
       <div class="container">
-        <card-review-slider :card_review_slider="card_review_slider"></card-review-slider>
+        <review-slider-list :review_slider_list="review_slider_list"></review-slider-list>
       </div>
     </section>
 
@@ -58,8 +58,7 @@ import CardHeroSlider from '&/CardHeroSlider';
 import InfoBlock from '&/InfoBlock';
 import ContactBlock from '&/ContactBlock';
 import CardActionSlider from '&/CardActionSlider';
-
-import CardReviewSlider from '&/CardReviewSlider';
+import ReviewSliderList from '&/ReviewSliderList';
 
 export default {
   components: {
@@ -69,7 +68,7 @@ export default {
     InfoBlock,
     ContactBlock,
 	CardActionSlider,
-	CardReviewSlider,
+	ReviewSliderList,
   },
 
   asyncData(context) {

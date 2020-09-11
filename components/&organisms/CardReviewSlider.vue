@@ -128,6 +128,15 @@ export default {
 			left: rem(-$indent-arrows-x);
 			right: auto;
 		}
+
+		@include media-breakpoint-down(md) {
+			padding-right: 0;
+			padding-left: rem(64);
+		}
+
+		@include media-breakpoint-down(sm) {
+			padding-left: 0;
+		}
 	}
 }
 </style>

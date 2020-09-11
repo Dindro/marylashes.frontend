@@ -527,147 +527,215 @@
       }
     ]
   },
-  "card_review": {
-    "title": "Моё первое наращивание - на высоте",
-    "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
-    "author": {
-      "name": "Кристина Агилера",
-      "socials": {
-        "items": [
-          {
-            "href": "https://vk.com/i7enov",
-            "text": "Vk"
-          },
-          {
-            "href": "https://vk.com/i7enov",
-            "text": "Fb"
-          },
-          {
-            "href": "https://vk.com/i7enov",
-            "text": "In"
-          },
-          {
-            "href": "https://vk.com/i7enov",
-            "text": "Wt"
-          },
-          {
-            "href": "https://vk.com/i7enov",
-            "text": "Vb"
-          }
-        ]
-      }
-    },
-    "image": {
-      "src": "./img/cards/lashes-classic-2.jpg",
-      "alt": ""
-    }
-  },
-  "card_review_slider": {
+
+  "review_slider_list": {
+    "title": "Отзывы",
     "items": [
       {
-        "title": "Моё первое наращивание - на высоте",
-        "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
-        "author": {
-          "name": "Кристина Агилера",
-          "socials": {
-            "items": [
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vk"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Fb"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "In"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Wt"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vb"
+        "items": [
+          {
+            "title": "Моё первое наращивание - на высоте",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+            "author": {
+              "name": "Кристина Агилера",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "In"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Wt"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vb"
+                  }
+                ]
               }
-            ]
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
+          },
+          {
+            "title": "Супер супер!",
+            "text": "Просто все супер",
+            "author": {
+              "name": "Светлана",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  }
+                ]
+              }
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
+          },
+          {
+            "title": "Моё первое наращивание - на высоте",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+            "author": {
+              "name": "Кристина Агилера",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "In"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Wt"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vb"
+                  }
+                ]
+              }
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
           }
-        },
-        "image": {
-          "src": "./img/cards/lashes-classic-2.jpg",
-          "alt": ""
-        }
+        ]
       },
       {
-        "title": "Моё первое наращивание - на высоте",
-        "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
-        "author": {
-          "name": "Кристина Агилера",
-          "socials": {
-            "items": [
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vk"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Fb"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "In"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Wt"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vb"
+        "items": [
+          {
+            "title": "Моё первое наращивание - на высоте",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+            "author": {
+              "name": "Кристина Агилера",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "In"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Wt"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vb"
+                  }
+                ]
               }
-            ]
-          }
-        },
-        "image": {
-          "src": "./img/cards/lashes-classic-2.jpg",
-          "alt": ""
-        }
-      },
-      {
-        "title": "Моё первое наращивание - на высоте",
-        "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
-        "author": {
-          "name": "Кристина Агилера",
-          "socials": {
-            "items": [
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vk"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Fb"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "In"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Wt"
-              },
-              {
-                "href": "https://vk.com/i7enov",
-                "text": "Vb"
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
+          },
+          {
+            "title": "Моё первое наращивание - на высоте",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+            "author": {
+              "name": "Кристина Агилера",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "In"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Wt"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vb"
+                  }
+                ]
               }
-            ]
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
+          },
+          {
+            "title": "Моё первое наращивание - на высоте",
+            "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod",
+            "author": {
+              "name": "Кристина Агилера",
+              "socials": {
+                "items": [
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vk"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Fb"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "In"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Wt"
+                  },
+                  {
+                    "href": "https://vk.com/i7enov",
+                    "text": "Vb"
+                  }
+                ]
+              }
+            },
+            "image": {
+              "src": "./img/cards/lashes-classic-2.jpg",
+              "alt": ""
+            }
           }
-        },
-        "image": {
-          "src": "./img/cards/lashes-classic-2.jpg",
-          "alt": ""
-        }
+        ]
       }
     ]
   }

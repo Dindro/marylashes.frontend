@@ -89,7 +89,9 @@ export default {
 		flex-direction: row-reverse;
 
 		#{$b}__image {
-			padding: 0 0 0 rem(112);
+			@include media-breakpoint-up(lg) {
+				padding: 0 0 0 rem(112);
+			}
 		}
 	}
 }
