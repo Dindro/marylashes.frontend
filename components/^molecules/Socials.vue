@@ -72,8 +72,18 @@ export default {
   }
 
   &--column {
-    flex-direction: column;
-    align-items: flex-start;
+	#{$b}__list {
+		flex-direction: column;
+		align-items: flex-start;
+
+		li:first-child {
+			margin-top: rem(-12);
+		}
+
+		li:last-child {
+			margin-bottom: rem(-12);
+		}
+	}
 
     #{$b}__title {
       margin-bottom: rem(8);

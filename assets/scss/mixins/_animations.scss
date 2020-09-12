@@ -1,3 +1,18 @@
+@mixin defaultTransition($args...) {
+  transition-timing-function: $easing;
+  transition-duration: $timing;
+  transition-property: $args;
+}
+
+@mixin default-hover($args...) {
+  @include defaultTransition(opacity, $args);
+
+  &:hover {
+    opacity: 0.3;
+    @content;
+  }
+}
+
 @mixin line-animate($color: currentColor) {
   background-size: 0% 1px;
   background-position: 0% 100%;

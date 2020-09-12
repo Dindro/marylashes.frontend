@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <header-vue></header-vue>
-    <Nuxt />
+    <Nuxt class="layout__content" />
 	<footer-vue></footer-vue>
   </div>
 </template>
@@ -23,5 +23,11 @@ export default {
 	background-color: $color-white;
 	overflow-x: hidden;
 	overflow-y: hidden;
+
+	// Footer made with gsap
+	&__content {
+		position: relative;
+		z-index: 1;
+	}
 }
 </style>

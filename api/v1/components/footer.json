@@ -70,6 +70,7 @@
       ]
     },
     "address": {
+      "href": "https://yandex.ru",
       "city": "Чебоксары",
       "street": "ул. Ярморочная 11"
     },
@@ -79,6 +80,7 @@
       "icon": {
         "name": "logos/dindro"
       }
-    }
+    },
+    "copyright": "© Мария И.И., 2020"
   }
 }
