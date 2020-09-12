@@ -530,6 +530,16 @@
 
   "review_slider_list": {
     "title": "Отзывы",
+    "actions": {
+      "items": [
+        {
+          "type": "button",
+          "color": "dark",
+          "text": "Оставить отзыв",
+          "href": "#"
+        }
+      ]
+    },
     "items": [
       {
         "items": [
