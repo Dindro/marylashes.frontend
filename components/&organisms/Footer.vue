@@ -65,11 +65,11 @@ export default {
 			gsap.registerPlugin(ScrollTrigger);
 
 			const { footer, overlay } = this.$refs;
-			const footerPreviousSibling = footer.previousElementSibling;
+			const layoutContent = footer.previousElementSibling;
 
 			const tm = gsap.timeline({
 				scrollTrigger: {
-					trigger: footerPreviousSibling,
+					trigger: layoutContent,
 					start: 'bottom bottom',
 					endTrigger: document.documentElement,
 					end: 'bottom bottom',
@@ -77,9 +77,26 @@ export default {
 				},
 			});
 
-			tm
-			.fromTo(footer, { yPercent: -30 }, { yPercent: 0 }, 0)
-			.fromTo(overlay, { opacity: 1, delay: 0.3 }, { opacity: 0 }, 0);
+			const halfTm = gsap.timeline({
+				scrollTrigger: {
+					trigger: layoutContent,
+					start: 'bottom 80%',
+					endTrigger: document.documentElement,
+					end: 'bottom bottom',
+					scrub: true,
+					markers: true,
+				},
+			});
+
+			tm.fromTo(footer, { yPercent: -30 }, { yPercent: 0 }, 0);
+			halfTm.fromTo(overlay, { opacity: 1 }, { opacity: 0 }, 0);
+
+			this.$once('hook:beforeDestroy', () => {
+				tm.kill();
+				tm = null;
+				halfTm.kill();
+				halfTm = null;
+			});
 		}
 	},
 
@@ -191,7 +208,12 @@ export default {
 		bottom: 0;
 		pointer-events: none;
 		opacity: 0;
-		backdrop-filter: blur(10px);
+		background-color: rgba($color-dark, 0.4);
+
+		@supports (backdrop-filter: blur(10px)) {
+			backdrop-filter: blur(10px);
+			background-color: transparent;
+		}
 	}
 }
 
