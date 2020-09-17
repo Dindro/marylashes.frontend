@@ -80,15 +80,14 @@ export default {
 			const halfTm = gsap.timeline({
 				scrollTrigger: {
 					trigger: layoutContent,
-					start: 'bottom 80%',
+					start: 'bottom 85%',
 					endTrigger: document.documentElement,
 					end: 'bottom bottom',
 					scrub: true,
-					markers: true,
 				},
 			});
 
-			tm.fromTo(footer, { yPercent: -30 }, { yPercent: 0 }, 0);
+			tm.fromTo(footer, { yPercent: -40 }, { yPercent: 0 }, 0);
 			halfTm.fromTo(overlay, { opacity: 1 }, { opacity: 0 }, 0);
 
 			this.$once('hook:beforeDestroy', () => {
@@ -112,6 +111,14 @@ export default {
 	background-color: $color-saphire;
 	position: relative;
 
+	@include media-breakpoint-down(md) {
+		padding-bottom: rem(40);
+	}
+
+	@include media-breakpoint-down(sm) {
+		padding: rem(64) 0 rem(24);
+	}
+
 	&__container {
 		@include make-container;
 		display: grid;
@@ -122,10 +129,41 @@ export default {
 			"items contacts socials"
 			". . ."
 			"address copyright author";
+
+		@include media-breakpoint-down(md) {
+			grid-auto-columns: 1fr 1fr 1fr 1fr 1fr;
+			grid-auto-rows: auto auto rem(64) auto auto;
+			grid-template-areas:
+				"logo logo . . ."
+				"items items contacts contacts contacts"
+				". . . . ."
+				"socials socials socials socials socials"
+				"address copyright copyright copyright author";
+		}
+
+		@include media-breakpoint-down(sm) {
+			grid-auto-columns: 1fr 1fr;
+			grid-auto-rows: auto auto auto auto auto auto;
+			grid-template-areas:
+				"logo ."
+				"items items"
+				"contacts contacts"
+				"socials socials"
+				"address ."
+				"copyright author";
+		}
 	}
 
 	&__logo {
 		margin-bottom: rem(56);
+
+		@include media-breakpoint-down(md) {
+			margin-bottom: rem(40);
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-bottom: rem(32);
+		}
 	}
 
 	&__author {
@@ -137,11 +175,16 @@ export default {
 	&__author-link {
 		display: inline-flex;
 		align-items: center;
-		@include default-hover;
+		opacity: 0.3;
 		@include text-small;
+		@include defaultTransition(opacity);
 
 		.icon {
 			margin-left: 0.3em;
+		}
+
+		&:hover {
+			opacity: 1;
 		}
 	}
 
@@ -165,6 +208,10 @@ export default {
 
 	&__address {
 		grid-area: address;
+
+		@include media-breakpoint-down(sm) {
+			margin-bottom: rem(24);
+		}
 	}
 
 	&__contacts {
@@ -172,16 +219,42 @@ export default {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(48);
+
+			& > * + * {
+				margin-top: rem(24);
+			}
+		}
 	}
 
 	&__contacts-item {
 		font-size: rem(40);
 		@include default-hover;
+
+		@include media-breakpoint-down(md) {
+			font-size: rem(28);
+		}
+
+		@include media-breakpoint-down(sm) {
+			font-size: rem(20);
+		}
 	}
 
 	&__socials {
 		grid-area: socials;
 		justify-self: flex-end;
+
+		@include media-breakpoint-down(md) {
+			justify-self: center;
+			margin-bottom: rem(8);
+		}
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(16);
+			margin-bottom: rem(40);
+		}
 
 		.socials {
 			height: 100%;
@@ -189,6 +262,17 @@ export default {
 			&__list {
 				height: 100%;
 				justify-content: space-between;
+
+				@include media-breakpoint-down(md) {
+					flex-direction: row;
+				}
+
+				li {
+					@include media-breakpoint-down(md) {
+						margin-top: 0 !important;
+						margin-bottom: 0 !important;
+					}
+				}
 			}
 		}
 	}
@@ -196,8 +280,12 @@ export default {
 	&__copyright {
 		grid-area: copyright;
 		align-self: center;
-		@include text-small;
 		opacity: 0.3;
+		@include text-small;
+
+		@include media-breakpoint-only(md) {
+			justify-self: center;
+		}
 	}
 
 	&__overlay {
@@ -220,7 +308,7 @@ export default {
 .footer-address {
 	$b: #{&};
 	display: inline-block;
-	@include text-default;
+	@include text-small;
 
 	&__subtitle {
 		opacity: 0.3;

@@ -38,20 +38,21 @@
       </div>
     </section>
 
-    <section class="bg-white">
+	<section class="bg-white pt-md-96 pb-md-96 pt-64 pb-64">
       <div class="container">
-        <card-service-list :card_service_list="card_service_list"></card-service-list>
+        <photo-gallery :photo_gallery="photo_gallery"></photo-gallery>
       </div>
     </section>
 
-
-    <nuxt-link to="/articles">articles</nuxt-link>
+	<section class="bg-white pt-md-96 pb-md-96 pt-64 pb-64">
+      <div class="container">
+        <card-article-slider :card_article_slider="card_article_slider"></card-article-slider>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import Btn from '+/Button';
-
 import AboutBlock from '&/AboutBlock';
 import CardServiceList from '&/CardServiceList';
 import CardHeroSlider from '&/CardHeroSlider';
@@ -59,16 +60,19 @@ import InfoBlock from '&/InfoBlock';
 import ContactBlock from '&/ContactBlock';
 import CardActionSlider from '&/CardActionSlider';
 import ReviewSliderList from '&/ReviewSliderList';
+import PhotoGallery from '&/PhotoGallery';
+import CardArticleSlider from '&/CardArticleSlider';
 
 export default {
   components: {
-    Btn,
     CardServiceList,
     CardHeroSlider,
     InfoBlock,
     ContactBlock,
 	CardActionSlider,
 	ReviewSliderList,
+	PhotoGallery,
+	CardArticleSlider,
   },
 
   asyncData(context) {

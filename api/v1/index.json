@@ -748,5 +748,212 @@
         ]
       }
     ]
+  },
+
+  "card_article_slider": {
+    "title": "Статьи",
+    "action": {
+      "href": "/themes/top_otvetov",
+      "icon": "16/link",
+      "text": "Смотреть все"
+    },
+    "items": [
+      {
+        "mode": "",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов 10 способов как выбрать ресницы для проффесионалов 10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "gray",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      },
+      {
+        "mode": "overlay",
+        "image": {
+          "src": "./img/hero/girl-sleep.jpg",
+          "alt": ""
+        },
+        "title": "10 способов как выбрать ресницы для проффесионалов",
+        "info": {
+          "date": "2019",
+          "view": 201
+        },
+        "link": {
+          "href": "articles/desyt_sposobov"
+        },
+        "author": {
+          "name": "Кристина Агилера",
+          "position": "",
+          "image": {
+            "src": "",
+            "alt": ""
+          }
+        }
+      }
+    ]
+  },
+
+  "photo_gallery": {
+    "title": "Мои работы",
+    "effects": [
+      {
+        "ID": "NATURAL",
+        "text": "натуральный"
+      }
+    ],
+    "views": [
+      {
+        "ID": "CLASSIC",
+        "text": "Classic"
+      },
+      {
+        "ID": "1.5D",
+        "text": "1.5D"
+      },
+      {
+        "ID": "2D",
+        "text": "2D"
+      },
+      {
+        "ID": "2.5D",
+        "text": "2.5D"
+      },
+      {
+        "ID": "3D",
+        "text": "3D"
+      }
+    ],
+    "items": [
+      {
+        "image": {
+          "src": "img/cards/lashes-classic-1.jpg",
+          "alt": ""
+        },
+        "view_id": "VIEW_CLASSIC",
+        "effect_id": "NATURAL"
+      },
+      {
+        "image": {
+          "src": "img/cards/lashes-classic-2.jpg",
+          "alt": ""
+        },
+        "view_id": "VIEW_CLASSIC",
+        "effect_id": "NATURAL"
+      },
+      {
+        "image": {
+          "src": "img/cards/lashes-classic-3.jpg",
+          "alt": ""
+        },
+        "view_id": "VIEW_CLASSIC",
+        "effect_id": "NATURAL"
+      }
+    ]
   }
 }

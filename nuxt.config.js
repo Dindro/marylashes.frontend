@@ -47,7 +47,7 @@ export default {
   */
   plugins: [
     { src: '@/plugins/height', mode: 'client' },
-    { src: '@/plugins/animations/index', mode: 'client' },
+	{ src: '@/plugins/animations/index', mode: 'client' },
   ],
   /*
   ** Auto import components
