@@ -24,10 +24,5 @@ export default {
 	overflow-x: hidden;
 	overflow-y: hidden;
 
-	// Footer made with gsap
-	&__content {
-		position: relative;
-		z-index: 1;
-	}
 }
 </style>

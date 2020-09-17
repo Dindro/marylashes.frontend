@@ -1,6 +1,6 @@
 <template>
 	<footer class="footer" ref="footer">
-		<div class="footer__container">
+		<div class="footer__container" ref="footerContainer" >
 			<div class="footer__logo">
 				<tag-link :link="footer.logo">
 					<logo color="dark"></logo>
@@ -64,7 +64,7 @@ export default {
 			const { ScrollTrigger } = require('gsap/ScrollTrigger');
 			gsap.registerPlugin(ScrollTrigger);
 
-			const { footer, overlay } = this.$refs;
+			const { footer, footerContainer, overlay } = this.$refs;
 			const layoutContent = footer.previousElementSibling;
 
 			const tm = gsap.timeline({
@@ -87,7 +87,7 @@ export default {
 				},
 			});
 
-			tm.fromTo(footer, { yPercent: -40 }, { yPercent: 0 }, 0);
+			tm.fromTo(footerContainer, { yPercent: -50 }, { yPercent: 0 }, 0);
 			halfTm.fromTo(overlay, { opacity: 1 }, { opacity: 0 }, 0);
 
 			this.$once('hook:beforeDestroy', () => {
@@ -110,6 +110,7 @@ export default {
 	padding: rem(72) 0 rem(80);
 	background-color: $color-saphire;
 	position: relative;
+	overflow: hidden;
 
 	@include media-breakpoint-down(md) {
 		padding-bottom: rem(40);
