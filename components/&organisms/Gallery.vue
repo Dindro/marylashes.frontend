@@ -3,8 +3,11 @@
 		<div class="slides" aria-live="polite"></div>
 		<nav-arrows ref="nav_arrows" @prev="prev" @next="next"></nav-arrows>
 
+
 		<!-- Рендер на клиенте так как проблемы при использовании переменных -->
 		<client-only>
+			<btn class="blueimp-gallery__close" @click.native="$emit('close');" :button="{ icon: { name: '24/cross' }, round: true, color: 'transparent', size: 'lg' }"></btn>
+
 			<div class="blueimp-gallery-text" v-if="slide">
 				<div class="blueimp-gallery-text__content">
 					<h4 class="blueimp-gallery-text__view" ref="view" >{{ slide.view }}</h4>
@@ -139,6 +142,7 @@ export default {
 <style lang="scss">
 .blueimp-gallery {
 	background: rgba($color-dark, 0.9);
+	z-index: $z-index-gallery;
 
 	@supports (backdrop-filter: blur(#{rem(20)})) {
 		background: rgba($color-dark, 0.7);
@@ -169,6 +173,17 @@ export default {
 			}
 		}
 	}
+
+	&__close {
+		position: absolute;
+		right: rem(64);
+		top: rem(64);
+
+		@include media-breakpoint-down(md) {
+			right: rem(8);
+			top: rem(8);
+		}
+	}
 }
 
 .blueimp-gallery-text {
@@ -197,6 +212,7 @@ export default {
 		right: rem(4);
 		padding: rem(4) rem(4) rem(4) rem(28);
 		border-radius: rem(32);
+		max-width: none;
 	}
 
 	&__content {
@@ -208,20 +224,13 @@ export default {
 	}
 
 	&__view {
-		@include h4;
-
-		@include media-breakpoint-down(sm) {
-			@include h5;
-		}
+		@include text-default;
 	}
 
 	&__effect {
-		@include text-default;
+		@include text-small;
+		opacity: 0.65;
 		white-space: nowrap;
-
-		@include media-breakpoint-down(sm) {
-			@include text-small;
-		}
 	}
 }
 </style>

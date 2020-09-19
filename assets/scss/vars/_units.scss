@@ -2,6 +2,10 @@ $z-index-header: 500;
 $z-index-header-logo: $z-index-header + 1;
 $z-index-preloader: $z-index-header-logo + 500;
 
+$z-index-gallery: $z-index-header + 500;
+
+$z-index-cursor: $z-index-gallery + 500;
+
 $indent-arrows-x: 28;
 $indent-arrows-x-sm: 20;
 

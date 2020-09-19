@@ -1,20 +1,28 @@
 <template>
 	<tag-link
 		:link="button"
-		:class="[button.color && `button--${button.color}`, button.round && 'button--round']"
+		:class="[
+			button.color && `button--${button.color}`,
+			button.round && 'button--round',
+			!button.text && button.icon && 'button--morphing',
+			button.size && `button--${button.size}`,
+		]"
 		tag="button"
 		class="button"
 	>
-		<span class="button__text">{{ button.text }}</span>
+		<icon-vue class="button__icon" v-if="button.icon" :icon="button.icon"></icon-vue>
+		<span class="button__text" v-if="button.text">{{ button.text }}</span>
 	</tag-link>
 </template>
 
 <script>
-import TagLink from './TagLink';
+import TagLink from '+/TagLink';
+import IconVue from '+/Icon';
 
 export default {
 	components: {
 		TagLink,
+		IconVue,
 	},
 
 	props: {
@@ -42,12 +50,17 @@ export default {
     white-space: nowrap;
     position: relative;
     overflow: hidden;
-    cursor: pointer;
+	cursor: pointer;
+	outline: none !important;
 
 	@include defaultTransition(color);
 
 	@include media-breakpoint-down(sm) {
 		height: rem(56);
+	}
+
+	&__icon {
+		position: relative;
 	}
 
     &__text {
@@ -167,8 +180,42 @@ export default {
       }
 	}
 
+	&--transparent {
+		background-color: transparent;
+		color: $color-white;
+
+		&::before {
+			background-color: $color-white;
+		}
+
+		&:hover {
+			color: $color-dark;
+		}
+	}
+
 	&--round {
 		border-radius: rem(30);
+
+		&#{$b}--lg {
+			border-radius: rem(36);
+		}
+	}
+
+	&--morphing {
+		padding: rem(0) rem(18);
+		min-width: auto;
+
+		&#{$b}--lg {
+			padding: rem(0) rem(24);
+
+			@include media-breakpoint-down(sm) {
+				padding: rem(0) rem(26);
+			}
+		}
+	}
+
+	&--lg {
+		height: rem(72);
 	}
 }
 </style>

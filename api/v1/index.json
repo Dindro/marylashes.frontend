@@ -938,6 +938,22 @@
         },
         "view_id": "3D",
         "effect_id": "NATURAL"
+      },
+      {
+        "image": {
+          "src": "img/cards/lashes-classic-2.jpg",
+          "alt": ""
+        },
+        "view_id": "3D",
+        "effect_id": "NATURAL"
+      },
+      {
+        "image": {
+          "src": "img/cards/lashes-classic-1.jpg",
+          "alt": ""
+        },
+        "view_id": "3D",
+        "effect_id": "NATURAL"
       }
     ]
   }

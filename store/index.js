@@ -1,11 +1,13 @@
 export const state = () => ({
 	header: {},
 	footer: {},
+	cursor: null,
 });
 
 export const mutations = {
 	SET_HEADER: (state, header) => state.header = header,
 	SET_FOOTER: (state, footer) => state.footer = footer,
+	SET_CURSOR: (state, cursor) => state.cursor = cursor,
 };
 
 export const actions = {
