@@ -23,6 +23,5 @@ export default {
 	background-color: $color-white;
 	overflow-x: hidden;
 	overflow-y: hidden;
-
 }
 </style>

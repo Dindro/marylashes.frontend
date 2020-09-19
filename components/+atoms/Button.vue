@@ -1,40 +1,33 @@
 <template>
-  <tag-link :link="button" tag="button" class="button" :class="classes">
-    <span class="button__text">{{ button.text }}</span>
-  </tag-link>
+	<tag-link
+		:link="button"
+		:class="[button.color && `button--${button.color}`, button.round && 'button--round']"
+		tag="button"
+		class="button"
+	>
+		<span class="button__text">{{ button.text }}</span>
+	</tag-link>
 </template>
 
 <script>
-  import TagLink from './TagLink';
+import TagLink from './TagLink';
 
-  export default {
-    components: {
-      TagLink,
-    },
+export default {
+	components: {
+		TagLink,
+	},
 
-    computed: {
-      classes() {
-        let classes = '';
-
-        if (this.button.color) {
-          classes = ` button--${this.button.color}`;
-        }
-
-        return classes;
-      }
-    },
-
-    props: {
-      button: {
-        type: Object,
-        required: true,
-      }
-    }
-  }
+	props: {
+		button: {
+			type: Object,
+			required: true,
+		}
+	}
+}
 </script>
 
 <style lang="scss">
-  .button {
+.button {
     $b: #{&};
 
     display: inline-flex;
@@ -51,7 +44,11 @@
     overflow: hidden;
     cursor: pointer;
 
-    @include defaultTransition(color);
+	@include defaultTransition(color);
+
+	@include media-breakpoint-down(sm) {
+		height: rem(56);
+	}
 
     &__text {
       position: relative;
@@ -114,7 +111,20 @@
       &:hover {
         color: $color-white;
       }
-    }
+	}
+
+	&--white {
+		background-color: $color-white;
+		color: $color-dark;
+
+		&::before {
+			background-color: $color-dark;
+		}
+
+		&:hover {
+			color: $color-white;
+		}
+	}
 
     &--outline-white {
       border: 1px solid $color-white;
@@ -155,6 +165,10 @@
       &:hover {
         color: $color-dark;
       }
-    }
-  }
+	}
+
+	&--round {
+		border-radius: rem(30);
+	}
+}
 </style>

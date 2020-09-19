@@ -1,9 +1,9 @@
 <template>
 	<div class="nav-arrows" :class="[nav_arrows.color && `nav-arrows--${nav_arrows.color}`]">
-		<button ref="prev" class="nav-arrows__button nav-arrows__button--prev" title="Назад" aria-label="Назад">
+		<button ref="prev" class="nav-arrows__button nav-arrows__button--prev" title="Назад" aria-label="Назад" @click="$emit('prev')">
 			<icon :icon="{ name: '24/arrow-left' }"></icon>
 		</button>
-		<button ref="next" class="nav-arrows__button nav-arrows__button--next" title="Вперёд" aria-label="Вперёд">
+		<button ref="next" class="nav-arrows__button nav-arrows__button--next" title="Вперёд" aria-label="Вперёд" @click="$emit('next')">
 			<icon :icon="{ name: '24/arrow-right' }"></icon>
 		</button>
 		<slot name="after"></slot>
@@ -14,9 +14,9 @@
 import Icon from '+/Icon';
 
 export default {
-  components: {
-    Icon,
-  },
+	components: {
+		Icon,
+	},
 
 	props: {
 		nav_arrows: {
@@ -25,14 +25,14 @@ export default {
 		},
 	},
 
-  methods: {
-    getNavigation() {
-      return {
-        prev: this.$refs.prev,
-        next: this.$refs.next,
-      }
-    }
-  },
+	methods: {
+		getNavigation() {
+			return {
+				prev: this.$refs.prev,
+				next: this.$refs.next,
+			}
+		}
+	},
 };
 </script>
 

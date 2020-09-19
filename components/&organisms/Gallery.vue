@@ -1,154 +1,227 @@
 <template>
-  <div
-    :id="id"
-    class="blueimp-gallery blueimp-gallery-controls"
-    :class="{'blueimp-gallery-carousel': carousel}">
+	<div class="blueimp-gallery blueimp-gallery-controls" :id="id" aria-label="image gallery" aria-modal="true" role="dialog">
+		<div class="slides" aria-live="polite"></div>
+		<nav-arrows ref="nav_arrows" @prev="prev" @next="next"></nav-arrows>
 
-    <div class="slides"></div>
-    <h3 class="title"></h3>
-    <p class="description"></p>
-    <a class="prev">
-      <slot name="prev">‹</slot>
-    </a>
-    <a class="next">
-      <slot name="next">›</slot>
-    </a>
-    <a v-if="!carousel" class="close">
-      <slot name="close">×</slot>
-    </a>
-    <ol v-if="!carousel" class="indicator"></ol>
-    <a v-if="carousel" class="play-pause"></a>
-  </div>
+		<!-- Рендер на клиенте так как проблемы при использовании переменных -->
+		<client-only>
+			<div class="blueimp-gallery-text" v-if="slide">
+				<div class="blueimp-gallery-text__content">
+					<h4 class="blueimp-gallery-text__view" ref="view" >{{ slide.view }}</h4>
+					<p class="blueimp-gallery-text__effect" ref="effect">{{ slide.effect }} {{ effect_text }}</p>
+				</div>
+				<btn class="blueimp-gallery-text__button" :button="Object.assign({}, button, { round: true, color: 'white' })"></btn>
+			</div>
+		</client-only>
+
+	</div>
 </template>
 
 <script>
-  import 'blueimp-gallery/css/blueimp-gallery.min.css';
-  import 'blueimp-gallery/js/blueimp-gallery-fullscreen.js';
-  import 'blueimp-gallery/js/blueimp-gallery-video.js';
-  import 'blueimp-gallery/js/blueimp-gallery-youtube.js';
-  import blueimp from 'blueimp-gallery/js/blueimp-gallery.js';
+import 'blueimp-gallery/css/blueimp-gallery.min.css';
+import NavArrows from '+/NavArrows';
+import Btn from '+/Button';
 
-  export default {
+import { isMob } from '@/utils/breakpoints';
+
+export default {
+	components: {
+		NavArrows,
+		Btn,
+	},
     props: {
-      images: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-
-      options: {
-        type: Object,
-        default() {
-          return {};
-        },
-      },
-
-      carousel: {
-        type: Boolean,
-        default: false,
-      },
-
-      index: {
-        type: Number,
-      },
-
-      id: {
-        type: String,
-        default: 'blueimp-gallery',
-      },
+		images: {
+			type: Array,
+			default() {
+				return [];
+			},
+		},
+		options: {
+			type: Object,
+			default() {
+				return {};
+			},
+		},
+		index: {
+			type: Number,
+		},
+		id: {
+			type: String,
+			default: 'blueimp-gallery',
+		},
+		button_text: {
+			type: String,
+			default: 'Записаться на',
+		},
+		button_text_mob: {
+			type: String,
+			default: 'Записаться',
+		},
+		effect_text: {
+			type: String,
+			default: 'эффект'
+		}
     },
 
-    data() {
-      return {
-        instance: null,
-      };
-    },
+    data: () => ({
+		blueimp: null,
+		instance: null,
+		slide: null,
+	}),
+
+	computed: {
+		button() {
+			return {
+				text: isMob() ? this.button_text_mob : `${this.button_text} ${this.slide.view.toLowerCase()}`,
+			}
+		}
+	},
 
     watch: {
-      index(value) {
-        if (this.carousel) {
-          return;
-        }
+		index(value) {
+			if (value !== null) {
+				this.open(value);
 
-        if (value !== null) {
-          this.open(value);
-        } else {
-          if (this.instance) {
-            this.instance.close();
-          }
+			} else {
+				if (this.instance) {
+					this.instance.close();
+				}
 
-          this.$emit('close');
-        }
-      },
+				this.$emit('close');
+			}
+		},
     },
 
     mounted() {
-      if (this.carousel) {
-        this.open();
-      }
+		this.blueimp = require('blueimp-gallery');
     },
 
-    destroyed() {
-      if (this.instance !== null) {
-        this.instance.destroyEventListeners();
-        this.instance.close();
-        this.instance = null;
-      }
+    destroy() {
+		if (this.instance !== null) {
+			this.instance.destroyEventListeners();
+			this.instance.close();
+			this.instance = null;
+		}
     },
 
     methods: {
-      open(index = 0) {
-        const instance = typeof blueimp.Gallery !== 'undefined' ? blueimp.Gallery : blueimp;
+		open(index = 0) {
+			const options = {
+				container: this.$el,
+				index,
+				transitionDuration: 600,
+				onclose: () => this.$emit('close'),
+				onslide: this.changeDescription,
+			};
 
-        const options = Object.assign({
-          toggleControlsOnReturn: false,
-          toggleControlsOnSlideClick: false,
-          closeOnSlideClick: false,
-          carousel: this.carousel,
-          container: `#${this.id}`,
-          index,
-          onopen: () => this.$emit('onopen'),
-          onopened: () => this.$emit('onopened'),
-          onslide: this.onSlideCustom,
-          onslideend: (index, slide) => this.$emit('onslideend', { index, slide }),
-          onslidecomplete: (index, slide) => this.$emit('onslidecomplete', { index, slide }),
-          onclose: () => this.$emit('close'),
-          onclosed: () => this.$emit('onclosed'),
-        }, this.options);
+			this.instance = this.blueimp(this.images, options);
+		},
 
-        if (this.carousel) {
-          options.container = this.$el;
-        }
+		next() {
+			if (this.instance) {
+				this.instance.next();
+			}
+		},
 
-        this.instance = instance(this.images, options);
-      },
-      onSlideCustom(index, slide) {
-        this.$emit('onslide', { index, slide });
+		prev() {
+			if (this.instance) {
+				this.instance.prev();
+			}
+		},
 
-        const image = this.images[index];
-        if (image !== undefined) {
-          const text = image.description;
-          const node = this.instance.container.find('.description');
-          if (text) {
-            node.empty();
-            node[0].appendChild(document.createTextNode(text));
-          }
-        }
-      },
+		changeDescription(index, slide) {
+			this.slide = this.images[index];
+		},
     },
-  };
+};
 </script>
 
-<style>
-  .blueimp-gallery > .description {
-    position: absolute;
-    top: 30px;
-    left: 15px;
-    color: #fff;
-    display: none;
-  }
-  .blueimp-gallery-controls > .description {
-    display: block;
-  }
+<style lang="scss">
+.blueimp-gallery {
+	background: rgba($color-dark, 0.9);
+
+	@supports (backdrop-filter: blur(#{rem(20)})) {
+		background: rgba($color-dark, 0.7);
+		backdrop-filter: blur(#{rem(20)});
+	}
+
+	.nav-arrows {
+		&__button {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			margin: auto 0;
+
+			&--prev {
+				left: rem(64);
+
+				@include media-breakpoint-down(md) {
+					left: rem(8);
+				}
+			}
+
+			&--next {
+				right: rem(64);
+
+				@include media-breakpoint-down(md) {
+					right: rem(8);
+				}
+			}
+		}
+	}
+}
+
+.blueimp-gallery-text {
+	position: absolute;
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: rgba($color-dark, 0.4);
+	padding: rem(8) rem(8) rem(8) rem(40);
+	border-radius: rem(40);
+	max-width: rem(480);
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	bottom: rem(16);
+	color: $color-white;
+
+	@supports (backdrop-filter: blur(#{rem(4)})) {
+		background: rgba($color-dark, 0.2);
+		backdrop-filter: blur(#{rem(4)});
+	}
+
+	@include media-breakpoint-down(sm) {
+		bottom: rem(4);
+		left: rem(4);
+		right: rem(4);
+		padding: rem(4) rem(4) rem(4) rem(28);
+		border-radius: rem(32);
+	}
+
+	&__content {
+		padding-right: rem(16);
+	}
+
+	&__button {
+		flex-shrink: 0;
+	}
+
+	&__view {
+		@include h4;
+
+		@include media-breakpoint-down(sm) {
+			@include h5;
+		}
+	}
+
+	&__effect {
+		@include text-default;
+		white-space: nowrap;
+
+		@include media-breakpoint-down(sm) {
+			@include text-small;
+		}
+	}
+}
 </style>

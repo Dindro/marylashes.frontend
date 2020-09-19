@@ -901,41 +901,26 @@
 
   "photo_gallery": {
     "title": "Мои работы",
-    "effects": [
-      {
-        "ID": "NATURAL",
-        "text": "натуральный"
-      }
-    ],
-    "views": [
-      {
-        "ID": "CLASSIC",
-        "text": "Classic"
-      },
-      {
-        "ID": "1.5D",
-        "text": "1.5D"
-      },
-      {
-        "ID": "2D",
-        "text": "2D"
-      },
-      {
-        "ID": "2.5D",
-        "text": "2.5D"
-      },
-      {
-        "ID": "3D",
-        "text": "3D"
-      }
-    ],
+    "effects": {
+      "NATURAL": "натуральный"
+    },
+    "views": {
+      "CLASSIC": "Classic",
+      "1.5D": "1.5D",
+      "2D": "2D",
+      "2.5D": "2.5D",
+      "3D": "3D"
+    },
+    "button_text": "Записаться на",
+    "button_text_mob": "Записаться",
+    "effects_text": "эффект",
     "items": [
       {
         "image": {
           "src": "img/cards/lashes-classic-1.jpg",
           "alt": ""
         },
-        "view_id": "VIEW_CLASSIC",
+        "view_id": "CLASSIC",
         "effect_id": "NATURAL"
       },
       {
@@ -943,7 +928,7 @@
           "src": "img/cards/lashes-classic-2.jpg",
           "alt": ""
         },
-        "view_id": "VIEW_CLASSIC",
+        "view_id": "2D",
         "effect_id": "NATURAL"
       },
       {
@@ -951,7 +936,7 @@
           "src": "img/cards/lashes-classic-3.jpg",
           "alt": ""
         },
-        "view_id": "VIEW_CLASSIC",
+        "view_id": "3D",
         "effect_id": "NATURAL"
       }
     ]
