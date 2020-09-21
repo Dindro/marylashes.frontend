@@ -189,7 +189,9 @@
     "count_label": "статей",
     "action": {
       "href": "/themes/top_otvetov",
-      "icon": "16/link",
+      "icon": {
+        "name": "16/link"
+      },
       "text": "Смотреть все"
     },
     "items": [

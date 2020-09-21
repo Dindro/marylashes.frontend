@@ -75,8 +75,8 @@ export default {
 	CardArticleSlider,
   },
 
-  asyncData(context) {
-    return context.app.$axios.get('/api/v1/index').then((res) => {
+  asyncData(ctx) {
+    return ctx.app.$axios.get('/api/v1/index').then((res) => {
       return res.data;
     })
   },

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 6,
+    "image": {
+      "src": "img/cards/lashes-classic-1.jpg",
+      "alt": ""
+    },
+    "view_id": "CLASSIC",
+    "effect_id": "NATURAL"
+  },
+  {
+    "id": 7,
+    "image": {
+      "src": "img/cards/lashes-classic-2.jpg",
+      "alt": ""
+    },
+    "view_id": "2D",
+    "effect_id": "NATURAL"
+  },
+  {
+    "id": 8,
+    "image": {
+      "src": "img/cards/lashes-classic-3.jpg",
+      "alt": ""
+    },
+    "view_id": "3D",
+    "effect_id": "NATURAL"
+  },
+  {
+    "id": 9,
+    "image": {
+      "src": "img/cards/lashes-classic-2.jpg",
+      "alt": ""
+    },
+    "view_id": "3D",
+    "effect_id": "NATURAL"
+  },
+  {
+    "id": 10,
+    "image": {
+      "src": "img/cards/lashes-classic-1.jpg",
+      "alt": ""
+    },
+    "view_id": "3D",
+    "effect_id": "NATURAL"
+  }
+]

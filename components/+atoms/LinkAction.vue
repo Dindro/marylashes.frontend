@@ -1,7 +1,7 @@
 <template>
 	<tag-link :link="link" class="link-action">
 		<span class="link-action__text">{{ link.text }}</span>
-		<icon class="link-action__icon" :icon="{ name: '16/link' }"></icon>
+		<icon class="link-action__icon" :icon="link.icon"></icon>
 	</tag-link>
 </template>
 
@@ -28,16 +28,24 @@ export default {
 .link-action {
 	$b: #{&};
 
+	cursor: pointer;
 	display: inline-flex;
-	align-items: center;
+	align-items: flex-start;
 
 	&__text {
 		@include defaultTransition(opacity);
+		@include text-default;
 	}
 
 	&__icon {
 		overflow: hidden;
 		margin-left: rem(8);
+	}
+
+	.icon {
+		&--plus svg {
+			@include defaultTransition(transform);
+		}
 	}
 
 	&:hover {
@@ -47,6 +55,10 @@ export default {
 
 		.icon--link svg {
 			animation: diagonal-animate .4s ease .1s forwards;
+		}
+
+		.icon--plus svg {
+			transform: rotate(90deg);
 		}
 	}
 }

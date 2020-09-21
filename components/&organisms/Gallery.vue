@@ -6,12 +6,12 @@
 
 		<!-- Рендер на клиенте так как проблемы при использовании переменных -->
 		<client-only>
-			<btn class="blueimp-gallery__close" @click.native="$emit('close');" :button="{ icon: { name: '24/cross' }, round: true, color: 'transparent', size: 'lg' }"></btn>
+			<btn class="blueimp-gallery__close" @click.native="$emit('close')" :button="{ icon: { name: '24/cross' }, round: true, color: 'transparent', size: 'lg' }"></btn>
 
 			<div class="blueimp-gallery-text" v-if="slide">
 				<div class="blueimp-gallery-text__content">
-					<h4 class="blueimp-gallery-text__view" ref="view" >{{ slide.view }}</h4>
-					<p class="blueimp-gallery-text__effect" ref="effect">{{ slide.effect }} {{ effect_text }}</p>
+					<h4 class="blueimp-gallery-text__view">{{ slide.view }}</h4>
+					<p class="blueimp-gallery-text__effect">{{ slide.effect }} {{ effect_text }}</p>
 				</div>
 				<btn class="blueimp-gallery-text__button" :button="Object.assign({}, button, { round: true, color: 'white' })"></btn>
 			</div>
@@ -22,6 +22,8 @@
 
 <script>
 import 'blueimp-gallery/css/blueimp-gallery.min.css';
+
+import Vue from 'vue';
 import NavArrows from '+/NavArrows';
 import Btn from '+/Button';
 
@@ -111,10 +113,14 @@ export default {
 		open(index = 0) {
 			const options = {
 				container: this.$el,
+				continuous: false,
 				index,
 				transitionDuration: 600,
 				onclose: () => this.$emit('close'),
-				onslide: this.changeDescription,
+				onslide: (...args) => {
+					this.changeDescription(...args);
+					this.checkEnd(...args);
+				}
 			};
 
 			this.instance = this.blueimp(this.images, options);
@@ -135,6 +141,17 @@ export default {
 		changeDescription(index, slide) {
 			this.slide = this.images[index];
 		},
+
+		checkEnd(index) {
+			index === this.images.length - 1 && this.$emit('end');
+		},
+
+		async add() {
+			await Vue.$nextTick;
+			const index = this.instance.getIndex();
+			const images = this.images.slice(index, this.images.length);
+			this.instance.add(images);
+		}
     },
 };
 </script>

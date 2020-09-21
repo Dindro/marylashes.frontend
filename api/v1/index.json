@@ -754,7 +754,9 @@
     "title": "Статьи",
     "action": {
       "href": "/themes/top_otvetov",
-      "icon": "16/link",
+      "icon": {
+        "name": "16/link"
+      },
       "text": "Смотреть все"
     },
     "items": [
@@ -905,6 +907,7 @@
       "NATURAL": "натуральный"
     },
     "views": {
+      "ALL": "Все объемы",
       "CLASSIC": "Classic",
       "1.5D": "1.5D",
       "2D": "2D",
@@ -916,6 +919,7 @@
     "effects_text": "эффект",
     "items": [
       {
+        "id": 1,
         "image": {
           "src": "img/cards/lashes-classic-1.jpg",
           "alt": ""
@@ -924,6 +928,7 @@
         "effect_id": "NATURAL"
       },
       {
+        "id": 2,
         "image": {
           "src": "img/cards/lashes-classic-2.jpg",
           "alt": ""
@@ -932,6 +937,7 @@
         "effect_id": "NATURAL"
       },
       {
+        "id": 3,
         "image": {
           "src": "img/cards/lashes-classic-3.jpg",
           "alt": ""
@@ -940,6 +946,7 @@
         "effect_id": "NATURAL"
       },
       {
+        "id": 4,
         "image": {
           "src": "img/cards/lashes-classic-2.jpg",
           "alt": ""
@@ -948,6 +955,7 @@
         "effect_id": "NATURAL"
       },
       {
+        "id": 5,
         "image": {
           "src": "img/cards/lashes-classic-1.jpg",
           "alt": ""
@@ -955,6 +963,12 @@
         "view_id": "3D",
         "effect_id": "NATURAL"
       }
-    ]
+    ],
+    "action": {
+      "text": "Показать еще",
+      "icon": {
+        "name": "16/plus"
+      }
+    }
   }
 }
