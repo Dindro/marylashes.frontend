@@ -60,6 +60,7 @@ export default {
 	}
 
 	svg {
+		vertical-align: initial;
 		width: 100%;
 		height: 100%;
 	}

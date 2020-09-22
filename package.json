@@ -14,6 +14,7 @@
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/svg": "^0.1.11",
+    "@pauleliet/vue-sticky-directive": "git+https://github.com/dindro/vue-sticky-directive.git#feat/widthForce",
     "blueimp-gallery": "^3.3.0",
     "body-scroll-lock": "^3.0.3",
     "express": "^4.17.1",

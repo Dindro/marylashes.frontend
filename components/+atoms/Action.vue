@@ -19,27 +19,21 @@ export default {
 		}
 	},
 
-	data: (ctx) => ({
-		componentName: ctx.getComponentName(ctx.action),
-		params: ctx.getParams(ctx.action),
-	}),
-
-	methods: {
-		getComponentName({ type, icon }) {
-			if (type === 'button') return 'btn';
+	computed: {
+		componentName() {
+			if (this.action.type === 'button') return 'btn';
 			return 'link-action';
 		},
 
-		getParams(action) {
-			const name = this.getComponentName(action);
-			switch (name) {
+		params() {
+			switch (this.componentName) {
 				case 'btn':
-					return { button: action }
+					return { button: this.action }
 					break;
 
 				case 'link-action':
 				default:
-					return { link: action }
+					return { link: this.action }
 					break;
 			}
 		}

@@ -1,5 +1,5 @@
 <template>
-	<tag-link :link="link" class="link-action">
+	<tag-link :link="link" class="link-action" :class="[ link.loading && 'is-loading' ]">
 		<span class="link-action__text">{{ link.text }}</span>
 		<icon class="link-action__icon" :icon="link.icon"></icon>
 	</tag-link>
@@ -30,7 +30,7 @@ export default {
 
 	cursor: pointer;
 	display: inline-flex;
-	align-items: flex-start;
+	align-items: center;
 
 	&__text {
 		@include defaultTransition(opacity);
@@ -40,6 +40,8 @@ export default {
 	&__icon {
 		overflow: hidden;
 		margin-left: rem(8);
+
+		@include defaultTransition(opacity);
 	}
 
 	.icon {
@@ -59,6 +61,34 @@ export default {
 
 		.icon--plus svg {
 			transform: rotate(90deg);
+		}
+	}
+
+	&.is-loading {
+		pointer-events: none;
+
+		#{$b}__text {
+			position: relative;
+
+			&::after {
+				content: '';
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				display: block;
+				height: rem(16);
+      			width: rem(16);
+				position: absolute;
+				left: calc(100% + #{rem(8)});
+				animation: $loader-spin-animation;
+				border: 2px solid currentColor;
+				border-radius: 50%;
+				border-right-color: transparent !important;
+			}
+		}
+
+		#{$b}__icon {
+			opacity: 0;
 		}
 	}
 }

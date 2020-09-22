@@ -1,9 +1,25 @@
 <template>
 	<div class="nav-arrows" :class="[nav_arrows.color && `nav-arrows--${nav_arrows.color}`]">
-		<button ref="prev" class="nav-arrows__button nav-arrows__button--prev" title="Назад" aria-label="Назад" @click="$emit('prev')">
+		<button
+			ref="prev"
+			class="nav-arrows__button nav-arrows__button--prev"
+			:class="[nav_arrows.prevLoading && 'is-loading']"
+			:disabled="nav_arrows.prevDisabled || nav_arrows.prevLoading"
+			title="Назад"
+			aria-label="Назад"
+			@click="$emit('prev')"
+		>
 			<icon :icon="{ name: '24/arrow-left' }"></icon>
 		</button>
-		<button ref="next" class="nav-arrows__button nav-arrows__button--next" title="Вперёд" aria-label="Вперёд" @click="$emit('next')">
+		<button
+			ref="next"
+			class="nav-arrows__button nav-arrows__button--next"
+			:class="[nav_arrows.nextLoading && 'is-loading']"
+			:disabled="nav_arrows.nextDisabled || nav_arrows.nextLoading"
+			title="Вперёд"
+			aria-label="Вперёд"
+			@click="$emit('next')"
+		>
 			<icon :icon="{ name: '24/arrow-right' }"></icon>
 		</button>
 		<slot name="after"></slot>
@@ -77,7 +93,7 @@ export default {
 			@include defaultTransition(opacity, transform);
 		}
 
-		&:hover:not(.disabled) {
+		&:hover:not(.disabled):not(:disabled) {
 			color: $color-dark;
 
 			&::before {
@@ -93,10 +109,36 @@ export default {
 			}
 		}
 
-		&.disabled {
+		&.disabled,
+		&:disabled {
 			opacity: 0.3;
 			pointer-events: none !important;
 		}
+
+		&:disabled {
+			pointer-events: initial !important;
+		}
+
+		&.is-loading {
+			&::after {
+				content: '';
+				position: absolute;
+				pointer-events: none;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-radius: 50%;
+				animation: $loader-spin-animation;
+				border: 2px solid currentColor;
+				border-radius: 50%;
+				border-right-color: transparent !important;
+			}
+		}
+	}
+
+	.icon {
+		position: relative;
 	}
 
 	&--dark {
@@ -107,14 +149,10 @@ export default {
 				background-color: $color-dark;
 			}
 
-			&:hover:not(.disabled) {
+			&:hover:not(.disabled):not(:disabled) {
 				color: $color-white;
 			}
 		}
-	}
-
-	.icon {
-		position: relative;
 	}
 }
 </style>

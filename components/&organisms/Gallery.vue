@@ -1,7 +1,7 @@
 <template>
 	<div class="blueimp-gallery blueimp-gallery-controls" :id="id" aria-label="image gallery" aria-modal="true" role="dialog">
 		<div class="slides" aria-live="polite"></div>
-		<nav-arrows ref="nav_arrows" @prev="prev" @next="next"></nav-arrows>
+		<nav-arrows ref="nav_arrows" :nav_arrows="nav_arrows" @prev="prev" @next="next"></nav-arrows>
 
 
 		<!-- Рендер на клиенте так как проблемы при использовании переменных -->
@@ -65,13 +65,18 @@ export default {
 		effect_text: {
 			type: String,
 			default: 'эффект'
-		}
+		},
     },
 
     data: () => ({
 		blueimp: null,
 		instance: null,
 		slide: null,
+		nav_arrows: {
+			prevDisabled: false,
+			nextDisabled: false,
+			nextLoading: false,
+		}
 	}),
 
 	computed: {
@@ -119,7 +124,7 @@ export default {
 				onclose: () => this.$emit('close'),
 				onslide: (...args) => {
 					this.changeDescription(...args);
-					this.checkEnd(...args);
+					this.checkEdge(...args);
 				}
 			};
 
@@ -142,8 +147,20 @@ export default {
 			this.slide = this.images[index];
 		},
 
-		checkEnd(index) {
-			index === this.images.length - 1 && this.$emit('end');
+		checkEdge(index) {
+			// Начало
+			if (index === 0) {
+				this.nav_arrows.prevDisabled = true;
+				this.$emit('start');
+
+			// Конец
+			} else if (index === this.images.length - 1) {
+				this.nav_arrows.nextDisabled = true;
+				this.$emit('end');
+			} else {
+				this.nav_arrows.prevDisabled = false;
+				this.nav_arrows.nextDisabled = false;
+			}
 		},
 
 		async add() {
@@ -151,6 +168,7 @@ export default {
 			const index = this.instance.getIndex();
 			const images = this.images.slice(index, this.images.length);
 			this.instance.add(images);
+			this.nav_arrows.nextDisabled = false;
 		}
     },
 };

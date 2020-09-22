@@ -1,5 +1,7 @@
 <template>
-	<div class="photo-gallery">
+	<div class="photo-gallery" sticky-container>
+
+		<!-- Heading && Filter -->
 		<div class="photo-gallery__header">
 			<h2 class="photo-gallery__title">{{ photo_gallery.title }}</h2>
 			<div class="photo-gallery__filter photo-gallery-filter">
@@ -11,6 +13,7 @@
 			</div>
 		</div>
 
+		<!-- Gallery -->
 		<gallery
 			ref="gallery"
 			:images="images"
@@ -22,6 +25,7 @@
 			@end="more"
 		></gallery>
 
+		<!-- Photos -->
 		<transition-group name="photo-gallery-item" tag="div" class="photo-gallery__items">
 			<div class="photo-gallery__item" v-for="(item, index) in itemsFiltered" :key="item.id" @click="openPhoto(index)">
 				<image-vue
@@ -35,21 +39,53 @@
 			</div>
 		</transition-group>
 
+		<!-- More -->
 		<div class="photo-gallery__actions">
-			<action @click.native="more" :action="photo_gallery.action"></action>
+			<action @click.native="more" :action="Object.assign({}, photo_gallery.action, { loading: isLoading })"></action>
+		</div>
+
+		<!-- Info -->
+		<div class="photo-gallery__info">
+			<div class="photo-gallery-info"
+				v-sticky sticky-side="bottom"
+				stick-align="right"
+				:sticky-offset="stickyOffset"
+			>
+				<span class="photo-gallery-info__title">FILTER</span>
+				<span class="photo-gallery-info__item" v-for="(item, index) in selectedTabs" :key="index">
+					{{ photo_gallery.views[item] }}
+				</span>
+				<button
+					class="photo-gallery-info__clear"
+					v-if="selectedTabs.indexOf(ALL) === -1"
+					@click="selectTab({ id: ALL })"
+				>
+					<icon-vue :icon="{ name: '24/cross', size: 16 }"></icon-vue>
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import ImageVue from '+/Image';
+import IconVue from '+/Icon';
 import Gallery from '&/Gallery';
+
+import { getForBreakpoints } from '@/utils/breakpoints';
+import { convertToScalingPx } from '@/utils/convert';
+
+let VueStickyDirective;
+if (process.client) {
+	VueStickyDirective = require('@pauleliet/vue-sticky-directive').default;
+}
 
 const ALL = 'ALL';
 
 export default {
 	components: {
 		ImageVue,
+		IconVue,
 		Gallery,
 	},
 
@@ -60,11 +96,23 @@ export default {
 		}
 	},
 
+	directives: {
+		sticky: VueStickyDirective,
+	},
+
 	data: (ctx) => {
+		let stickyOffset;
+		if (process.client) {
+			stickyOffset = ctx.getStickyOffset();
+		}
+
 		return {
 			items: ctx.photo_gallery.items,
 			selectedPhotoIndex: null,
 			selectedTabs: [ALL],
+			isLoading: false,
+			stickyOffset,
+			ALL,
 		}
 	},
 
@@ -137,27 +185,55 @@ export default {
 		},
 
 		more() {
-			// Получаем id эффектов
-			const activesIds = this.selectedTabs;
+			// Если загружается то ничего не делаем
+			if (this.isLoading) return;
 
-			this.$provide.photo.get().then((res) => {
+			// Включаем loading
+			this.isLoading = true;
+
+			// Получаем id эффектов
+			const ids = this.selectedTabs;
+
+			this.$provide.photo.get(ids).then((res) => {
 				this.items.push(...res.data);
 				this.selectedPhotoIndex !== null && this.$refs.gallery.add();
+			}).finally(() => {
+				this.isLoading = false;
 			});
-			// Отправляем на сервер
-			// Ожидаем
-			// Добавляем
+		},
+
+		getStickyOffset() {
+			const lg = {
+				bottom: convertToScalingPx(40),
+				top: convertToScalingPx(180),
+			};
+
+			const md = {
+				bottom: convertToScalingPx(20),
+				top: convertToScalingPx(144),
+			};
+
+			const sm = {
+				bottom: convertToScalingPx(12),
+				top: convertToScalingPx(240)
+			}
+
+			return JSON.stringify(getForBreakpoints(lg, md, sm));
 		}
 	},
 
-	mounted() {
-
+	watch: {
+		isLoading(value) {
+			this.$refs.gallery.nav_arrows.nextLoading = value;
+		}
 	}
 }
 </script>
 
 <style lang="scss">
 .photo-gallery {
+	position: relative;
+
 	&__title {
 		@include h2;
 	}
@@ -222,6 +298,23 @@ export default {
 		margin-top: rem(64);
 		text-align: center;
 	}
+
+	&__info {
+		position: absolute;
+		right: rem(-80);
+		bottom: rem(-24);
+		height: rem(80); // иначе Sticky не понимает
+
+		@include media-breakpoint-down(md) {
+			right: rem(-$wrapper-gutter-md-1 / 2);
+		}
+
+		@include media-breakpoint-down(sm) {
+			bottom: rem(120);
+			right: rem(-$wrapper-gutter-sm-1 / 2);
+			height: rem(64);
+		}
+	}
 }
 
 .photo-gallery-item {
@@ -251,6 +344,70 @@ export default {
 
 		&.no-click {
 			pointer-events: none;
+		}
+	}
+}
+
+.photo-gallery-info {
+	display: inline-flex;
+	align-items: center;
+	padding: rem(24) rem(32);
+	background-color: $color-light;
+	width: auto !important;
+	height: rem(80);
+	opacity: 0;
+	pointer-events: none;
+	@include defaultTransition(opacity);
+
+	@include media-breakpoint-down(sm) {
+		padding: rem(16) rem(24);
+		height: rem(64);
+	}
+
+	&.bottom-sticky {
+		opacity: 1;
+		pointer-events: initial;
+	}
+
+	&--no-visible {
+		opacity: 0 !important;
+		pointer-events: none !important;
+	}
+
+	&__title {
+		@include text-small;
+		font-weight: 700;
+		text-transform: uppercase;
+		margin-right: 0.4em;
+	}
+
+	&__item {
+		@include text-small;
+		text-transform: lowercase;
+		margin-left: 0.4em;
+		white-space: nowrap;
+	}
+
+	&__clear {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+		padding: rem(8);
+		background: transparent;
+		border-radius: 0;
+		margin-right: rem(-8);
+		margin-left: rem(16);
+		outline: none;
+
+		&:hover {
+			.icon {
+				transform: rotate(90deg);
+			}
+		}
+
+		.icon {
+			@include defaultTransition(transform);
 		}
 	}
 }
