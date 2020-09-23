@@ -236,12 +236,21 @@ export default {
 
 	&__title {
 		@include h2;
+
+		@include media-breakpoint-down(sm) {
+			margin-bottom: rem(16);
+		}
 	}
 
 	&__header {
 		margin-bottom: rem(64);
 		display: flex;
 		justify-content: space-between;
+
+		@include media-breakpoint-down(sm) {
+			display: block;
+			margin-bottom: rem(32);
+		}
 	}
 
 	&__items {
@@ -297,6 +306,10 @@ export default {
 	&__actions {
 		margin-top: rem(64);
 		text-align: center;
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(32);
+		}
 	}
 
 	&__info {
@@ -310,7 +323,7 @@ export default {
 		}
 
 		@include media-breakpoint-down(sm) {
-			bottom: rem(120);
+			bottom: rem(96);
 			right: rem(-$wrapper-gutter-sm-1 / 2);
 			height: rem(64);
 		}
@@ -326,6 +339,11 @@ export default {
 .photo-gallery-filter {
 	display: flex;
 	margin: 0 rem(-12);
+	flex-wrap: wrap;
+
+	@include media-breakpoint-down(sm) {
+		margin: 0 rem(-8);
+	}
 
 	&__item {
 		border: none;
@@ -335,7 +353,12 @@ export default {
 		padding: rem(12);
 		opacity: 0.3;
 		outline: none !important;
+		white-space: nowrap;
 		@include defaultTransition(opacity);
+
+		@include media-breakpoint-down(sm) {
+			padding: rem(4) rem(8);
+		}
 
 		&.active,
 		&:hover {
