@@ -41,7 +41,8 @@
 
 		<!-- More -->
 		<div class="photo-gallery__actions">
-			<action @click.native="more" :action="Object.assign({}, photo_gallery.action, { loading: isLoading })"></action>
+			<span class="photo-gallery__loaded" v-if="selectedLoaded">{{ photo_gallery.loaded }}</span>
+			<action v-else @click.native="more" :action="Object.assign({}, photo_gallery.action, { loading: isLoading })"></action>
 		</div>
 
 		<!-- Info -->
@@ -101,18 +102,21 @@ export default {
 	},
 
 	data: (ctx) => {
+
+		// Вычесляем отступы для стики
 		let stickyOffset;
 		if (process.client) {
 			stickyOffset = ctx.getStickyOffset();
 		}
 
 		return {
-			items: ctx.photo_gallery.items,
-			selectedPhotoIndex: null,
-			selectedTabs: [ALL],
-			isLoading: false,
-			stickyOffset,
-			ALL,
+			items: ctx.photo_gallery.items,								// Список фото
+			selectedPhotoIndex: null,									// Индекс выбранного фото
+			selectedTabs: [ALL],										// Выбранные категории фото
+			itemsLoaded: ctx.photo_gallery.items_loaded ? [ALL] : [],	// Загруженные категории фото
+			isLoading: false,											// Статус загрузки фото
+			stickyOffset,												// Значение отступов для стики
+			ALL,														// Значение id - "ВСЕ"
 		}
 	},
 
@@ -143,6 +147,16 @@ export default {
 					id: item,
 					text: this.photo_gallery.views[item],
 				}
+			});
+		},
+
+		selectedLoaded() {
+			if (this.itemsLoaded.indexOf(ALL) !== -1) return true;
+
+			// Тут точно нет ALL
+
+			return this.selectedTabs.every((id) => {
+				return this.itemsLoaded.indexOf(id) !== -1;
 			});
 		}
 	},
@@ -188,15 +202,38 @@ export default {
 			// Если загружается то ничего не делаем
 			if (this.isLoading) return;
 
+			// Если выбранные категории загружены полностью и нет на сервере
+			if (this.selectedLoaded) return;
+
+			// Получаем id эффектов, клонируя
+			const ids = [...this.selectedTabs];
+
 			// Включаем loading
 			this.isLoading = true;
 
-			// Получаем id эффектов
-			const ids = this.selectedTabs;
-
 			this.$provide.photo.get(ids).then((res) => {
-				this.items.push(...res.data);
+				const items = res.data;
+
+				// В случае если фото больше нет
+				// то добавляем в список загруженных
+				if (!items || !items.length) {
+					ids.forEach((id) => {
+						this.itemsLoaded.indexOf(id) === -1 && this.itemsLoaded.push(id);
+					});
+
+					// Если все пункты загружены то значит это ALL
+					if (this.itemsLoaded.length === this.photo_gallery.views.length - 1) {
+						this.itemsLoaded.length = 0;
+						this.itemsLoaded.push(ALL);
+					}
+				}
+
+				this.items.push(...items);
 				this.selectedPhotoIndex !== null && this.$refs.gallery.add();
+
+			}).catch((err) => {
+				// TODO: Добавить ошибку в стек ошибок
+
 			}).finally(() => {
 				this.isLoading = false;
 			});
@@ -310,6 +347,11 @@ export default {
 		@include media-breakpoint-down(sm) {
 			margin-top: rem(32);
 		}
+	}
+
+	&__loaded {
+		@include text-small;
+		opacity: 0.65;
 	}
 
 	&__info {

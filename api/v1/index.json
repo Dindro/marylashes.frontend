@@ -917,6 +917,8 @@
     "button_text": "Записаться на",
     "button_text_mob": "Записаться",
     "effects_text": "эффект",
+    "loaded": "По этому фильтру все фотографии загружены",
+    "items_loaded": false,
     "items": [
       {
         "id": 1,

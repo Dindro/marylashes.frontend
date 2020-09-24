@@ -34,7 +34,6 @@
 				</tag-link>
 			</div>
 		</div>
-		<div class="footer__overlay" ref="overlay"></div>
 	</footer>
 </template>
 
@@ -77,24 +76,11 @@ export default {
 				},
 			});
 
-			const halfTm = gsap.timeline({
-				scrollTrigger: {
-					trigger: layoutContent,
-					start: 'bottom 85%',
-					endTrigger: document.documentElement,
-					end: 'bottom bottom',
-					scrub: true,
-				},
-			});
-
 			tm.fromTo(footerContainer, { yPercent: -50 }, { yPercent: 0 }, 0);
-			halfTm.fromTo(overlay, { opacity: 1 }, { opacity: 0 }, 0);
 
 			this.$once('hook:beforeDestroy', () => {
 				tm.kill();
 				tm = null;
-				halfTm.kill();
-				halfTm = null;
 			});
 		}
 	},
@@ -286,22 +272,6 @@ export default {
 
 		@include media-breakpoint-only(md) {
 			justify-self: center;
-		}
-	}
-
-	&__overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		pointer-events: none;
-		opacity: 0;
-		background-color: rgba($color-dark, 0.4);
-
-		@supports (backdrop-filter: blur(10px)) {
-			backdrop-filter: blur(10px);
-			background-color: transparent;
 		}
 	}
 }
