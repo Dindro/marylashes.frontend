@@ -44,9 +44,15 @@ export default {
 
 	&__item {
 		opacity: 0.3;
+		display: inline-flex;
+		align-items: center;
 
 		&:not(:last-child) {
 			margin-right: rem(8);
+		}
+
+		.icon {
+			margin-right: 0.2em;
 		}
 	}
 }
