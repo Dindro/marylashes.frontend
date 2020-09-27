@@ -1,5 +1,5 @@
 <template>
-	<div class="cursor-shell" :style="{ transform: transform }" :class="[size && `cursor--size--${size}`]">
+	<div class="cursor-shell" :style="{ transform }" :class="[size && `cursor--size--${size}`]">
 		<div
 			class="cursor"
 			:class="[
@@ -27,6 +27,8 @@ export default {
 		transform: 'none',
 		x: -100,
 		y: -100,
+		timer: null,
+		render: false,
 	}),
 
 	computed: {
@@ -53,30 +55,49 @@ export default {
 		cursor(value) {
 			if (value === null) {
 				document.body.classList.remove(CURSOR_BODY_CLASS);
+
+				// Получаем таймер для отображения
+				this.timer = setTimeout(() => {
+					this.destroyCursor();
+					this.timer = null;
+				}, 150);
+
 			} else {
 				document.body.classList.add(CURSOR_BODY_CLASS);
+				if (this.timer) {
+					clearInterval(this.timer);
+					this.timer = null;
+				} else {
+					this.initCursor();
+				}
 			}
 		}
 	},
 	methods: {
 		initCursor() {
-			document.addEventListener('mousemove', (e) => {
+			// Listen
+			this.handler = (e) => {
 				this.x = e.clientX;
 				this.y = e.clientY;
-			});
+			};
+			window.addEventListener('mousemove', this.handler);
 
+			// Рендер proccess
+			this.render = true;
 			const render = () => {
+				if (!this.render) return;
 				this.transform = `translate(${this.x}px, ${this.y}px)`;
-
 				requestAnimationFrame(render);
 			}
-
 			requestAnimationFrame(render);
 		},
 
-	},
-	mounted() {
-		this.initCursor();
+		destroyCursor() {
+			window.removeEventListener('mousemove', this.handler);
+			this.render = false;
+			this.x = -100;
+			this.y = -100;
+		}
 	},
 }
 </script>
