@@ -91,7 +91,7 @@ export default {
 	&__arrows {
 		position: absolute;
 		bottom: calc(100% + #{rem(8)});
-		right: rem(-$indent-arrows-x);
+		right: rem(-$indent-arrows);
 
 		@include media-breakpoint-down(md) {
 			display: none;
@@ -125,7 +125,7 @@ export default {
 
 	&--reverse {
 		#{$b}__arrows {
-			left: rem(-$indent-arrows-x);
+			left: rem(-$indent-arrows);
 			right: auto;
 		}
 

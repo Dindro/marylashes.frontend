@@ -195,14 +195,14 @@ export default {
 
 		@include media-breakpoint-down(md) {
 			top: calc(100% + #{rem(8)});
-			right: rem(-$indent-arrows-x);
+			right: rem(-$indent-arrows);
 			bottom: auto;
 			left: auto;
 			pointer-events: all;
 		}
 
 		@include media-breakpoint-down(sm) {
-			right: rem(-$indent-arrows-x-sm);
+			right: rem(-$indent-arrows-sm);
 		}
 
 		&__button {

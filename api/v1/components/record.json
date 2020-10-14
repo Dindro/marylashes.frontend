@@ -1,0 +1,156 @@
+{
+  "services": [
+    {
+      "view_id": "CLASSIC",
+      "title": "Classic",
+      "price": 900,
+      "duration": 2,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
+      "view_id": "1.5D",
+      "title": "1.5D",
+      "price": 1000,
+      "duration": 2.5,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
+      "view_id": "2D",
+      "title": "2D",
+      "price": 1100,
+      "duration": 2.5,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
+      "view_id": "CLEAR",
+      "title": "Снятие",
+      "text": "Снятие моей работы с последующим наращиванием — бесплатно.",
+      "price": 200,
+      "price_info": "внимание, если вы наращивали у меня и хотите снова нарастить, то снятие будет — бесплатно",
+      "duration": 0.5,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
+      "view_id": "HELP",
+      "title": "Нужна помощь в подборе",
+      "duration": 2,
+      "title_selected": "Помощь",
+      "text": "Выберите данный пункт, вместе подберем что вам лучше подойдет"
+    }
+  ],
+  "meets": [
+    {
+      "free": true,
+      "duration": 3.5,
+      "date": 1601899200000
+    },
+    {
+      "free": true,
+      "duration": 3.5,
+      "date": 1602590400000
+    },
+    {
+      "record": true,
+      "duration": 2.5,
+      "date": 1601971200000
+    },
+    {
+      "record": true,
+      "duration": 2.5,
+      "date": 1602072000000
+    }
+  ],
+  "contacts": {
+    "info": [
+      {
+        "input": true,
+        "label": "Ваше имя",
+        "required": true
+      },
+      {
+        "input": true,
+        "label": "Телефон",
+        "type": "tel",
+        "required": true
+      }
+    ],
+    "socials": [
+      {
+        "input": true,
+        "label": "Vk"
+      },
+      {
+        "input": true,
+        "label": "In"
+      },
+      {
+        "input": true,
+        "label": "Vb"
+      },
+      {
+        "input": true,
+        "label": "Wa"
+      }
+    ],
+    "checkboxes": [
+      {
+        "checkbox": true,
+        "label": "Были ли вы у меня ранее?"
+      },
+      {
+        "checkbox": true,
+        "label": "Согласен на <a href='#'>политику обработки данных</a>"
+      }
+    ],
+    "action": {
+      "type": "button",
+      "text": "Записаться",
+      "color": "outline-dark"
+    }
+  },
+  "text": {
+    "tabs": {
+      "services": "Выберите услугу",
+      "date": "Выберите дату",
+      "contact": "Обратная связь"
+    },
+    "services": {
+      "cursor_choose": "Выбрать",
+      "meets_prev": "Предыдущие записи",
+      "meets_next": "Предстоящие записи",
+      "price": "цена",
+      "price_info": "*внимание, если вы наращивали у меня и хотите снова нарастить, то снятие будет — бесплатно"
+    },
+    "date": {
+      "today_action": "Перейти в текущую неделю",
+      "individual_text": "Не нашли подходящее время?",
+      "individual_action": "Подобрать индивидуально",
+      "individual": "индивидуально",
+      "free": "Свободно",
+      "record": "Запись",
+      "record_my": "Моя запись",
+      "hover": "Нажмите для выбора",
+      "hover_adaptive": "Выбрать",
+      "hover_record": "Занято!",
+      "or": "или"
+    },
+    "contacts": {
+      "choose": "Вы выбрали",
+      "time": "Время наращивания",
+      "price": "цена",
+      "socials_header": "Где вам удобнее договориться?"
+    }
+  }
+}

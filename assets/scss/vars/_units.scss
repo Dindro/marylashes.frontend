@@ -6,7 +6,10 @@ $z-index-gallery: $z-index-header + 500;
 
 $z-index-cursor: $z-index-gallery + 500;
 
-$indent-arrows-x: 28;
-$indent-arrows-x-sm: 20;
+$indent-arrows: 28;
+$indent-arrows-sm: 20;
 
 $height-screen: calc(var(--vh, 1vh) * 100);
+
+$input-height: 60;
+$input-height-sm: 56;

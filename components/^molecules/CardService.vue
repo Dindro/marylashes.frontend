@@ -461,15 +461,46 @@
 }
 
 .hover-change {
-  position: absolute;
-  display: flex;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+	$b: #{&};
 
-  &__item {
-    flex: 1;
-  }
+	position: absolute;
+	display: flex;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+
+	&:hover {
+		#{$b}__item::after {
+			opacity: 0.3;
+		}
+	}
+
+	&__item {
+		flex: 1;
+
+		&::after {
+			content: '';
+			display: block;
+			position: static;
+			margin: rem(8) rem(4) 0;
+			height: rem(4);
+			background-color: $color-white;
+			opacity: 0.3;
+			border-radius: rem(3);
+			opacity: 0;
+			@include defaultTransition(opacity);
+
+			@include media-breakpoint-down(md) {
+				display: none;
+			}
+		}
+
+		&:hover {
+			&::after {
+				opacity: 0.65 !important;
+			}
+		}
+	}
 }
 </style>

@@ -11,12 +11,22 @@ export const mutations = {
 };
 
 export const actions = {
-	async nuxtServerInit(store, ctx) {
+	async nuxtServerInit({ dispatch, commit }, ctx) {
 		const headerRequest = ctx.$axios.$get('/api/v1/components/header');
 		const footerRequest = ctx.$axios.$get('/api/v1/components/footer');
+		const recordRequest = ctx.$axios.$get('/api/v1/components/record');
+
 		const { header } = await headerRequest;
 		const { footer } = await footerRequest;
-		store.commit('SET_HEADER', header);
-		store.commit('SET_FOOTER', footer);
+		const record = await recordRequest;
+		commit('SET_FOOTER', footer);
+		commit('SET_HEADER', header);
+		dispatch('record/init', record);
+	},
+
+	async nuxtClientInit({ dispatch }, ctx) {
+		dispatch('record/loadSelectedServices');
+		dispatch('record/loadSelectedDate');
+		dispatch('record/loadUserMeets');
 	}
 };

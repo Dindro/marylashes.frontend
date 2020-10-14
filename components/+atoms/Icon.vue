@@ -11,10 +11,10 @@ export default {
 		},
 	},
 
-	data: (context) => ({
-		src: require(`assets/icons/${context.icon.name}.svg?raw`),
-		size: context.icon.size || context.getSize(context.icon.name) || 'default',
-		name: context.getName(context.icon.name),
+	data: (ctx) => ({
+		src: require(`assets/icons/${ctx.icon.name}.svg?raw`),
+		size: ctx.icon.size || ctx.getSize(ctx.icon.name) || 'default',
+		name: ctx.getName(ctx.icon.name),
 	}),
 
 	methods: {
@@ -57,6 +57,11 @@ export default {
 	&--16 {
 		width: rem(16);
 		height: rem(16);
+	}
+
+	&--32 {
+		width: rem(32);
+		height: rem(32);
 	}
 
 	svg {

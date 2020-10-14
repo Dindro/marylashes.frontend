@@ -150,10 +150,10 @@ export default {
   }
 
   &__arrows {
-    margin-right: rem(-$indent-arrows-x);
+    margin-right: rem(-$indent-arrows);
 
     @include media-breakpoint-down(sm) {
-      margin-right: rem(-$indent-arrows-x-sm);
+      margin-right: rem(-$indent-arrows-sm);
     }
   }
 }

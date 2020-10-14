@@ -1,5 +1,5 @@
 <template>
-	<tag-link :link="link" class="link-action" :class="[ link.loading && 'is-loading' ]">
+	<tag-link :link="link" class="link-action" :class="[ link.loading && 'is-loading', link.small && 'link-action--small' ]">
 		<span class="link-action__text">{{ link.text }}</span>
 		<icon class="link-action__icon" :icon="link.icon"></icon>
 	</tag-link>
@@ -89,6 +89,16 @@ export default {
 
 		#{$b}__icon {
 			opacity: 0;
+		}
+	}
+
+	&--small {
+		#{$b}__text {
+			@include text-small;
+		}
+
+		#{$b}__icon {
+			margin-left: rem(4);
 		}
 	}
 }
