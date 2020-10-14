@@ -7,6 +7,7 @@
 			:text="text"
 			:duration="duration"
 			:selectedDate="selectedDate"
+			:loadMeets="loadMeets"
 			@select="selectDate"
 		>
 			<template v-slot:footnote>
@@ -63,6 +64,23 @@ export default {
 		...mapActions('record', {
 			selectDate: 'selectDate',
 		}),
+
+		// TODO: Загрузка
+		async loadMeets(date) {
+			const options = {
+				date,
+				duration: 7,
+				type: true,
+			};
+
+			await new Promise(resolve => {
+				setTimeout(() => {
+					resolve(true);
+				}, 3000);
+			});
+			// Получаем по api meets
+			// Добавляем в store и все
+		},
 	},
 }
 </script>

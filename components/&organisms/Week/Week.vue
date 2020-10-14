@@ -41,6 +41,7 @@ export default {
 		meets: Array,
 		text: Object,
 		selectedDate: [ String, Date ],
+		loadMeets: Function,
 	},
 
 	data: (ctx) => {
@@ -53,6 +54,8 @@ export default {
 			currentDateText: '',
 			startWeekDay,
 			week: [],
+			preloader: false,
+			laodStack: [],
 			points: [
 				{ text: ctx.text.free, color: 'green' },
 				{ text: ctx.text.record, color: 'red' },
@@ -116,7 +119,7 @@ export default {
 			this.currentDateText = `${month} ${year}`;
 		},
 
-		updateWeek() {
+		async updateWeek() {
 			const week = [];
 			for (let i = 0; i < 7; i++) {
 				const date = new Date(this.startWeekDay.getTime());
@@ -130,6 +133,21 @@ export default {
 				});
 			}
 			this.week = week;
+
+			await this.getMeets();
+		},
+
+		// TODO: Добавить прелоадер
+		async getMeets() {
+			const time = this.startWeekDay.getTime();
+
+			// Проверка в стеке загруженных
+			const isExist = this.laodStack.indexOf(time) !== -1;
+			if (isExist) return;
+
+			this.preloader = true;
+			await this.loadMeets(this.startWeekDay);
+			this.preloader = false;
 		},
 
 		gotoToday() {
