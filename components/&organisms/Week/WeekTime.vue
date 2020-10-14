@@ -14,7 +14,7 @@ export default {
 .week-time {
 	position: absolute;
 
-	&::before {
+	&::after {
 		content: '';
 		position: absolute;
 		top: 0;
@@ -24,13 +24,14 @@ export default {
 		width: rem(9);
 		height: rem(9);
 		transform: translate(-50%, -50%);
+		border: 1px solid $color-light;
 	}
 
-	&::after {
+	&::before {
 		content: '';
 		display: block;
 		width: 100%;
-		height: rem(2);
+		height: 1px;
 		background-color: $color-dark;
 		transform: translateY(-50%);
 	}

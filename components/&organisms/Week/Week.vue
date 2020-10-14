@@ -10,6 +10,9 @@
 			<week-point-list class="week__points" :items="points"></week-point-list>
 			<slot name="footnote"></slot>
 		</div>
+		<div class="week__preloader">
+			<spinner></spinner>
+		</div>
 	</div>
 </template>
 
@@ -17,6 +20,7 @@
 import WeekPointList from './WeekPointList';
 import WeekCalendar from './WeekCalendar';
 import NavArrows from '+/NavArrows';
+import Spinner from '+/Spinner';
 
 import { dateLocales, getStartWeekDay, equalDates } from '@/utils/dates';
 
@@ -25,6 +29,7 @@ export default {
 		WeekPointList,
 		WeekCalendar,
 		NavArrows,
+		Spinner,
 	},
 	props: {
 		timeFrom: {
@@ -188,6 +193,8 @@ export default {
 
 <style lang="scss">
 .week {
+	position: relative;
+
 	&__control {
 		display: flex;
 		justify-content: flex-end;
@@ -223,6 +230,17 @@ export default {
 
 	&__current {
 		@include text-default;
+	}
+
+	&__preloader {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 
 	&__today {
