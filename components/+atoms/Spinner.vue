@@ -5,21 +5,10 @@
 	</svg>
 </template>
 
-<script>
-export default {
-	props: {
-		spinner: {
-			type: Object,
-			default: () => ({
-				play: true,
-			}),
-		}
-	}
-}
-</script>
-
 <style lang="scss">
 .spinner {
+	width: rem(48);
+	height: rem(48);
 	animation: spinner-loader-main 1.4s infinite linear;
 
 	&__ring {

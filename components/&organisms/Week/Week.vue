@@ -1,5 +1,5 @@
 <template>
-	<div class="week">
+	<div class="week" :class="[ preloader && 'week--preloader' ]">
 		<div class="week__control">
 			<button v-show="!existCurrentDay" @click="gotoToday" class="week__today">{{ text.today_action }}</button>
 			<p class="week__current">{{ currentDateText }}</p>
@@ -124,6 +124,7 @@ export default {
 			this.currentDateText = `${month} ${year}`;
 		},
 
+		// Обновляем неделю
 		async updateWeek() {
 			const week = [];
 			for (let i = 0; i < 7; i++) {
@@ -142,9 +143,12 @@ export default {
 			await this.getMeets();
 		},
 
-		// TODO: Добавить прелоадер
+		// Получаем миты, и добавляем недели в базу что их загрузили
 		async getMeets() {
-			const time = this.startWeekDay.getTime();
+			// Получаем цифры времени
+			const date = new Date(this.startWeekDay.getTime());
+			date.setHours(0, 0, 0, 0);
+			const time = date.getTime();
 
 			// Проверка в стеке загруженных
 			const isExist = this.laodStack.indexOf(time) !== -1;
@@ -152,11 +156,15 @@ export default {
 
 			this.preloader = true;
 			await this.loadMeets(this.startWeekDay);
+			this.laodStack.push(time);
+
 			this.preloader = false;
 		},
 
 		gotoToday() {
-			this.startWeekDay = getStartWeekDay();
+			const date = new Date();
+			date.setSeconds(0, 0);
+			this.startWeekDay = getStartWeekDay(date);
 			this.changeCurrentDateText();
 			this.updateWeek();
 		},
@@ -193,7 +201,16 @@ export default {
 
 <style lang="scss">
 .week {
+	$b: #{&};
 	position: relative;
+
+	&--preloader {
+		pointer-events: none;
+
+		#{$b}__preloader {
+			opacity: 1;
+		}
+	}
 
 	&__control {
 		display: flex;
@@ -241,6 +258,10 @@ export default {
 		left: 0;
 		width: 100%;
 		height: 100%;
+		pointer-events: none;
+		opacity: 0;
+
+		@include defaultTransition(opacity);
 	}
 
 	&__today {

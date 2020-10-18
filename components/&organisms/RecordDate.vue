@@ -65,7 +65,6 @@ export default {
 			selectDate: 'selectDate',
 		}),
 
-		// TODO: Загрузка
 		async loadMeets(date) {
 			const options = {
 				date,
@@ -73,7 +72,7 @@ export default {
 				type: true,
 			};
 
-			await new Promise(resolve => {
+			return new Promise(resolve => {
 				setTimeout(() => {
 					resolve(true);
 				}, 3000);
