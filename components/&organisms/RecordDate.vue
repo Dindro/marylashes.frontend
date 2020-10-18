@@ -25,7 +25,7 @@
 import Week from '&/Week/Week';
 import Action from '+/Action';
 
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
 	components: {
@@ -65,20 +65,25 @@ export default {
 			selectDate: 'selectDate',
 		}),
 
+		...mapMutations('record', {
+			addMeets: 'ADD_MEETS',
+		}),
+
 		async loadMeets(date) {
 			const options = {
-				date,
+				date: (date instanceof Date) ? date.getTime() : date,
 				duration: 7,
 				type: true,
 			};
 
-			return new Promise(resolve => {
-				setTimeout(() => {
-					resolve(true);
-				}, 3000);
-			});
-			// Получаем по api meets
-			// Добавляем в store и все
+			try {
+				const res = await this.$provide.meet.get(options);
+				this.addMeets(res.data);
+			} catch (err) {
+				// TODO: Обработка ошибок
+				// TODO: Вывод в общую ошибку
+				console.log(err);
+			}
 		},
 	},
 }
