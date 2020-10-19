@@ -98,6 +98,7 @@ export default {
 			return this.week.some(day => day.active);
 		},
 
+		// Массив встреч для текущей недели
 		meetsWeek() {
 			return this.meets.filter(({ date }) => {
 				return this.week.some(day => equalDates(day.date, date));

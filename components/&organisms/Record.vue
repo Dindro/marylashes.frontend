@@ -9,7 +9,9 @@
 			</ul>
 		</div>
 		<div class="record__content" :class="[`record__content--${componentName}`]">
-			<component :is="componentName" @change="selectTab"></component>
+			<keep-alive>
+				<component :is="componentName" @change="selectTab"></component>
+			</keep-alive>
 		</div>
 	</div>
 </template>

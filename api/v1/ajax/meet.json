@@ -2,6 +2,11 @@
   {
     "free": true,
     "duration": 3.5,
-    "date": 1603008015757
+    "date": 1603101641613
+  },
+  {
+    "record": true,
+    "duration": 4,
+    "date": 1603364400000
   }
 ]

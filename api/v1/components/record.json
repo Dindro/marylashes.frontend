@@ -50,28 +50,6 @@
       "text": "Выберите данный пункт, вместе подберем что вам лучше подойдет"
     }
   ],
-  "meets": [
-    {
-      "free": true,
-      "duration": 3.5,
-      "date": 1601899200000
-    },
-    {
-      "free": true,
-      "duration": 3.5,
-      "date": 1602590400000
-    },
-    {
-      "record": true,
-      "duration": 2.5,
-      "date": 1601971200000
-    },
-    {
-      "record": true,
-      "duration": 2.5,
-      "date": 1602072000000
-    }
-  ],
   "contacts": {
     "info": [
       {

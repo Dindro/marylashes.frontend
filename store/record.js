@@ -75,9 +75,8 @@ export const mutations = {
 
 export const actions = {
 	init({ commit, dispatch }, req) {
-		const { services, text, meets, contacts } = req;
+		const { services, text, contacts } = req;
 		commit('SET_SERVICES', services);
-		commit('ADD_MEETS', meets);
 		commit('SET_TEXT', text);
 		commit('SET_CONTACTS', contacts);
 	},

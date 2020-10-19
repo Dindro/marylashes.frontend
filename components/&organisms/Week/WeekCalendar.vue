@@ -383,6 +383,11 @@ export default {
 			await this.$nextTick();
 			this.updateRender();
 		},
+
+		async meetsWeek() {
+			await this.$nextTick();
+			this.updateRender();
+		}
 	}
 }
 </script>
