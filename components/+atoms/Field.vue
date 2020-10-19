@@ -11,6 +11,7 @@ import FieldInput from '+/FieldInput'  ;
 import FieldCheckbox from '+/FieldCheckbox';
 
 export default {
+	inheritAttrs: false,
 	components: {
 		FieldInput,
 		FieldCheckbox,
