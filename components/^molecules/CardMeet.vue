@@ -66,7 +66,7 @@ export default {
 		position: absolute;
 		top: rem(16);
 		right: rem(16);
-		opacity: 0.3;
+		opacity: 0.65;
 		outline: none !important;
 
 		@include defaultTransition(opacity);

@@ -92,6 +92,11 @@ export default {
 		border: 1px solid rgba($color-dark, 0.3);
 		cursor: pointer;
 
+		@include media-breakpoint-down(sm) {
+			width: rem(20);
+			height: rem(20);
+		}
+
 		&::before {
 			content: '';
 			position: static;

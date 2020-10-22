@@ -31,6 +31,26 @@
       }
     },
     {
+      "view_id": "2.5D",
+      "title": "2.5D",
+      "price": 1200,
+      "duration": 2.5,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
+      "view_id": "3D",
+      "title": "3D",
+      "price": 1300,
+      "duration": 2.5,
+      "image": {
+        "src": "/img/hero/girl-sleep.jpg",
+        "alt": ""
+      }
+    },
+    {
       "view_id": "CLEAR",
       "title": "Снятие",
       "text": "Снятие моей работы с последующим наращиванием — бесплатно.",
@@ -128,8 +148,8 @@
     },
     "services": {
       "cursor_choose": "Выбрать",
-      "meets_prev": "Предыдущие записи",
-      "meets_next": "Предстоящие записи",
+      "meets_prev": "Мои предыдущие записи",
+      "meets_next": "Мои предстоящие записи",
       "price": "цена",
       "price_info": "*внимание, если вы наращивали у меня и хотите снова нарастить, то снятие будет — бесплатно"
     },

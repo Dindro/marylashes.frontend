@@ -26,7 +26,19 @@ export default $axios => ({
 			const f = $axios.post(URL, form);
 
 			setTimeout(() => {
-				resolve(f);
+				const res = {
+					data: {
+						id: 'id' + Date.now(),
+						title: "Заявка отправлена",
+						text: "За день до посещения свяжемся для подтверждения записи",
+						action: {
+							text: "Закрыть",
+							type: "button",
+							color: "outline-dark",
+						}
+					}
+				};
+				resolve(res);
 			}, 1500);
 		});
 

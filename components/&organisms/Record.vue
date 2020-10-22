@@ -1,7 +1,7 @@
 <template>
 	<div class="record">
 		<div class="record__control">
-			<ul class="record__tabs">
+			<ul class="record__tabs" :class="[ active === 3 && 'record__tabs--disabled' ]">
 				<li class="record__tab-wrapper" v-for="(tab, index) in tabs" :key="index">
 					<button class="record__tab" :class="{ 'is-active': active === index }" @click="selectTab(index)">{{ tab.title }}</button>
 					<p class="record__choose record-choose">{{ tab.text }}</p>
@@ -20,16 +20,18 @@
 import RecordService from '&/RecordService';
 import RecordDate from '&/RecordDate';
 import RecordContact from '&/RecordContact';
+import RecordResult from '&/RecordResult';
 
 import { mapState, mapGetters } from 'vuex';
 
-const COMPONENTS = ['record-service', 'record-date', 'record-contact'];
+const COMPONENTS = ['record-service', 'record-date', 'record-contact', 'record-result'];
 
 export default {
 	components: {
 		RecordService,
 		RecordDate,
 		RecordContact,
+		RecordResult,
 	},
 
 	data: () => ({
@@ -91,6 +93,10 @@ export default {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+
+		&--disabled {
+			pointer-events: none;
+		}
 	}
 
 	&__tab-wrapper {

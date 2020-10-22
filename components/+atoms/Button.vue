@@ -7,6 +7,9 @@
 			!button.text && button.icon && 'button--morphing',
 			button.size && `button--${button.size}`,
 			button.loading && `button--loading`,
+			button.fit && 'button--fit',
+			button.fit_sm && 'button--fit--sm',
+			button.shake && 'button--shake',
 		]"
 		tag="button"
 		class="button"
@@ -102,14 +105,14 @@ export default {
 		position: absolute;
 		margin: auto;
 		opacity: 0;
-		@include defaultTransition(transform, opacity);
+		@include defaultTransition(transform, opacity, background-color);
     }
 
     &:hover {
 		color: $color-dark;
 
 		&::before {
-			transform: scale(30);
+			transform: scale(32);
 			opacity: 1;
 		}
 
@@ -240,6 +243,39 @@ export default {
 
 	&--lg {
 		height: rem(72);
+	}
+
+	&--fit {
+		width: 100%;
+
+		&--sm {
+			@include media-breakpoint-down(sm) {
+				width: 100%;
+			}
+		}
+	}
+
+	&--shake {
+		border: 1px solid $color-red !important;
+		background-color: $color-red !important;
+		color: $color-white !important;
+		animation: shake $timing $easing forwards;
+
+		&::before {
+			background-color: $color-red !important;
+		}
+	}
+}
+
+@keyframes shake {
+	20%,
+	60% {
+		transform: translateX(#{rem(8)});
+	}
+
+	40%,
+	80% {
+		transform: translateX(#{rem(-8)});
 	}
 }
 </style>

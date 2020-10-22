@@ -12,6 +12,7 @@ export const state = () => ({
 	selectedDate: null,
 	text: {},
 	contacts: {},
+	result: {},
 });
 
 export const getters = {
@@ -34,6 +35,7 @@ export const getters = {
 		}, 0);
 	},
 	SELECTED_SERVICES: state => state.services.filter(service => service.selected),
+	SELECTED_SERVICES_ID: (state, getters) => getters.SELECTED_SERVICES.map(service => service.view_id),
 	SELECTED_DATE_TEXT: (state) => {
 		if (typeof state.selectedDate === 'string') {
 			switch (state.selectedDate) {
@@ -77,6 +79,7 @@ export const mutations = {
 		state.contacts = contacts;
 	},
 	SET_CONTACTS_FIELD: (state, { field, value }) => field.value = value,
+	SET_RESULT: (state, result) => state.result = result,
 };
 
 export const actions = {
