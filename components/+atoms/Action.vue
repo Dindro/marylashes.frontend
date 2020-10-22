@@ -21,7 +21,7 @@ export default {
 
 	computed: {
 		componentName() {
-			if (this.action.type === 'button') return 'btn';
+			if (this.action.type === 'button' || this.action.type === 'submit') return 'btn';
 			return 'link-action';
 		},
 

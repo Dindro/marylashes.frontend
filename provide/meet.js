@@ -20,4 +20,16 @@ export default $axios => ({
 			params: options,
 		});
 	},
+
+	add(form) {
+		return new Promise(resolve => {
+			const f = $axios.post(URL, form);
+
+			setTimeout(() => {
+				resolve(f);
+			}, 1500);
+		});
+
+		return $axios.post(URL, form);
+	}
 });

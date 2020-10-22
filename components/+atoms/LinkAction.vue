@@ -1,18 +1,23 @@
 <template>
-	<tag-link :link="link" class="link-action" :class="[ link.loading && 'is-loading', link.small && 'link-action--small' ]">
+	<tag-link :link="link" class="link-action" :class="[ link.loading && 'link-action--loading', link.small && 'link-action--small' ]">
 		<span class="link-action__text">{{ link.text }}</span>
-		<icon class="link-action__icon" :icon="link.icon"></icon>
+		<transition :duration="300" name="fade" mode="out-in">
+			<icon v-if="!link.loading" class="link-action__icon" :icon="link.icon" key="icon"></icon>
+			<spinner v-else class="link-action__spinner" :spinner="{ size: 'xss' }" key="spinner"></spinner>
+		</transition>
 	</tag-link>
 </template>
 
 <script>
 import TagLink from "+/TagLink";
 import Icon from '+/Icon';
+import Spinner from '+/Spinner';
 
 export default {
 	components: {
 		TagLink,
 		Icon,
+		Spinner,
 	},
 
 	props: {
@@ -40,8 +45,10 @@ export default {
 	&__icon {
 		overflow: hidden;
 		margin-left: rem(8);
+	}
 
-		@include defaultTransition(opacity);
+	&__spinner {
+		margin-left: rem(8);
 	}
 
 	.icon {
@@ -64,32 +71,8 @@ export default {
 		}
 	}
 
-	&.is-loading {
+	&--loading {
 		pointer-events: none;
-
-		#{$b}__text {
-			position: relative;
-
-			&::after {
-				content: '';
-				top: 0;
-				bottom: 0;
-				margin: auto;
-				display: block;
-				height: rem(16);
-      			width: rem(16);
-				position: absolute;
-				left: calc(100% + #{rem(8)});
-				animation: $loader-spin-animation;
-				border: 2px solid currentColor;
-				border-radius: 50%;
-				border-right-color: transparent !important;
-			}
-		}
-
-		#{$b}__icon {
-			opacity: 0;
-		}
 	}
 
 	&--small {
@@ -116,5 +99,16 @@ export default {
 	100% {
 		transform: none;
 	}
+}
+</style>
+
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  	transition: opacity $timing $easing;
+}
+.fade-enter,
+.fade-leave-to {
+  	opacity: 0;
 }
 </style>

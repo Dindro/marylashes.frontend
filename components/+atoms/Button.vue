@@ -6,23 +6,27 @@
 			button.round && 'button--round',
 			!button.text && button.icon && 'button--morphing',
 			button.size && `button--${button.size}`,
+			button.loading && `button--loading`,
 		]"
 		tag="button"
 		class="button"
 	>
 		<icon-vue class="button__icon" v-if="button.icon" :icon="button.icon"></icon-vue>
 		<span class="button__text" v-if="button.text">{{ button.text }}</span>
+		<spinner :spinner="{ size: 'sm' }" class="button__spinner"></spinner>
 	</tag-link>
 </template>
 
 <script>
 import TagLink from '+/TagLink';
 import IconVue from '+/Icon';
+import Spinner from '+/Spinner';
 
 export default {
 	components: {
 		TagLink,
 		IconVue,
+		Spinner,
 	},
 
 	props: {
@@ -51,6 +55,7 @@ export default {
     position: relative;
     overflow: hidden;
 	cursor: pointer;
+	user-select: none;
 	outline: none !important;
 
 	@include defaultTransition(color);
@@ -64,66 +69,85 @@ export default {
 	}
 
     &__text {
-      position: relative;
-      @include defaultTransition(transform);
-      @include text-default;
-    }
+		position: relative;
+		@include defaultTransition(transform);
+		@include text-default;
+	}
+
+	&__spinner {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	&--loading {
+		pointer-events: none !important;
+
+		#{$b}__spinner {
+			opacity: 1;
+		}
+
+		#{$b}__icon,
+		#{$b}__text {
+			color: transparent !important;
+		}
+	}
 
     &::before {
-      content: '';
-      background-color: $color-saphire;
-      height: rem(10);
-      width: rem(10);
-      border-radius: 50%;
-      position: absolute;
-      margin: auto;
-      opacity: 0;
-      @include defaultTransition(transform, opacity);
+		content: '';
+		background-color: $color-saphire;
+		height: rem(10);
+		width: rem(10);
+		border-radius: 50%;
+		position: absolute;
+		margin: auto;
+		opacity: 0;
+		@include defaultTransition(transform, opacity);
     }
 
     &:hover {
-      color: $color-dark;
+		color: $color-dark;
 
-      &::before {
-        transform: scale(30);
-        opacity: 1;
-      }
+		&::before {
+			transform: scale(30);
+			opacity: 1;
+		}
 
-      #{$b}__text {
-        transform: scale(0.9);
-      }
+		#{$b}__text {
+			transform: scale(0.9);
+		}
     }
 
     &,
     &--dark,
     &--default {
-      background-color: $color-dark;
-      color: $color-white;
+		background-color: $color-dark;
+		color: $color-white;
     }
 
     // --white при ховере
     &--dark--white {
-      &:hover {
-        color: $color-dark;
+		&:hover {
+			color: $color-dark;
 
-        &::before {
-          background-color: $color-white;
-        }
-      }
+			&::before {
+				background-color: $color-white;
+			}
+		}
     }
 
     &--outline-dark {
-      border: 1px solid $color-dark;
-      background-color: transparent;
-      color: $color-dark;
+		border: 1px solid $color-dark;
+		background-color: transparent;
+		color: $color-dark;
 
-      &::before {
-        background-color: $color-dark;
-      }
+		&::before {
+			background-color: $color-dark;
+		}
 
-      &:hover {
-        color: $color-white;
-      }
+		&:hover {
+			color: $color-white;
+		}
 	}
 
 	&--white {
@@ -140,44 +164,44 @@ export default {
 	}
 
     &--outline-white {
-      border: 1px solid $color-white;
-      background-color: transparent;
-      color: $color-white;
+		border: 1px solid $color-white;
+		background-color: transparent;
+		color: $color-white;
 
-      &::before {
-        background-color: $color-white;
-      }
+		&::before {
+			background-color: $color-white;
+		}
 
-      &:hover {
-        color: $color-dark;
-      }
+		&:hover {
+			color: $color-dark;
+		}
     }
 
     &--saphire {
-      background-color: $color-saphire;
-      color: $color-dark;
+		background-color: $color-saphire;
+		color: $color-dark;
 
-      &::before {
-        background-color: $color-dark;
-      }
+		&::before {
+			background-color: $color-dark;
+		}
 
-      &:hover {
-        color: $color-white;
-      }
+		&:hover {
+			color: $color-white;
+		}
     }
 
     &--outline-saphire {
-      border: 1px solid $color-saphire;
-      background-color: transparent;
-      color: $color-saphire;
+		border: 1px solid $color-saphire;
+		background-color: transparent;
+		color: $color-saphire;
 
-      &::before {
-        background-color: $color-saphire;
-      }
+		&::before {
+			background-color: $color-saphire;
+		}
 
-      &:hover {
-        color: $color-dark;
-      }
+		&:hover {
+			color: $color-dark;
+		}
 	}
 
 	&--transparent {

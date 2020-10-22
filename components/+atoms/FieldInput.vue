@@ -3,33 +3,33 @@
 		<input
 			v-if="isInput"
 			class="input"
-			v-model="value"
 			v-mask="maskComputed"
-			:autocomplete="autocomplete"
+			:value="value"
+			:autocomplete="autocompleteComputed"
 			:pattern="patternComputed"
 			:inputmode="inputmodeComputed"
 			:type="type"
-			:required="required"
 			:readonly="readonly"
 			:disabled="disabled"
 			:name="name"
 			:id="id"
 			:placeholder="placeholder"
+			@input="$emit('input', $event.target.value)"
 		>
 		<textarea
 			v-else
 			class="input input--textarea"
-			v-model="value"
 			v-mask="maskComputed"
+			:value="value"
 			:autocomplete="autocompleteComputed"
 			:pattern="patternComputed"
 			:inputmode="inputmodeComputed"
-			:required="required"
 			:readonly="readonly"
 			:disabled="disabled"
 			:name="name"
 			:id="id"
 			:placeholder="placeholder"
+			@input="$emit('input', $event.target.value)"
 		>
 		</textarea>
 		<label class="input-shell-label" :class="[ isExist && 'input-shell-label--exist' ]">{{ label }}</label>
@@ -40,11 +40,17 @@
 // README: https://css-tricks.com/everything-you-ever-wanted-to-know-about-inputmode/
 // README: https://www.twilio.com/blog/html-attributes-two-factor-authentication-autocomplete
 
+import { phoneMask } from '@/utils/regex';
 const VueMaskDirective = process.client ? require('v-mask').VueMaskDirective : null;
 
 export default {
+	inheritAttrs: false,
+
 	props: {
-		required: Boolean,
+		value: {
+			type: String,
+			value: '',
+		},
 		input: Boolean,
 		textarea: Boolean,
 		type: {
@@ -63,10 +69,6 @@ export default {
 		inputmode: String,			// Дает понять браузеру - какую клавиатуру вывести на экран
 	},
 
-	data: () => ({
-		value: '',
-	}),
-
 	directives: {
 		mask: VueMaskDirective,
 	},
@@ -83,7 +85,7 @@ export default {
 		maskComputed() {
 			if (this.mask) return this.mask;
 
-			if (this.type === 'tel') return '+7 (###) ### ## ##';
+			if (this.type === 'tel') return phoneMask;
 			return null;
 		},
 
@@ -118,16 +120,35 @@ export default {
 	padding: rem(20) rem(24) 0 rem(24);
 	border-radius: 0;
 
-	@include defaultTransition(box-shadow);
+	@include defaultTransition(box-shadow, border-color);
 	@include text-default;
+
+	@include media-breakpoint-down(sm) {
+		height: rem($input-height-sm);
+	}
 
 	&:hover,
 	&:focus {
 		box-shadow: 0px rem(8) rem(20) 0px rgba($color-dark, 0.1);
 	}
 
-	@include media-breakpoint-down(sm) {
-		height: rem($input-height-sm);
+	&::placeholder {
+		color: $color-dark;
+		opacity: 0.3;
+		@include defaultTransition(opacity);
+	}
+
+	&:not(:focus)::placeholder {
+		opacity: 0;
+	}
+
+	@at-root .has-error & {
+		border-color: rgba($color-red, 0.5);
+
+		&:hover,
+		&:focus {
+			box-shadow: 0px rem(8) rem(20) 0px rgba($color-red, 0.1);
+		}
 	}
 }
 
@@ -146,11 +167,15 @@ export default {
 	transform-origin: left center;
 	pointer-events: none;
 
-	@include defaultTransition(transform);
+	@include defaultTransition(transform, color);
 
 	@at-root input:focus + &,
 	&--exist {
-		transform: translateY(-100%) scale(0.8);
+		transform: translateY(-100%) scale(0.85);
+	}
+
+	@at-root .has-error & {
+		color: $color-red;
 	}
 }
 </style>

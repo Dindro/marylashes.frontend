@@ -37,6 +37,7 @@ export default {
 			// Проверка на отсутсвтие ссылки
 			if (!href) return {
 				componentName: this.tag || 'span',
+				type: this.tag === 'button' ? link.type : null,
 			};
 
 			// Проверка на внешние ресурсы

@@ -25,8 +25,6 @@ export const actions = {
 	},
 
 	async nuxtClientInit({ dispatch }, ctx) {
-		dispatch('record/loadSelectedServices');
-		dispatch('record/loadSelectedDate');
-		dispatch('record/loadUserMeets');
+		dispatch('record/load');
 	}
 };

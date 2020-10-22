@@ -3,6 +3,7 @@ import { formatDayMonthTime } from '@/utils/dates';
 import servicesStorage from '@/storage/services';
 import recordDateStorage from '@/storage/recordDate';
 import meetsStorage from '@/storage/meets';
+import fieldsStorage from '@/storage/fields';
 
 export const state = () => ({
 	services: [],
@@ -70,15 +71,27 @@ export const mutations = {
 	},
 	SET_SELECT_DATE: (state, date) => state.selectedDate = date,
 	ADD_USER_MEETS: (state, meets) => state.userMeets.push(...meets),
-	SET_CONTACTS: (state, contacts) => state.contacts = contacts,
+	SET_CONTACTS: (state, contacts) => {
+		[...contacts.info, ...contacts.socials].forEach(field => field.value = field.hasOwnProperty('value') ? field.value : '');
+		[...contacts.checkboxes].forEach(field => field.value = field.hasOwnProperty('value') ? field.value : false);
+		state.contacts = contacts;
+	},
+	SET_CONTACTS_FIELD: (state, { field, value }) => field.value = value,
 };
 
 export const actions = {
-	init({ commit, dispatch }, req) {
+	init({ commit }, req) {
 		const { services, text, contacts } = req;
 		commit('SET_SERVICES', services);
 		commit('SET_TEXT', text);
 		commit('SET_CONTACTS', contacts);
+	},
+
+	load({ dispatch }) {
+		dispatch('loadSelectedServices');
+		dispatch('loadSelectedDate');
+		dispatch('loadUserMeets');
+		dispatch('loadContactsFields');
 	},
 
 	selectService({ state, commit }, service) {
@@ -131,11 +144,25 @@ export const actions = {
 		commit('ADD_USER_MEETS', userMeets);
 	},
 
-	loadNextMeetsFromStorage() {},
+	setContactsField({ commit }, { field, value }) {
+		commit('SET_CONTACTS_FIELD', { field, value });
 
-	saveSelectedDateToStorage() {},
+		if (!field.save || !field.name) return;
 
-	loadFormFromStorage() {},
+		fieldsStorage.add(value, 'RECORD', field.name);
+	},
 
-	saveFormToStorage() {}
+	loadContactsFields({ state, commit }) {
+		const { info, socials, checkboxes } = state.contacts;
+		[...info, ...socials, ...checkboxes].forEach(field => {
+			if (!field.save || !field.name ) return;
+
+			let value = fieldsStorage.get('RECORD', field.name);
+
+			if (value === null) value = '';
+			if (field.checkbox) value = value === 'true';
+
+			commit('SET_CONTACTS_FIELD', { field, value });
+		});
+	}
 };

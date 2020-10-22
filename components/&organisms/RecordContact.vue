@@ -1,5 +1,5 @@
 <template>
-	<div class="record-contact">
+	<div class="record-contact" :class="[ loading && 'record-contact--loading' ]">
 		<div class="record-contact__check record-contact-check">
 			<table class="record-contact-check__items">
 				<tr>
@@ -28,27 +28,30 @@
 			</p>
 		</div>
 
-		<div class="record-contact__form record-form">
-			<div class="record-form__contact record-form-grid">
-				<field class="record-form-grid__item" v-for="(field, i) in contacts.info" :key="i" v-bind="field"></field>
-			</div>
-			<div class="record-form__socials record-form-grid">
-				<p class="record-form-grid__title">{{ text.socials_header }}</p>
-				<field class="record-form-grid__item" v-for="(field, i) in contacts.socials" :key="i" v-bind="field"></field>
-			</div>
-			<div class="record-form__checkboxes record-form-grid record-form-grid--sm">
-				<field class="record-form-grid__item record-form-grid__item--lg" v-for="(field, i) in contacts.checkboxes" :key="i" v-bind="field"></field>
-			</div>
-			<div class="record-form__action">
-				<action :action="contacts.action"></action>
-			</div>
-		</div>
+		<validation-observer v-slot="{ handleSubmit }" ref="form" tag="div" slim>
+			<form @submit.prevent="handleSubmit(onSubmit)" class="record-form record-contact__form">
+				<div class="record-form__contact record-form-grid">
+					<field class="record-form-grid__item" v-for="(field, i) in contacts.info" :key="i" v-bind="field" @input="value => inputField({ field, value })"></field>
+				</div>
+				<div class="record-form__socials record-form-grid">
+					<p class="record-form-grid__title">{{ text.socials_header }}</p>
+					<field class="record-form-grid__item" v-for="(field, i) in contacts.socials" :key="i" v-bind="field" @input="value => inputField({ field, value })"></field>
+				</div>
+				<div class="record-form__checkboxes record-form-grid record-form-grid--sm">
+					<field class="record-form-grid__item record-form-grid__item--lg" v-for="(field, i) in contacts.checkboxes" :key="i" v-bind="field" @input="value => inputField({ field, value })"></field>
+				</div>
+				<div class="record-form__action">
+					<action :action="Object.assign({}, contacts.action, { type: 'submit', loading })"></action>
+				</div>
+			</form>
+		</validation-observer>
 	</div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { getTime } from '~/utils/dates';
+import { ValidationObserver } from 'vee-validate';
 import IconVue from '+/Icon';
 import FieldInput from '+/FieldInput';
 import Field from '+/Field';
@@ -60,25 +63,28 @@ export default {
 		FieldInput,
 		Field,
 		Action,
+		ValidationObserver,
 	},
 
 	data: () => ({
+		loading: false,
 		editIcon: {
 			name: '24/edit',
-		}
+		},
 	}),
 
 	computed: {
 		...mapState('record', {
 			text: state => state.text.contacts,
 			contacts: 'contacts',
+			selectedDateNative: 'selectedDate',
 		}),
 
 		...mapGetters('record', {
 			selectedServices: 'SELECTED_SERVICES',
 			selectedDate: 'SELECTED_DATE_TEXT',
 			duration: 'DURATION',
-			price: 'PRICE'
+			price: 'PRICE',
 		}),
 
 		selectedServicesText() {
@@ -90,7 +96,47 @@ export default {
 			const duration = this.duration ? ` (${this.duration}ч)` : '';
 			return `${this.selectedDate}${duration}`;
 		}
-	}
+	},
+
+	methods: {
+		...mapActions('record', {
+			inputField: 'setContactsField',
+		}),
+
+		onSubmit() {
+			process.env.NODE_ENV === 'development' && console.info('Record form submit');
+
+			this.loading = true;
+
+			// Получаем данные
+			const form = this.createForm();
+
+			// Получаем результат
+			this.$provide.meet.add(form)
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => console.log(err))
+				.finally(() => this.loading = false);
+		},
+
+		createForm() {
+			const fields = [
+				...this.contacts.info,
+				...this.contacts.socials,
+				...this.contacts.checkboxes,
+			].map(({ name, value }) => ({ name, value }));
+
+			const date = (this.selectedDateNative instanceof Date) ? this.selectedDateNative.getTime() : this.selectedDateNative;
+			const services = this.selectedServices.map(service => service.view_id);
+
+			return {
+				fields,
+				date,
+				services,
+			};
+		},
+	},
 }
 </script>
 
@@ -108,6 +154,10 @@ export default {
 	&__form {
 		padding-right: rem(48);
 		width: 60%;
+	}
+
+	&--loading {
+		pointer-events: none !important;
 	}
 }
 

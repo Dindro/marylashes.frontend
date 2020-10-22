@@ -55,41 +55,63 @@
       {
         "input": true,
         "label": "Ваше имя",
-        "required": true
+        "placeholder": "Например 'Маша'",
+        "required": true,
+        "name": "NAME",
+        "save": true
       },
       {
         "input": true,
         "label": "Телефон",
+        "placeholder": "8 (999) 999 99 99",
         "type": "tel",
-        "required": true
+        "required": true,
+        "name": "PHONE",
+        "save": true
       }
     ],
     "socials": [
       {
         "input": true,
-        "label": "Vk"
+        "label": "Vk",
+        "placeholder": "vk.com/",
+        "name": "SOCIAL_VK",
+        "save": true
       },
       {
         "input": true,
-        "label": "In"
+        "label": "In",
+        "placeholder": "instagramm.com/",
+        "name": "SOCIAL_INSTAGRAMM",
+        "save": true
       },
       {
         "input": true,
-        "label": "Vb"
+        "label": "Vb",
+        "placeholder": "8 (999) 999 99 99",
+        "name": "SOCIAL_VIBER",
+        "save": true
       },
       {
         "input": true,
-        "label": "Wa"
+        "label": "Wa",
+        "placeholder": "8 (999) 999 99 99",
+        "name": "SOCIAL_WHATSAPP",
+        "save": true
       }
     ],
     "checkboxes": [
       {
         "checkbox": true,
-        "label": "Были ли вы у меня ранее?"
+        "label": "Были ли вы у меня ранее?",
+        "name": "VISITED",
+        "save": true
       },
       {
         "checkbox": true,
-        "label": "Согласен на <a href='#'>политику обработки данных</a>"
+        "label": "Согласен на <a href='#'>политику обработки данных</a>",
+        "required": true,
+        "name": "POLITICS"
       }
     ],
     "action": {

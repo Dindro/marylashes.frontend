@@ -2,11 +2,12 @@
 	<label class="checkbox">
 		<input
 			class="checkbox__input"
-			v-model="value"
 			:type="type"
 			:id="id"
 			:name="name"
 			:disabled="disabled"
+			:checked="value"
+			@change="$emit('input', $event.target.checked)"
 		>
 		<span class="checkbox__cube"></span>
 		<span class="checkbox__label" v-if="label" v-html="label"></span>
@@ -15,20 +16,19 @@
 
 <script>
 export default {
+	inheritAttrs: false,
+
 	props: {
 		type: {
 			type: String,
 			default: 'checkbox'
 		},
+		value: Boolean,
 		label: String,
 		disabled: Boolean,
 		id: String,
 		name: String,
 	},
-
-	data: () => ({
-		value: false,
-	}),
 }
 </script>
 
@@ -67,11 +67,17 @@ export default {
 	&__label {
 		display: inline-block;
 		padding-left: rem(12);
+		user-select: none;
 		cursor: pointer;
 		@include text-default;
+		@include defaultTransition(color);
 
 		a {
 			@include line-animate-over;
+		}
+
+		@at-root .has-error & {
+			color: $color-red;
 		}
 	}
 
@@ -119,6 +125,14 @@ export default {
 		#{$b}__input:checked ~ & {
 			&::before {
 				opacity: 1;
+			}
+		}
+
+		@at-root .has-error & {
+			border-color: rgba($color-red, 0.5);
+
+			&::after {
+				box-shadow: 0px rem(5) rem(10) rem(3) rgba($color-red, 0.1);
 			}
 		}
 	}
