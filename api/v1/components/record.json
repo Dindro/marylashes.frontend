@@ -74,7 +74,7 @@
     "info": [
       {
         "input": true,
-        "label": "Ваше имя",
+        "label": "Ваше имя*",
         "placeholder": "Например 'Маша'",
         "required": true,
         "name": "NAME",
@@ -82,7 +82,7 @@
       },
       {
         "input": true,
-        "label": "Телефон",
+        "label": "Телефон*",
         "placeholder": "8 (999) 999 99 99",
         "type": "tel",
         "required": true,
@@ -104,20 +104,6 @@
         "placeholder": "instagramm.com/",
         "name": "SOCIAL_INSTAGRAMM",
         "save": true
-      },
-      {
-        "input": true,
-        "label": "Vb",
-        "placeholder": "8 (999) 999 99 99",
-        "name": "SOCIAL_VIBER",
-        "save": true
-      },
-      {
-        "input": true,
-        "label": "Wa",
-        "placeholder": "8 (999) 999 99 99",
-        "name": "SOCIAL_WHATSAPP",
-        "save": true
       }
     ],
     "checkboxes": [
@@ -129,7 +115,7 @@
       },
       {
         "checkbox": true,
-        "label": "Согласен на <a href='#'>политику обработки персональных данных</a>",
+        "label": "Согласен на <a href='#'>политику обработки персональных данных</a>*",
         "required": true,
         "name": "POLITICS"
       }

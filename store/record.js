@@ -58,7 +58,9 @@ export const getters = {
 	},
 	NEXT_MEETS: (state) => {
 		const current = new Date();
-		return state.userMeets.filter(meet => meet.date > current);
+		return state.userMeets
+			.filter(meet => typeof meet.date === 'string' || meet.date > current)
+			.map(meet => meet.date === 'INDIVIDUAL' ? Object.assign({}, meet, { date: state.text.date.individual }) : meet);
 	},
 };
 

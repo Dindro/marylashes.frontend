@@ -120,14 +120,18 @@ export default {
 			resetSelectedData: 'resetSelectedData',
 		}),
 
+		shakeAction() {
+			clearTimeout(this.shake);
+			this.shake = setTimeout(() => this.shake = false, 350);
+		},
+
 		async onSubmit() {
 			process.env.NODE_ENV === 'development' && console.info('Record form submit');
 
 			// Проверка на валидность
 			const success = await this.$refs.form.validate();
 			if (!success) {
-				clearTimeout(this.shake);
-				this.shake = setTimeout(() => this.shake = false, 400);
+				this.shakeAction();
 				return;
 			}
 
@@ -153,10 +157,10 @@ export default {
 					// Записываем данные для сообщения
 					this.setResult(result);
 
-					// Переключаемся на сообщения
+					// Переключаемся на сообщения (view)
 					this.$emit('change', 3);
 
-					// Ставим дефолтные значения
+					// Выбранные значения ставим на дефолт
 					this.resetSelectedData();
 				})
 				.catch(err => {

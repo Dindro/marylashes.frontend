@@ -2,8 +2,6 @@ const KEY_NAME = 'RECORD_SELECTED_DATE';
 
 export default {
 	add(date) {
-		if (!date) return;
-
 		let value;
 		if (date instanceof Date) value = date.getTime();
 		else value = date;
@@ -14,6 +12,7 @@ export default {
 	get() {
 		const value = this.loadStorage();
 		if (!value) return;
+		if (value === 'null') return null;
 
 		const date = new Date(parseInt(value));
 		if (!isNaN(date.getTime())) return date;
