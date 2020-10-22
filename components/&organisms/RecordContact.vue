@@ -117,11 +117,13 @@ export default {
 
 		...mapActions('record', {
 			inputField: 'setContactsField',
+			resetSelectedData: 'resetSelectedData',
 		}),
 
 		async onSubmit() {
 			process.env.NODE_ENV === 'development' && console.info('Record form submit');
 
+			// Проверка на валидность
 			const success = await this.$refs.form.validate();
 			if (!success) {
 				clearTimeout(this.shake);
@@ -153,6 +155,9 @@ export default {
 
 					// Переключаемся на сообщения
 					this.$emit('change', 3);
+
+					// Ставим дефолтные значения
+					this.resetSelectedData();
 				})
 				.catch(err => {
 					// TODO: Добавить обработку ошибки

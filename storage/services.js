@@ -25,6 +25,10 @@ export default {
 		this.saveStorage(values);
 	},
 
+	removeAll() {
+		localStorage.removeItem(KEY_NAME);
+	},
+
 	get() {
 		return this.loadStorage();
 	},

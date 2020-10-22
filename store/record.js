@@ -167,5 +167,11 @@ export const actions = {
 
 			commit('SET_CONTACTS_FIELD', { field, value });
 		});
+	},
+
+	resetSelectedData({ commit, dispatch, state }) {
+		commit('DISELECT_SERVICES', state.services);
+		servicesStorage.removeAll();
+		dispatch('selectDate', null);
 	}
 };

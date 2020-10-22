@@ -1,7 +1,7 @@
 <template>
 	<div class="record-result">
 		<h2 class="record-result__title">{{ result.title }}</h2>
-		<p class="record-result__text text-default">{{ result.text }}</p>
+		<p class="record-result__text text-default" v-html="result.text"></p>
 		<action class="record-result__action" :action="result.action" @click="close"></action>
 	</div>
 </template>
@@ -24,8 +24,6 @@ export default {
 	methods: {
 		close() {
 			this.$emit('modal:close');
-
-			// TODO: Стирать данные
 		}
 	},
 }
@@ -42,6 +40,10 @@ export default {
 	&__title {
 		@include h2;
 		margin-bottom: rem(8);
+	}
+
+	&__text {
+		text-align: center;
 	}
 
 	&__action {

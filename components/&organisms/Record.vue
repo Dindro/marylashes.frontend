@@ -1,7 +1,7 @@
 <template>
 	<div class="record">
 		<div class="record__control">
-			<ul class="record__tabs" :class="[ active === 3 && 'record__tabs--disabled' ]">
+			<ul class="record__tabs">
 				<li class="record__tab-wrapper" v-for="(tab, index) in tabs" :key="index">
 					<button class="record__tab" :class="{ 'is-active': active === index }" @click="selectTab(index)">{{ tab.title }}</button>
 					<p class="record__choose record-choose">{{ tab.text }}</p>
@@ -93,10 +93,6 @@ export default {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-
-		&--disabled {
-			pointer-events: none;
-		}
 	}
 
 	&__tab-wrapper {
