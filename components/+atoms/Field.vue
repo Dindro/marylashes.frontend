@@ -16,7 +16,7 @@
 
 <script>
 import { ValidationProvider, extend } from 'vee-validate';
-import { required, regex } from 'vee-validate/dist/rules';
+import { required, regex } from 'vee-validate/dist/rules.umd';
 import { phone as phoneRegex } from '@/utils/regex';
 import FieldCheckbox from '+/FieldCheckbox';
 import FieldInput from '+/FieldInput'  ;

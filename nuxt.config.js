@@ -46,11 +46,11 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+	{ src: '@/plugins/provide' },
 	{ src: '@/plugins/nuxt-client-init', mode: 'client' },
     { src: '@/plugins/height', mode: 'client' },
 	{ src: '@/plugins/animations/index', mode: 'client' },
 	{ src: '@/plugins/cursor/index', mode: 'client' },
-	{ src: '@/plugins/provide' }
   ],
   /*
   ** Auto import components

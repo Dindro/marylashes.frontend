@@ -57,7 +57,7 @@ export const getters = {
 		return state.userMeets.filter(meet => meet.date < current);
 	},
 	NEXT_MEETS: (state) => {
-		const current = new Date();
+		const current = Date.now();
 		return state.userMeets
 			.filter(meet => typeof meet.date === 'string' || meet.date > current)
 			.map(meet => meet.date === 'INDIVIDUAL' ? Object.assign({}, meet, { date: state.text.date.individual }) : meet);
@@ -144,8 +144,35 @@ export const actions = {
 		commit('SET_SELECT_DATE', value);
 	},
 
-	loadUserMeets({ commit }) {
+	async loadUserMeets({ commit }) {
 		const userMeets = meetsStorage.get();
+
+		const current = Date.now();
+		const nextUserMeets = userMeets.filter(meet => typeof meet.date === 'string' || meet.date > current);
+		const nextUserMeetsId = nextUserMeets.map(meet => meet.id);
+
+		let serverMeets;
+		try {
+			const res = await this.$provide.meet.get({id: nextUserMeetsId});
+			serverMeets = res.data;
+		} catch (err) {
+			console.log('Load user meets: ', err);
+		}
+
+		if (serverMeets && serverMeets.length) {
+			// Заменяем следующие миты
+			nextUserMeets.forEach(meet => {
+				const findedMeet = serverMeets.find(m => m.id === meet.id);
+				if (!findedMeet) return;
+
+				meet = findedMeet;
+			});
+
+			// Записываем в local
+			nextUserMeetsId.forEach(id => meetsStorage.remove(id));
+			nextUserMeets.forEach(meet => meetsStorage.add(meet));
+		}
+
 		commit('ADD_USER_MEETS', userMeets);
 	},
 
@@ -175,5 +202,5 @@ export const actions = {
 		commit('DISELECT_SERVICES', state.services);
 		servicesStorage.removeAll();
 		dispatch('selectDate', null);
-	}
+	},
 };
