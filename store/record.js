@@ -163,14 +163,12 @@ export const actions = {
 			// Заменяем следующие миты
 			nextUserMeets.forEach(meet => {
 				const findedMeet = serverMeets.find(m => m.id === meet.id);
-				if (!findedMeet) return;
-
-				meet = findedMeet;
+				if (findedMeet) meet = findedMeet;
 			});
 
-			// Записываем в local
-			nextUserMeetsId.forEach(id => meetsStorage.remove(id));
-			nextUserMeets.forEach(meet => meetsStorage.add(meet));
+			// Обновляем в localstorage
+			// nextUserMeetsId.forEach(id => meetsStorage.remove(id));
+			// nextUserMeets.forEach(meet => meetsStorage.add(meet));
 		}
 
 		commit('ADD_USER_MEETS', userMeets);
