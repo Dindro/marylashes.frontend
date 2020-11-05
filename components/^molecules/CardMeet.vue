@@ -1,6 +1,9 @@
 <template>
 	<div class="card-meet" :class="[card.deletable && 'card-meet--deletable']">
-		<p class="card-meet__views">{{ views }}</p>
+		<p class="card-meet__header">
+			<span class="card-meet__views">{{ views }}</span>
+			<span class="card-meet__price" v-if="card.price">{{ card.price }}₽</span>
+		</p>
 		<p class="card-meet__date">{{ date }} {{ duration }}</p>
 		<button class="card-meet__delete" v-if="card.deletable" @click="$emit('delete', card)">
 			<icon-vue :icon="{ name: '24/cross', size: 16 }"></icon-vue>
@@ -46,7 +49,6 @@ export default {
 	background-color: $color-light;
 	border-radius: rem(2);
 	padding: rem(16);
-	text-transform: lowercase;
 	white-space: nowrap;
 	opacity: 0.65;
 	user-select: none;
@@ -55,6 +57,11 @@ export default {
 
 	&__date {
 		margin-top: rem(4);
+	}
+
+	&__date,
+	&__views {
+		text-transform: lowercase;
 	}
 
 	&__delete {

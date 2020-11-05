@@ -80,7 +80,9 @@ export default {
 			'selectService',
 		]),
 
-		cancelMeet(meet) {},
+		cancelMeet(meet) {
+
+		},
 
 		// Получить название по id
 		getServiceTextById(id) {
