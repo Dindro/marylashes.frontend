@@ -14,7 +14,7 @@
 				<div class="record-date-action">
 					<p class="record-date-action__separate">{{ text.or }}</p>
 					<p class="record-date-action__text">{{ text.individual_text }}</p>
-					<action @click.native="selectDate('INDIVIDUAL')" class="record-date-action__action" :action="action"></action>
+					<action @click.native="selectDateIndividual" class="record-date-action__action" :action="action"></action>
 				</div>
 			</template>
 		</week>
@@ -69,6 +69,11 @@ export default {
 			addMeets: 'ADD_MEETS',
 		}),
 
+		selectDateIndividual() {
+			this.selectDate('INDIVIDUAL');
+			this.$emit('change', 2);
+		},
+
 		async loadMeets(date) {
 			const options = {
 				date: (date instanceof Date) ? date.getTime() : date,
@@ -98,6 +103,11 @@ export default {
 	display: flex;
 	align-items: center;
 
+	@include media-breakpoint-only(md) {
+		margin-top: rem(8);
+		justify-content: flex-end;
+	}
+
 	@include media-breakpoint-down(sm) {
 		display: block;
 		text-align: center;
@@ -123,6 +133,11 @@ export default {
 
 		@include media-breakpoint-up(md) {
 			display: none;
+		}
+
+		@include media-breakpoint-down(sm) {
+			font-size: rem(10);
+			margin-top: rem(8);
 		}
 	}
 }

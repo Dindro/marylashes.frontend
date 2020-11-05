@@ -13,7 +13,7 @@
     <image-vue :image="contact.image" class="contact__photo"></image-vue>
     <p class="contact__map-text text-default">{{ contact.map_text }}</p>
     <div v-animate="mapAnimation" class="contact__map">
-      <map-vue :map="contact.map"></map-vue>
+      <!-- <map-vue :map="contact.map"></map-vue> -->
     </div>
   </div>
 </template>

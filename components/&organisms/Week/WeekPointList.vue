@@ -25,9 +25,20 @@ export default {
 .week-point-list {
 	display: flex;
 
+	@include media-breakpoint-down(sm) {
+		flex-wrap: wrap;
+		margin: rem(-8) 0 0 rem(-8);
+	}
+
 	&__item {
-		& + & {
-			margin-left: rem(24);
+		@include media-breakpoint-up(md) {
+			& + & {
+				margin-left: rem(20);
+			}
+		}
+
+		@include media-breakpoint-down(sm) {
+			padding: rem(8) 0 0 rem(8);
 		}
 	}
 }

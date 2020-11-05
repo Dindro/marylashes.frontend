@@ -63,7 +63,7 @@ import CardActionSlider from '&/CardActionSlider';
 import ReviewSliderList from '&/ReviewSliderList';
 import PhotoGallery from '&/PhotoGallery';
 import CardArticleSlider from '&/CardArticleSlider';
-import Record from '&/Record';
+import Record from '&/Record/Record';
 
 export default {
 	components: {

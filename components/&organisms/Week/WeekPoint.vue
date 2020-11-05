@@ -31,10 +31,21 @@ export default {
 		width: rem(16);
 		border-radius: 2px;
 		margin-right: rem(8);
+		flex-shrink: 0;
+
+		@include media-breakpoint-down(sm) {
+			margin-right: rem(4);
+			width: rem(12);
+			height: rem(12);
+		}
 	}
 
 	&__text {
 		@include text-small;
+
+		@include media-breakpoint-down(sm) {
+			font-size: rem(10);
+		}
 	}
 
 	&--green {
@@ -45,11 +56,19 @@ export default {
 		}
 	}
 
-	&--red {
-		color: $color-red;
+	&--violet {
+		color: $color-violet;
 
 		#{$b}__box {
-			background-color: $color-red-light;
+			background-color: rgba($color-violet, 0.3);
+		}
+	}
+
+	&--dark {
+		color: $color-dark;
+
+		#{$b}__box {
+			background-color: rgba($color-dark, 0.3);
 		}
 	}
 }

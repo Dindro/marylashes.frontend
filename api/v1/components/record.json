@@ -145,11 +145,11 @@
       "individual_action": "Подобрать индивидуально",
       "individual": "индивидуально",
       "free": "Свободно",
-      "record": "Запись",
       "record_my": "Моя запись",
+      "record_block": "Запись невозможна",
+      "record_block_adaptive": "Невозможно",
       "hover": "Нажмите для выбора",
       "hover_adaptive": "Выбрать",
-      "hover_record": "Занято!",
       "or": "или"
     },
     "contacts": {

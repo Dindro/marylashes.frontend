@@ -1,4 +1,5 @@
 const URL = '/api/v1/ajax/meet';
+const URL_OPTION = `${URL}-option`;
 
 export default $axios => ({
 	/**
@@ -43,5 +44,27 @@ export default $axios => ({
 		});
 
 		return $axios.post(URL, form);
+	},
+
+	/**
+	 * Получить свободное
+	 *
+	 * @param {{ date: Number, duration: Number, type: String }} options
+	 */
+	getExist(options, optionsAxios) {
+		return new Promise(resolve => {
+			const resAxios = $axios.get(URL_OPTION, {
+				params: options,
+				...optionsAxios,
+			});
+
+			setTimeout(() => {
+				resolve(resAxios);
+			}, 1000);
+		});
+
+		return $axios.get(URL_OPTION, {
+			params: options,
+		});
 	}
 });

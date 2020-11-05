@@ -97,6 +97,17 @@ export const actions = {
 		dispatch('loadSelectedDate');
 		dispatch('loadUserMeets');
 		dispatch('loadContactsFields');
+		dispatch('watchDuration');
+	},
+
+	watchDuration({ state, getters, dispatch }) {
+		const unwatchDuration = this.watch(
+			() => getters.DURATION,
+			(value) => {
+				// Проверка на дату
+				if (state.selectedDate instanceof Date) dispatch('selectDate', null);
+			},
+		);
 	},
 
 	selectService({ state, commit }, service) {
@@ -139,39 +150,91 @@ export const actions = {
 		recordDateStorage.add(date);
 	},
 
-	loadSelectedDate({ commit }) {
+	async loadSelectedDate({ commit, state }) {
 		const value = recordDateStorage.get();
+		if (value instanceof Date) {
+			// Проверяем актуальна ли дата сейчас
+			const current = new Date();
+			if (current >= value) {
+				process.env.NODE_ENV === 'development' && console.info('Выбранная дата из localStorage устаревшая');
+				return;
+			};
+
+			// Проверяем стоит ли выбранная дата на СВОБОДНО
+			// Сделать запрос на сервер - актуальна ли дата
+
+			let existOnFree;
+			try {
+				const options = {
+					duration: state.duration,
+					time: value.getTime(),
+					exist: 'free',
+				};
+
+				const optionsAxios = {
+					timeout: 2000,
+				};
+
+				const res = await this.$provide.meet.getExist(options, optionsAxios);
+				existOnFree = res.data;
+			} catch (err) {
+				console.warn(err);
+				existOnFree = false;
+			}
+
+			if (!existOnFree) return;
+		}
+
 		commit('SET_SELECT_DATE', value);
 	},
 
 	async loadUserMeets({ commit }) {
+		// Структура в localStorage
+		// id
+		// price
+		// views
+		// date
+		// duration
+
+		// Получаем списки встреч с устройства
 		const userMeets = meetsStorage.get();
 
+		// Получаем массив id встреч которые возможны дальше
 		const current = Date.now();
-		const nextUserMeets = userMeets.filter(meet => typeof meet.date === 'string' || meet.date > current);
+		const prevUserMeets = [];
+		let nextUserMeets = [];
+		for (const meet of userMeets) {
+			if (meet.date === 'string' || meet.date > current) nextUserMeets.push(meet);
+			else prevUserMeets.push(meet);
+		}
 		const nextUserMeetsId = nextUserMeets.map(meet => meet.id);
 
-		let serverMeets;
-		try {
-			const res = await this.$provide.meet.get({id: nextUserMeetsId});
-			serverMeets = res.data;
-		} catch (err) {
-			console.log('Load user meets: ', err);
+		// Получаем по id-никам с сервера полноценные миты
+		let serverUserMeets = [];
+		if (nextUserMeetsId.length) {
+			try {
+				const res = await this.$provide.meet.get({ id: nextUserMeetsId });
+				serverUserMeets = res.data;
+			} catch (err) {
+				console.log('Load user meets: ', err);
+			}
 		}
 
-		if (serverMeets && serverMeets.length) {
-			// Заменяем следующие миты
+		// Дозаполняем серверные встречи
+		if (serverUserMeets && serverUserMeets.length) {
+			const meets = [];
+
 			nextUserMeets.forEach(meet => {
-				const findedMeet = serverMeets.find(m => m.id === meet.id);
-				if (findedMeet) meet = findedMeet;
+				const findedMeet = serverUserMeets.find(m => m.id === meet.id);
+				// Если не нашли его здесь - удаляем с localStorage
+				findedMeet ? meets.push(findedMeet) : meetsStorage.remove(meet.id);
 			});
 
-			// Обновляем в localstorage
-			// nextUserMeetsId.forEach(id => meetsStorage.remove(id));
-			// nextUserMeets.forEach(meet => meetsStorage.add(meet));
+			nextUserMeets = meets;
 		}
 
-		commit('ADD_USER_MEETS', userMeets);
+		const meets = [...nextUserMeets, ...prevUserMeets];
+		commit('ADD_USER_MEETS', meets);
 	},
 
 	setContactsField({ commit }, { field, value }) {

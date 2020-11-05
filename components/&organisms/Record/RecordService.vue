@@ -1,6 +1,6 @@
 <template>
 	<div class="record-service">
-		<card-record-list :card_record_list="Object.assign({}, { items: services })" @select="selectService"></card-record-list>
+		<card-record-list class="record-service__services" :card_record_list="Object.assign({}, { items: services })" @select="selectService"></card-record-list>
 
 		<client-only>
 			<div v-show="price !== 0" class="record-service__price record-service-price">
@@ -95,11 +95,20 @@ export default {
 
 <style lang="scss">
 .record-service {
+	@include media-breakpoint-down(sm) {
+		display: flex;
+		flex-direction: column;
+	}
+
 	&__meets {
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: rem(-24);
 		margin-top: rem(40 - 16);
+
+		@include media-breakpoint-down(sm) {
+			order: 3;
+		}
 	}
 
 	&__meet {
@@ -109,6 +118,18 @@ export default {
 
 	&__price {
 		margin-top: rem(24);
+
+		@include media-breakpoint-down(sm) {
+			order: 1;
+			margin-top: 0;
+			margin-bottom: rem(24);
+		}
+	}
+
+	&__services {
+		@include media-breakpoint-down(sm) {
+			order: 2;
+		}
 	}
 }
 

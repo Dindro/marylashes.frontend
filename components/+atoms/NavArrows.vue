@@ -3,7 +3,7 @@
 		<button
 			ref="prev"
 			class="nav-arrows__button nav-arrows__button--prev"
-			:class="[nav_arrows.prevLoading && 'is-loading']"
+			:class="[ nav_arrows.prevLoading && 'is-loading', nav_arrows.prevHidden && 'is-hidden' ]"
 			:disabled="nav_arrows.prevDisabled"
 			title="Назад"
 			aria-label="Назад"
@@ -14,7 +14,7 @@
 		<button
 			ref="next"
 			class="nav-arrows__button nav-arrows__button--next"
-			:class="[nav_arrows.nextLoading && 'is-loading']"
+			:class="[ nav_arrows.nextLoading && 'is-loading', nav_arrows.nextHidden && 'is-hidden' ]"
 			:disabled="nav_arrows.nextDisabled"
 			title="Вперёд"
 			aria-label="Вперёд"
@@ -134,6 +134,10 @@ export default {
 				border-radius: 50%;
 				border-right-color: transparent !important;
 			}
+		}
+
+		&.is-hidden {
+			display: none;
 		}
 	}
 

@@ -256,14 +256,7 @@ export default {
 	}
 
 	&--shake {
-		border: 1px solid $color-red !important;
-		background-color: $color-red !important;
-		color: $color-white !important;
 		animation: shake $timing $easing forwards;
-
-		&::before {
-			background-color: $color-red !important;
-		}
 	}
 }
 

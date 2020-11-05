@@ -21,15 +21,8 @@
 				</div>
 			</div>
 
-			<week-meet
-				v-for="(meet, index) in meets"
-				:key="'meet' + index"
-				:type="getMeetTypes(meet)"
-				:styling="meet.style"
-				:title="meet.record ? text.record : text.free"
-			></week-meet>
-			<week-meet v-if="selectedMeet" :type="[ 'hover', ...selectedMeet.opacify ? ['opacify'] : []]" :styling="selectedMeet.style" :title="selectedMeet.title" :time="selectedMeet.time"></week-meet>
-			<week-meet v-if="hover" :type="[ 'hover', ...hover.record ? ['record'] : []]" :styling="hover.style" :title="hover.title" :time="hover.time"></week-meet>
+			<week-meet v-if="selectedMeet" :type="[ 'hover', 'free', ...selectedMeet.opacify ? ['opacify'] : []]" :styling="selectedMeet.style" :title="selectedMeet.title" :time="selectedMeet.time"></week-meet>
+			<week-meet v-if="hover" :type="[ 'hover', ...hover.free ? ['free'] : []]" :styling="hover.style" :title="hover.title" :time="hover.time"></week-meet>
 
 			<week-time v-if="time" :styling="time.style"></week-time>
 		</div>
@@ -107,14 +100,9 @@ export default {
 
 			const half = isLast ? this.getCellElement(day, hour) : e.target;
 
-			// Поиск мит пересекающих с hover
-			const crossMeets = this.getMeetsCrossByDay(day, hour, duration);
-			this.meets.forEach(meet => this.$set(meet, 'hovered', false));
-			crossMeets.forEach(meet => this.$set(meet, 'hovered', true));
-
 			this.selected && this.selectedMeetCross(day, hour, duration);
 
-			// Вставка координат
+			// Вставка стилей
 			const time = getTime(hour);
 			const date = new Date(day.date.getTime());
 			date.setHours(time.h, time.m);
@@ -127,9 +115,11 @@ export default {
 
 			// Вставка текста
 			// Поиск записей пересекающих c hover
-			const crossRecords = crossMeets.filter(meet => meet.record);
-			hover.record = crossRecords.length !== 0;
-			hover.title = !hover.record ? ( isDesktop() ? this.text.hover : this.text.hover_adaptive ) : this.text.hover_record;
+			const enterOnFree = this.getMeetsEnterByDay(day, hour, duration).filter(meet => meet.free);
+			hover.free = enterOnFree.length !== 0;
+			hover.title = hover.free
+				? (isDesktop() ? this.text.hover : this.text.hover_adaptive)
+				: (isDesktop() ? this.text.record_block : this.text.record_block_adaptive);
 
 			if (duration >= 1) {
 				const from = time;
@@ -159,8 +149,7 @@ export default {
 
 		// Выбираем
 		async selectDate() {
-			if (!this.hover) return;
-			if (this.hover.record) return;
+			if (!this.hover || !this.hover.free) return;
 
 			const date = new Date(this.hover.date.getTime());
 			this.$emit('select', date);
@@ -228,16 +217,21 @@ export default {
 				|| this.$set(this.selected, 'opacify', false);
 		},
 
-		// Получить события которые пересекаются в одном дне
-		getMeetsCrossByDay(day, hour, duration, meets = this.meets) {
-			const recordsByDay = this.getMeetsByDay(day, meets);
-			const recordsCross = this.getMeetsCross(hour, duration, recordsByDay);
-			return recordsCross;
+		getMeetsEnterByDay(day, hour, duration, meets = this.meets) {
+			const meetsByDay = this.getMeetsByDay(day, meets);
+			const meetsEnter = this.getMeetsEnter(hour, duration, meetsByDay);
+			return meetsEnter;
 		},
 
-		// Получить события которые пересекаются
-		getMeetsCross(hour, duration, meets) {
-			return meets.filter(meet => this.isMeetCross(hour, duration, meet));
+		getMeetsEnter(hour, duration, meets) {
+			return meets.filter(meet => this.isMeetEnter(hour, duration, meet));
+		},
+
+		isMeetEnter(hour, duration, meet) {
+			const meetMinutes = meet.date.getMinutes() * 100 / 60 / 100;
+			const meetHours = meet.date.getHours() + meetMinutes;
+			const meetDuration = meet.duration;
+			return (meetHours <= hour && hour + duration <= meetHours + meetDuration);
 		},
 
 		// Встреча пересекатеся
@@ -271,10 +265,8 @@ export default {
 			const meetsByHour = this.getMeetsByHour(hour, duration, meetsByDay);
 
 			const free = meetsByHour.some(meet => meet.free);
-			const record = meetsByHour.some(meet => meet.record);
 			return {
 				'is-free': free,
-				'is-record': record,
 			};
 		},
 
@@ -303,25 +295,6 @@ export default {
 			};
 		},
 
-		// Получить массив типов для отображение week-meet
-		getMeetTypes(meet) {
-			return [
-				...meet.free ? ['free'] : [],
-				...meet.record ? ['record'] : [],
-				...meet.hovered ? ['hovered'] : []
-			];
-		},
-
-		// Обновляем рендер встрея
-		updateMeetStyle() {
-			this.meets.forEach((meet, i) => {
-				const half = this.getCellElement(meet, meet.date.getHours());
-				const style = this.getMeetStylePosition(half, meet.duration);
-
-				this.$set(this.meetsHelper, i, { style });
-			});
-		},
-
 		// Обновляем время
 		updateTime() {
 			const disableTime = () => this.$set(this, 'time', false);
@@ -348,13 +321,13 @@ export default {
 
 			style.top = `${top + (m * height / 60)}px`;
 			delete style.height;
+			delete style.width;
 
 			this.$set(this, 'time', { style });
 		},
 
 		// Обновляем рендеры
 		updateRender() {
-			this.updateMeetStyle();
 			this.updateTime();
 			this.updateSelectedMeet();
 		},
@@ -371,7 +344,7 @@ export default {
 		window.addEventListener('resize', updateRenderThrottle);
 
 		// Обновляем каждые 3 минуты
-		const intervalId = setInterval(this.updateTime.bind(this), 1000 * 60 * 3);
+		const intervalId = setInterval(this.updateTime.bind(this), 1000 * 60 * 5);
 		this.$once('hook:beforeDestroy', () => {
 			clearInterval(intervalId);
 			window.removeEventListener('resize', updateRenderThrottle);
@@ -394,6 +367,14 @@ export default {
 
 <style lang="scss">
 .week-calendar {
+	@include media-breakpoint-down(md) {
+		margin-left: rem(32);
+	}
+
+	@include media-breakpoint-down(sm) {
+		margin-left: rem(26);
+	}
+
 	&__header {
 		display: flex;
 		margin-bottom: rem(4);
@@ -414,8 +395,12 @@ export default {
 
 	&__hour {
 		height: 1px;
-		min-height: rem(50);
+		min-height: rem(48);
 		position: relative;
+
+		@include media-breakpoint-down(sm) {
+			min-height: rem(32);
+		}
 
 		&::before {
 			content: '';
@@ -431,10 +416,14 @@ export default {
 		&::after {
 			content: attr(data-hour);
 			position: absolute;
-			right: calc(100% + 2px);
+			right: calc(100% + #{rem(3)});
 			top: 1px;
 			opacity: 0.3;
 			@include text-small;
+
+			@include media-breakpoint-down(sm) {
+				font-size: rem(10);
+			}
 		}
 	}
 
@@ -465,10 +454,6 @@ export default {
 
 		&.is-free::before {
 			background-color: $color-green-light;
-		}
-
-		&.is-record::before {
-			background-color: $color-red-light;
 		}
 	}
 }

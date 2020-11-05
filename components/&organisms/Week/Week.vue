@@ -63,7 +63,8 @@ export default {
 			laodStack: [],
 			points: [
 				{ text: ctx.text.free, color: 'green' },
-				{ text: ctx.text.record, color: 'red' },
+				{ text: ctx.text.record_my, color: 'violet' },
+				{ text: ctx.text.record_block, color: 'dark', }
 			],
 			nav_arrows: {
 				color: 'dark',
@@ -205,6 +206,10 @@ export default {
 	$b: #{&};
 	position: relative;
 
+	@include media-breakpoint-down(sm) {
+		text-align: center; // Для control
+	}
+
 	&--preloader {
 		pointer-events: none;
 
@@ -218,14 +223,45 @@ export default {
 		justify-content: flex-end;
 		align-items: center;
 
+		@include media-breakpoint-down(sm) {
+			display: inline-block;
+			position: relative;
+			min-width: rem(112);
+		}
+
 		.nav-arrows {
-			margin-right: rem(-$indent-arrows);
-			margin-top: rem(-$indent-arrows);
-			margin-bottom: rem(-$indent-arrows);
+			@include media-breakpoint-up(md) {
+				margin-right: rem(-$indent-arrows);
+				margin-top: rem(-$indent-arrows);
+				margin-bottom: rem(-$indent-arrows);
+			}
+
+			@include media-breakpoint-down(sm) {
+				display: block;
+
+				&__button {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					margin: auto;
+
+					$position: calc(100% + #{rem(16)});
+
+					&--prev {
+						right: $position;
+					}
+
+					&--next {
+						left: $position;
+					}
+				}
+			}
 		}
 
 		> * + * {
-			margin-left: rem(24);
+			@include media-breakpoint-up(md) {
+				margin-left: rem(24);
+			}
 		}
 	}
 
@@ -239,9 +275,12 @@ export default {
 		align-items: center;
 		margin-top: rem(16);
 
-		@include media-breakpoint-down(sm) {
+		@include media-breakpoint-down(md) {
 			align-items: stretch;
 			flex-direction: column;
+		}
+
+		@include media-breakpoint-down(sm) {
 			margin-top: rem(8);
 		}
 	}
@@ -271,8 +310,13 @@ export default {
 		margin: 0;
 		outline: none !important;
 		opacity: 0.3;
+		background: none;
 		@include text-default;
 		@include defaultTransition(opacity);
+
+		@include media-breakpoint-down(sm) {
+			display: none;
+		}
 
 		&:hover {
 			opacity: 1;

@@ -49,7 +49,7 @@ export default {
 		@include media-breakpoint-down(sm) {
 			text-align: left;
 			word-break: break-word;
-			padding: 3px 3px 0 3px;
+			padding: 3px 2px 0 2px;
 			margin: 0;
 		}
 	}
@@ -58,10 +58,16 @@ export default {
 		position: absolute;
 		bottom: rem(2);
 		left: rem(4);
+
+		@include media-breakpoint-down(sm) {
+			bottom: 3px;
+			left: 2px;
+			text-align: left;
+		}
 	}
 
 	&--hover {
-		color: $color-violet;
+		color: $color-dark;
 
 		&::after {
 			content: '';
@@ -70,39 +76,26 @@ export default {
 			left: 1px;
 			right: 1px;
 			bottom: 1px;
-			border: 1px solid $color-violet;
+			border: 1px solid $color-dark;
 			border-radius: rem(2);
-			background-color: rgba($color-violet, 0.2);
+			background-color: rgba($color-dark, 0.2);
 		}
 
-		&#{$b}--record {
-			color: $color-dark;
+		&#{$b}--free {
+			color: $color-violet;
 
 			&::after {
-				border-color: $color-dark;
-				background-color: rgba($color-dark, 0.2);
+				border-color: $color-violet;
+				background-color: rgba($color-violet, 0.2);
 			}
 		}
 	}
 
 	&--free {
 		color: $color-green;
-	}
 
-	&--record {
-		color: $color-red;
-	}
-
-	&--free,
-	&--record {
 		#{$b}__title {
 			@include defaultTransition(filter);
-		}
-	}
-
-	&--hovered {
-		#{$b}__title {
-			filter: blur(rem(3));
 		}
 	}
 

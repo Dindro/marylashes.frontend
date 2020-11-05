@@ -71,7 +71,8 @@ export default {
 		loading: false,
 		shake: false,
 		editIcon: {
-			name: '24/edit',
+			name: '16/edit',
+			size: 24,
 		},
 	}),
 
@@ -149,6 +150,7 @@ export default {
 					// Сохраняем id в localStorage
 					meetsStorage.add({
 						id,
+						price: this.price,
 						views: this.selectedServicesId,
 						date: (this.selectedDateNative instanceof Date) ? this.selectedDateNative.getTime() : this.selectedDateNative,
 						duration: this.duration,
@@ -165,7 +167,7 @@ export default {
 				})
 				.catch(err => {
 					// TODO: Добавить обработку ошибки
-					console.log(err);
+					console.log('Добавить встречу', err);
 				})
 				.finally(() => this.loading = false);
 		},
