@@ -17,6 +17,31 @@
   }
 }
 
+@mixin make-container-padding {
+  width: 100%;
+
+  @include media-container-up {
+    $half-grid-max-width: $grid-max-width / 2;
+    $modal-padding: $half-grid-max-width - $wrapper-gutter-lg-1;
+
+    padding-right: calc(50vw - #{ rem($modal-padding) });
+    padding-left: calc(50vw - #{ rem($modal-padding) });
+  }
+
+  padding-left: rem($wrapper-gutter-lg-1);
+  padding-right: rem($wrapper-gutter-lg-1);
+
+  @include media-breakpoint-down(md) {
+    padding-left: rem($wrapper-gutter-md-1);
+    padding-right: rem($wrapper-gutter-md-1);
+  }
+
+  @include media-breakpoint-down(sm) {
+    padding-left: rem($wrapper-gutter-sm-1);
+    padding-right: rem($wrapper-gutter-sm-1);
+  }
+}
+
 /*
 * Миксин который действует с разрешения 2150px
 * $last-breakpoint-font-size  - самый высокий font-size для lg в файле src/base/_scale-html.scss

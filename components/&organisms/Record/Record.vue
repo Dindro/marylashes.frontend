@@ -22,7 +22,7 @@
 		</div>
 		<div class="record__content" :class="[`record__content--${componentName}`]">
 			<keep-alive>
-				<component :is="componentName" @change="selectTab"></component>
+				<component :is="componentName" @change="selectTab" @close="close"></component>
 			</keep-alive>
 		</div>
 	</div>
@@ -125,7 +125,11 @@ export default {
 				case 1:
 					if (this.selectedDate) return true;
 			}
-		}
+		},
+
+		close() {
+			this.$parent.$emit('close');
+		},
 	}
 }
 </script>
@@ -230,7 +234,7 @@ export default {
 	}
 
 	.record-date {
-		margin-top: rem(24);
+		margin-top: rem(40);
 
 		@include media-breakpoint-down(md) {
 			margin-top: rem(48);

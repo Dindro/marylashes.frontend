@@ -83,6 +83,10 @@ export default {
 		position: absolute;
 		color: $color-red;
 		margin-top: rem(4);
+
+		@include media-breakpoint-down(sm) {
+			margin-top: rem(2);
+		}
 	}
 }
 </style>

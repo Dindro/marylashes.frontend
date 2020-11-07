@@ -3,8 +3,10 @@ $z-index-header-logo: $z-index-header + 1;
 $z-index-preloader: $z-index-header-logo + 500;
 
 $z-index-gallery: $z-index-header + 500;
+$z-index-modal: $z-index-gallery;
 
 $z-index-cursor: $z-index-gallery + 500;
+
 
 $indent-arrows: 28;
 $indent-arrows-sm: 20;
@@ -13,3 +15,8 @@ $height-screen: calc(var(--vh, 1vh) * 100);
 
 $input-height: 60;
 $input-height-sm: 56;
+
+$button-height: 60;
+$button-height-sm: 56;
+$button-height--size--lg: 80;
+$button-height-sm--size--lg: 64;
