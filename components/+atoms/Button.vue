@@ -10,13 +10,16 @@
 			button.fit && 'button--fit',
 			button.fit_sm && 'button--fit--sm',
 			button.shake && 'button--shake',
+			button.hidden && 'button--hidden',
 		]"
+		:disabled="button.disabled"
+		:title="button.title"
 		tag="button"
 		class="button"
 	>
 		<icon-vue class="button__icon" v-if="button.icon" :icon="button.icon"></icon-vue>
 		<span class="button__text" v-if="button.text">{{ button.text }}</span>
-		<spinner :spinner="{ size: 'sm' }" class="button__spinner"></spinner>
+		<spinner :spinner="spinner" class="button__spinner"></spinner>
 	</tag-link>
 </template>
 
@@ -37,6 +40,12 @@ export default {
 			type: Object,
 			required: true,
 		}
+	},
+
+	computed: {
+		spinner() {
+			return this.button.spinner || { size: 'sm' }
+		}
 	}
 }
 </script>
@@ -53,7 +62,7 @@ export default {
     border: none;
     border-radius: 0;
     background: none;
-    height: rem(60);
+    height: rem($button-height);
     white-space: nowrap;
     position: relative;
     overflow: hidden;
@@ -64,7 +73,7 @@ export default {
 	@include defaultTransition(color);
 
 	@include media-breakpoint-down(sm) {
-		height: rem(56);
+		height: rem($button-height-sm);
 	}
 
 	&__icon {
@@ -83,6 +92,45 @@ export default {
 		pointer-events: none;
 	}
 
+	&::before {
+		content: '';
+		pointer-events: none;
+		height: rem(10);
+		width: rem(10);
+		border-radius: 50%;
+		position: absolute;
+		margin: auto;
+		opacity: 0;
+		@include defaultTransition(transform, opacity, background-color);
+    }
+
+	&:disabled,
+	&.disabled {
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+
+	&.disabled {
+		pointer-events: none !important;
+	}
+
+	@mixin hover-disabled {
+		&:hover:not(.disabled):not(:disabled) {
+			@content;
+		}
+	}
+
+	@include hover-disabled {
+		&::before {
+			transform: scale(32);
+			opacity: 1;
+		}
+
+		#{$b}__text {
+			transform: scale(0.9);
+		}
+	}
+
 	&--loading {
 		pointer-events: none !important;
 
@@ -96,41 +144,27 @@ export default {
 		}
 	}
 
-    &::before {
-		content: '';
-		background-color: $color-saphire;
-		height: rem(10);
-		width: rem(10);
-		border-radius: 50%;
-		position: absolute;
-		margin: auto;
-		opacity: 0;
-		@include defaultTransition(transform, opacity, background-color);
-    }
-
-    &:hover {
-		color: $color-dark;
-
-		&::before {
-			transform: scale(32);
-			opacity: 1;
-		}
-
-		#{$b}__text {
-			transform: scale(0.9);
-		}
-    }
-
-    &,
-    &--dark,
-    &--default {
+	&--default,
+    &--dark {
 		background-color: $color-dark;
 		color: $color-white;
+
+		@include hover-disabled {
+			color: $color-dark;
+
+			&::before {
+				background-color: $color-saphire;
+			}
+		}
     }
+
 
     // --white при ховере
     &--dark--white {
-		&:hover {
+		background-color: $color-dark;
+		color: $color-white;
+
+		@include hover-disabled {
 			color: $color-dark;
 
 			&::before {
@@ -148,7 +182,7 @@ export default {
 			background-color: $color-dark;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-white;
 		}
 	}
@@ -161,7 +195,7 @@ export default {
 			background-color: $color-dark;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-white;
 		}
 	}
@@ -175,7 +209,7 @@ export default {
 			background-color: $color-white;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-dark;
 		}
     }
@@ -188,7 +222,7 @@ export default {
 			background-color: $color-dark;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-white;
 		}
     }
@@ -202,7 +236,7 @@ export default {
 			background-color: $color-saphire;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-dark;
 		}
 	}
@@ -215,34 +249,79 @@ export default {
 			background-color: $color-white;
 		}
 
-		&:hover {
+		@include hover-disabled {
 			color: $color-dark;
 		}
 	}
 
+	&--transparent-dark {
+		background-color: transparent;
+		color: $color-dark;
+
+		&::before {
+			background-color: $color-dark;
+		}
+
+		@include hover-disabled {
+			color: $color-white;
+		}
+	}
+
 	&--round {
-		border-radius: rem(30);
+		border-radius: rem(($button-height / 2));
 
 		&#{$b}--lg {
-			border-radius: rem(36);
+			border-radius: rem(($button-height--size--lg / 2));
 		}
 	}
 
 	&--morphing {
-		padding: rem(0) rem(18);
+		padding: 0;
 		min-width: auto;
+		width: rem($button-height);
+		perspective: rem(400);
+		overflow: initial;
+
+		&::before {
+			opacity: 0;
+			transform: translateY(#{rem(16)}) rotateX(50deg);
+			height: 100%;
+			width: 100%;
+		}
+
+		@include hover-disabled {
+			&::before {
+				opacity: 1;
+				transform: none;
+			}
+		}
+
+		&:active:not(.disabled):not(:disabled) {
+			&::before {
+				transform: scale(1.1) !important;
+				transition-duration: 0.1s;
+			}
+		}
+
+		@include media-breakpoint-down(sm) {
+			width: rem($button-height-sm);
+		}
 
 		&#{$b}--lg {
-			padding: rem(0) rem(24);
+			width: rem($button-height--size--lg);
 
 			@include media-breakpoint-down(sm) {
-				padding: rem(0) rem(26);
+				width: rem($button-height-sm--size--lg);
 			}
 		}
 	}
 
 	&--lg {
-		height: rem(72);
+		height: rem($button-height--size--lg);
+
+		@include media-breakpoint-down(sm) {
+			height: rem($button-height-sm--size--lg);
+		}
 	}
 
 	&--fit {
@@ -257,6 +336,10 @@ export default {
 
 	&--shake {
 		animation: shake $timing $easing forwards;
+	}
+
+	&--hidden {
+		display: none;
 	}
 }
 
