@@ -10,7 +10,6 @@
 
     <section class="bg-white">
       <div class="container">
-		<record></record>
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
     </section>
@@ -63,7 +62,6 @@ import CardActionSlider from '&/CardActionSlider';
 import ReviewSliderList from '&/ReviewSliderList';
 import PhotoGallery from '&/PhotoGallery';
 import CardArticleSlider from '&/CardArticleSlider';
-import Record from '&/Record/Record';
 
 export default {
 	components: {
@@ -75,13 +73,12 @@ export default {
 		ReviewSliderList,
 		PhotoGallery,
 		CardArticleSlider,
-		Record,
 	},
 
 	asyncData(ctx) {
 		return ctx.app.$axios.get('/api/v1/index').then((res) => {
 			return res.data;
 		})
-	},
+  	}
 }
 </script>

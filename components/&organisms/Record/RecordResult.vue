@@ -31,15 +31,11 @@ export default {
 
 <style lang="scss">
 .record-result {
-	min-height: rem(600);
+	min-height: rem(480);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-
-	@include media-breakpoint-down(sm) {
-		min-height: rem(480);
-	}
 
 	&__title {
 		@include h2;

@@ -199,13 +199,26 @@ export const actions = {
 		// Получаем списки встреч с устройства
 		const userMeets = meetsStorage.get();
 
-		// Получаем массив id встреч которые возможны дальше
-		const current = Date.now();
-		const prevUserMeets = [];
+		// Получаем текущую дату
+		const currentDate = new Date();
+		const current = currentDate.getTime();
+
+		// Получаем дату год назад (чтобы удалить прошлые)
+		const COUNT_YEAR_AGO = 1;
+		const yearagoDate = new Date(current);
+		yearagoDate.setFullYear(yearagoDate.getFullYear() - COUNT_YEAR_AGO);
+		const yearago = yearagoDate.getTime();
+
+		// Распределяем встречи
+		let prevUserMeets = [];
 		let nextUserMeets = [];
 		for (const meet of userMeets) {
+			// Будущие встречи
 			if (meet.date === 'string' || meet.date > current) nextUserMeets.push(meet);
-			else prevUserMeets.push(meet);
+			// Прошлые встречи за год
+			else if (meet.date > yearago) prevUserMeets.push(meet);
+			// Удаляем встречи
+			else meetsStorage.remove(meet.id);
 		}
 		const nextUserMeetsId = nextUserMeets.map(meet => meet.id);
 
@@ -213,7 +226,7 @@ export const actions = {
 		let serverUserMeets = [];
 		if (nextUserMeetsId.length) {
 			try {
-				const res = await this.$provide.meet.get({ id: nextUserMeetsId });
+				const res = await this.$provide.meet.get({ ids: nextUserMeetsId });
 				serverUserMeets = res.data;
 			} catch (err) {
 				console.log('Load user meets: ', err);
@@ -229,6 +242,9 @@ export const actions = {
 				// Если не нашли его здесь - удаляем с localStorage
 				findedMeet ? meets.push(findedMeet) : meetsStorage.remove(meet.id);
 			});
+
+			// Сохраняем данные полученные с сервера
+			meetsStorage.update(meets);
 
 			nextUserMeets = meets;
 		}

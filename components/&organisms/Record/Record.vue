@@ -128,7 +128,7 @@ export default {
 		},
 
 		close() {
-			this.$parent.$emit('close');
+			this.$emit('close');
 		},
 	}
 }

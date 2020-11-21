@@ -534,7 +534,7 @@
       "items": [
         {
           "type": "button",
-          "color": "dark",
+          "color": "outline-dark",
           "text": "Оставить отзыв",
           "href": "#"
         }

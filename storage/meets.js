@@ -21,6 +21,22 @@ export default {
 		}
 	},
 
+	update(meets) {
+		if (!Array.isArray(meets)) {
+			meets = [ meets ];
+		}
+
+		const meetsStorage = this.loadStorage();
+		meets.forEach(meet => {
+			let meetFinded = meetsStorage.find(m => m.id === meet.id);
+			if (!meetFinded) return;
+
+			meetFinded = meet;
+		});
+
+		this.saveStorage(meetsStorage);
+	},
+
 	get() {
 		return this.loadStorage();
 	},

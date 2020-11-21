@@ -2,7 +2,7 @@
 	<div class="card-meet" :class="[card.deletable && 'card-meet--deletable']">
 		<p class="card-meet__header">
 			<span class="card-meet__views">{{ views }}</span>
-			<span class="card-meet__price" v-if="card.price">{{ card.price }}₽</span>
+			<span class="card-meet__price" v-if="card.price">— {{ card.price }}₽</span>
 		</p>
 		<p class="card-meet__date">{{ date }} {{ duration }}</p>
 		<button class="card-meet__delete" v-if="card.deletable" @click="$emit('delete', card)">

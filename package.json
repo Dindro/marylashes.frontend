@@ -17,7 +17,6 @@
     "@pauleliet/vue-sticky-directive": "git+https://github.com/dindro/vue-sticky-directive.git#feat/widthForce",
     "blueimp-gallery": "^3.3.0",
     "body-scroll-lock": "^3.0.3",
-    "express": "^4.17.1",
     "gsap": "^3.5.0",
     "nuxt": "^2.14.0",
     "raf-throttle": "^2.0.5",
@@ -25,11 +24,13 @@
     "v-mask": "^2.2.3",
     "v-runtime-template": "^1.10.0",
     "vee-validate": "^3.4.2",
+    "vue-js-modal": "^2.0.0-rc.6",
     "vue-yandex-maps": "^0.10.9"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.0.0",
     "node-sass": "^4.14.1",
-    "sass-loader": "^9.0.2"
+    "sass-loader": "^9.0.2",
+    "express": "^4.17.1"
   }
 }
