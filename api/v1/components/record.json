@@ -3,7 +3,7 @@
     {
       "view_id": "CLASSIC",
       "title": "Classic",
-      "price": 900,
+      "price": 1000,
       "duration": 2,
       "image": {
         "src": "/img/hero/girl-sleep.jpg",
@@ -13,7 +13,7 @@
     {
       "view_id": "1.5D",
       "title": "1.5D",
-      "price": 1000,
+      "price": 1100,
       "duration": 2.5,
       "image": {
         "src": "/img/hero/girl-sleep.jpg",
@@ -23,16 +23,6 @@
     {
       "view_id": "2D",
       "title": "2D",
-      "price": 1100,
-      "duration": 2.5,
-      "image": {
-        "src": "/img/hero/girl-sleep.jpg",
-        "alt": ""
-      }
-    },
-    {
-      "view_id": "2.5D",
-      "title": "2.5D",
       "price": 1200,
       "duration": 2.5,
       "image": {
@@ -43,7 +33,7 @@
     {
       "view_id": "3D",
       "title": "3D",
-      "price": 1300,
+      "price": 1400,
       "duration": 2.5,
       "image": {
         "src": "/img/hero/girl-sleep.jpg",

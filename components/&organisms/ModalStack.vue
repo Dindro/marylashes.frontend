@@ -48,6 +48,8 @@ export default {
 
 			await this.$nextTick();
 			this.$modal.show(name);
+
+			return name;
 		},
 
 		remove(id) {

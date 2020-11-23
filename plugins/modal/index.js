@@ -1,6 +1,7 @@
 /**
  * Вставляется в документ modal-stack
  * Если вызывается show и передается компонент, то показывается это все в modal-stack
+ * 	Иначе ищем модалку по названию и показываем
  */
 
 import { createDivInBody } from './utils';
@@ -40,7 +41,7 @@ export default (ctx, inject) => {
 			return {
 				subscription,
 
-				show(...args) {
+				async show(...args) {
 					const [component] = args;
 					switch (typeof component) {
 						case 'string':
@@ -52,7 +53,7 @@ export default (ctx, inject) => {
 						case 'object':
 						case 'function':
 							// Dynamic component
-							this.showComponent(...args);
+							return await this.showComponent(...args);
 							break;
 					}
 
@@ -62,8 +63,8 @@ export default (ctx, inject) => {
 					subscription.$emit('toggle', name, true, params)
 				},
 
-				showComponent(component, componentProps, modalProps, modalListeners) {
-					root?.modalStack.add(component, componentProps, modalProps, modalListeners);
+				async showComponent(component, componentProps, modalProps, modalListeners) {
+					return await root?.modalStack.add(component, componentProps, modalProps, modalListeners);
 				},
 
 				hide(name, params) {
@@ -72,6 +73,13 @@ export default (ctx, inject) => {
 
 				toggle(name, params) {
 					subscription.$emit('toggle', name, undefined, params);
+				},
+
+				getStatus(name) {
+					subscription.$emit('status', name);
+					const status = Object.assign({}, subscription.status);
+					subscription.status = null;
+					return status;
 				}
 			}
 		}

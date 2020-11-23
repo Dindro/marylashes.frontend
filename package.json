@@ -16,15 +16,14 @@
     "@nuxtjs/svg": "^0.1.11",
     "@pauleliet/vue-sticky-directive": "git+https://github.com/dindro/vue-sticky-directive.git#feat/widthForce",
     "blueimp-gallery": "^3.3.0",
-    "body-scroll-lock": "^3.0.3",
     "gsap": "^3.5.0",
     "nuxt": "^2.14.0",
     "raf-throttle": "^2.0.5",
+    "scroll-lock": "^2.1.4",
     "swiper": "^6.1.1",
     "v-mask": "^2.2.3",
     "v-runtime-template": "^1.10.0",
     "vee-validate": "^3.4.2",
-    "vue-js-modal": "^2.0.0-rc.6",
     "vue-yandex-maps": "^0.10.9"
   },
   "devDependencies": {

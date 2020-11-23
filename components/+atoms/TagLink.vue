@@ -40,6 +40,14 @@ export default {
 				type: this.tag === 'button' ? link.type : null,
 			};
 
+			if (typeof href === 'object') return {
+				componentName: 'nuxt-link',
+				to: href,
+				target: link.target,
+				rel: link.rel,
+				title: link.title,
+			};
+
 			// Проверка на внешние ресурсы
 			if (this.linkOnOtherResources(href)) return {
 				componentName: 'a',

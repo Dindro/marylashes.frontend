@@ -7,7 +7,9 @@
           "items": [
             {
               "type": "button",
-              "href": "#",
+              "href": {
+                "hash": "record"
+              },
               "color": "outline-saphire",
               "text": "Записаться онлайн"
             },
@@ -152,7 +154,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "CLASSIC"
+                }
+              }
             }
           ]
         }
@@ -186,7 +194,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "1.5D"
+                }
+              }
             }
           ]
         }
@@ -220,7 +234,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "2D"
+                }
+              }
             }
           ]
         }
@@ -254,7 +274,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "2.5D"
+                }
+              }
             }
           ]
         }
@@ -287,7 +313,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "3D"
+                }
+              }
             }
           ]
         }
@@ -313,7 +345,13 @@
             {
               "type": "button",
               "text": "Записаться онлайн",
-              "color": "saphire"
+              "color": "saphire",
+              "href": {
+                "hash": "record",
+                "query": {
+                  "view_id": "CLEAR"
+                }
+              }
             }
           ]
         }

@@ -1,27 +1,20 @@
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import { enablePageScroll, disablePageScroll, clearQueueScrollLocks, addFillGapSelector } from 'scroll-lock';
 
-let scrollStack = 0;
+addFillGapSelector('[data-gap]');
 
 const disableScroll = () => {
-  disableBodyScroll(document.body);
-  scrollStack++;
+	disablePageScroll();
 }
 
 const enableScroll = () => {
-  scrollStack --;
-
-  if (scrollStack <= 0) {
-    enableBodyScroll(document.body);
-    scrollStack = 0;
-  }
+	enablePageScroll();
 }
 
 /**
- * Включить скролл полноценно не смотря на scrollstack
+ * Включить скролл полноценно не смотря на scroll lock stack
  */
 const enableScrollAll = () => {
-  scrollStack = 0;
-  enableScroll();
+	clearQueueScrollLocks();
 }
 
 export {

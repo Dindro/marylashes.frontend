@@ -1,5 +1,5 @@
 <template>
-	<transition name="modal">
+	<transition name="modal" @after-leave="onAfterClose">
 		<div v-if="visible" class="modal" @click.self.stop="onClickOverlay">
 			<div class="modal__content">
 				<slot>
@@ -13,6 +13,7 @@
 
 <script>
 import Btn from '+/Button';
+import { disableScroll, enableScroll } from '~/utils/scroll';
 
 export default {
 	components: {
@@ -44,30 +45,36 @@ export default {
 
 	beforeMount() {
 		this.$modal.subscription.$on('toggle', this.onToggle);
+		this.$modal.subscription.$on('status', this.onStatus);
 		window.addEventListener('keyup', this.onEscapeKeyUp);
 	},
 
 	beforeDestroy() {
 		this.$modal.subscription.$off('toggle', this.onToggle);
-		window.removeEventListener('keyup', this.onEscapeKeyUp)
+		this.$modal.subscription.$off('status', this.onStatus);
+		window.removeEventListener('keyup', this.onEscapeKeyUp);
 	},
 
 	methods: {
 		close(params) {
-			// Enable scroll
-
 			// Set hide modal
 			this.visible = false;
 
-			// Set animation
+			// Emit event
 			this.$emit('closed');
+		},
+
+		// Вызывается после завершения анимации
+		onAfterClose() {
+			enableScroll();
 		},
 
 		open(params) {
 			// Disable Scroll
+			disableScroll();
+
 			// Set visiible modal
 			this.visible = true;
-			// Set animations
 		},
 
 		toggle(state, params) {
@@ -75,6 +82,15 @@ export default {
 
 			const action = state ? this.open : this.close;
 			action(params);
+		},
+
+		onStatus(name) {
+			if (this.name !== name) return;
+
+			this.$modal.subscription.status = {
+				open: this.visible,
+				id: this.name,
+			};
 		},
 
 		onComponentClose() {
@@ -94,7 +110,7 @@ export default {
 		},
 
 		onEscapeKeyUp(e) {
-			e.which === 27 && this.$modal.hide(this.name);
+			e.which === 27 && this.close();
 		},
 	},
 }

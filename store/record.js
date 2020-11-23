@@ -111,6 +111,11 @@ export const actions = {
 	},
 
 	selectService({ state, commit }, service) {
+		// В случае если передали по id
+		if (typeof service !== 'object') {
+			service = state.services.find(s => s.view_id === service);
+		}
+
 		if (!service) {
 			process.env.NODE_ENV === 'development' && console.info('Service is empty');
 			return;

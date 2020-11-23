@@ -1,7 +1,7 @@
 <template>
   <div class="header-shell" :class="{ 'is-open': isMenuOpen, 'is-fixed': isMenuFixed }">
 
-    <div class="header-logo" ref="logo">
+    <div class="header-logo" ref="logo" data-gap>
       <div class="header-logo__container container">
         <tag-link class="header-logo__link" :link="header.logo">
           <logo :small="isMenuFixed && !isMenuOpen" class="header-logo__icon"></logo>
@@ -12,7 +12,7 @@
 
     <div class="header" ref="header">
       <div class="header__container container">
-        <div class="header__menu">
+        <div class="header__menu" data-gap>
           <ul class="header__list">
             <li v-for="(item, index) in header.items" :key="index">
               <tag-link class="header__link text-default" ref="link" :link="item">
