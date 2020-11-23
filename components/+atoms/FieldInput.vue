@@ -142,6 +142,15 @@ export default {
 		opacity: 0;
 	}
 
+	&--textarea {
+		display: block;
+		padding-top: rem(29);
+
+		@include media-breakpoint-down(sm) {
+			padding-top: rem(28);
+		}
+	}
+
 	@at-root .has-error & {
 		border-color: rgba($color-red, 0.5);
 
@@ -159,19 +168,23 @@ export default {
 .input-shell-label {
 	@include text-default;
 	position: absolute;
-	top: 50%;
+	top: rem(19);
 	left: rem(24);
-	transform: translateY(-50%);
 	opacity: 0.65;
 	white-space: nowrap;
 	transform-origin: left center;
 	pointer-events: none;
 
+	@include media-breakpoint-down(sm) {
+		top: rem(17);
+	}
+
 	@include defaultTransition(transform, color);
 
 	@at-root input:focus + &,
+	textarea:focus + &,
 	&--exist {
-		transform: translateY(-100%) scale(0.85);
+		transform: translateY(-50%) scale(0.85);
 	}
 
 	@at-root .has-error & {
