@@ -73,31 +73,16 @@ export default {
     },
 
     initAnimation() {
-      const { swiper } = this.$refs;
-      const { ScrollTrigger } = require('gsap/ScrollTrigger');
-      gsap.registerPlugin(ScrollTrigger);
+		const { swiper } = this.$refs;
+		const { ScrollTrigger } = require('gsap/ScrollTrigger');
+		gsap.registerPlugin(ScrollTrigger);
 
-      if (isDesktop()) {
-        // Параллакс медленный вниз
-        this.animation = gsap.to(swiper, {
-          scrollTrigger: {
-            trigger: swiper,
-            start: 'top top',
-            end: () => window.innerHeight,
-            scrub: true,
-          },
-          ease: 'none',
-          translateY: '65%',
+		this.animation = ScrollTrigger.create({
+			trigger: swiper,
+			start: 'top top',
+			pin: true,
+			pinSpacing: false,
         });
-      } else {
-        // Установка PIN
-        this.animation = ScrollTrigger.create({
-          trigger: swiper,
-          start: 'top top',
-          pin: true,
-          pinSpacing: false,
-        });
-      }
     }
   },
 
