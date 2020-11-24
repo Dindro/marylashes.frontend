@@ -8,17 +8,20 @@ export default {
 		icon: {
 			type: Object,
 			required: true,
+			default: () => ({}),
 		},
 	},
 
 	data: (ctx) => ({
-		src: require(`assets/icons/${ctx.icon.name}.svg?raw`),
+		src: ctx.getIcon(ctx.icon.name),
 		size: ctx.icon.size || ctx.getSize(ctx.icon.name) || 'default',
 		name: ctx.getName(ctx.icon.name),
 	}),
 
 	methods: {
 		getSize(name) {
+			if (!name) return 'error-icon';
+
 			const words = name.split('/');
 			if (words.length <= 1) return undefined;
 
@@ -29,10 +32,21 @@ export default {
 		},
 
 		getName(name) {
+			if (!name) return 'error-icon';
+
 			const words = name.split('/');
 			if (words.length <= 1) return name;
 
 			return words[1];
+		},
+
+		getIcon(name) {
+			try {
+				return require(`assets/icons/${name}.svg?raw`);
+			} catch (err) {
+				process.env.NODE_ENV === 'development' && console.warn(`icon "${name}" not found!`);
+				return '';
+			}
 		}
 	},
 }
