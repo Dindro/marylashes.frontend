@@ -16,22 +16,25 @@
 			:placeholder="placeholder"
 			@input="$emit('input', $event.target.value)"
 		>
-		<textarea
-			v-else
-			class="input input--textarea"
-			v-mask="maskComputed"
-			:value="value"
-			:autocomplete="autocompleteComputed"
-			:pattern="patternComputed"
-			:inputmode="inputmodeComputed"
-			:readonly="readonly"
-			:disabled="disabled"
-			:name="name"
-			:id="id"
-			:placeholder="placeholder"
-			@input="$emit('input', $event.target.value)"
-		>
-		</textarea>
+		<template v-else>
+			<textarea
+				class="input input--textarea"
+				v-mask="maskComputed"
+				:value="value"
+				:autocomplete="autocompleteComputed"
+				:pattern="patternComputed"
+				:inputmode="inputmodeComputed"
+				:readonly="readonly"
+				:disabled="disabled"
+				:name="name"
+				:id="id"
+				:placeholder="placeholder"
+				@input="$emit('input', $event.target.value)"
+			>
+			</textarea>
+			<div class="input-shell-label-bg"></div>
+		</template>
+
 		<label class="input-shell-label" :class="[ isExist && 'input-shell-label--exist' ]">{{ label }}</label>
 	</div>
 </template>
@@ -145,9 +148,13 @@ export default {
 	&--textarea {
 		display: block;
 		padding-top: rem(29);
+		padding-bottom: rem(4);
+		min-height: rem($input-height);
+		height: rem(160);
 
 		@include media-breakpoint-down(sm) {
 			padding-top: rem(28);
+			min-height: rem($input-height-sm);
 		}
 	}
 
@@ -181,8 +188,8 @@ export default {
 
 	@include defaultTransition(transform, color);
 
-	@at-root input:focus + &,
-	textarea:focus + &,
+	@at-root input:focus ~ &,
+	textarea:focus ~ &,
 	&--exist {
 		transform: translateY(-50%) scale(0.85);
 	}
@@ -190,5 +197,14 @@ export default {
 	@at-root .has-error & {
 		color: $color-red;
 	}
+}
+
+.input-shell-label-bg {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	right: 16px;
+	background-image: linear-gradient(to bottom, rgba($color-white, 1) 0%, rgba($color-white, 1) 75%, rgba($color-white, 0) 100%);
+	height: rem(36);
 }
 </style>

@@ -61,7 +61,6 @@ import Action from '+/Action';
 export default {
 	components: {
 		IconVue,
-		FieldInput,
 		Field,
 		Action,
 		ValidationObserver,

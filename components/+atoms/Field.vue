@@ -1,5 +1,9 @@
 <template>
-	<validation-provider v-if="existRules" :rules="rules" v-slot="{ errors }" slim>
+	<!-- Filed group -->
+	<field-group v-if="group" v-bind="Object.assign({}, $attrs, $props)" @input="value => $emit('input', value)"></field-group>
+
+	<!-- Field validation -->
+	<validation-provider v-else-if="existRules" :rules="rules" :name="name" v-slot="{ errors }" slim>
 		<div class="field" :class="[ errors.length && 'has-error' ]">
 			<component :is="componentName" v-bind="Object.assign({}, $attrs, $props)" @input="value => $emit('input', value)"></component>
 			<transition name="slide" mode="out-in">
@@ -8,6 +12,7 @@
 		</div>
 	</validation-provider>
 
+	<!-- Field -->
 	<div class="field" v-else>
 		<component :is="componentName" v-bind="Object.assign({}, $attrs, $props)" @input="value => $emit('input', value)"></component>
 	</div>
@@ -19,7 +24,9 @@ import { ValidationProvider, extend } from 'vee-validate';
 import { required, regex } from 'vee-validate/dist/rules.umd';
 import { phone as phoneRegex } from '@/utils/regex';
 import FieldCheckbox from '+/FieldCheckbox';
-import FieldInput from '+/FieldInput'  ;
+import FieldInput from '+/FieldInput';
+import FieldGroup from '+/FieldGroup';
+import FieldImage from '+/FieldImage';
 
 extend('required', {
 	...required,
@@ -38,14 +45,19 @@ export default {
 		FieldInput,
 		FieldCheckbox,
 		ValidationProvider,
+		FieldGroup,
+		FieldImage,
 	},
 
 	props: {
 		input: Boolean,
 		checkbox: Boolean,
 		textarea: Boolean,
+		image: Boolean,
+		group: Boolean,
 		required: Boolean,
 		type: String,
+		name: String,
 	},
 
 	data: () => ({
@@ -56,6 +68,7 @@ export default {
 		componentName() {
 			if (this.input || this.textarea) return 'field-input';
 			else if (this.checkbox) return 'field-checkbox';
+			else if (this.image) return 'field-image';
 		},
 
 		rules() {
