@@ -10,6 +10,7 @@
 
     <section class="bg-white">
       <div class="container">
+		  <review-create></review-create>
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
     </section>
@@ -63,6 +64,8 @@ import ReviewSliderList from '&/ReviewSliderList';
 import PhotoGallery from '&/PhotoGallery';
 import CardArticleSlider from '&/CardArticleSlider';
 
+import ReviewCreate from '&/ReviewCreate';
+
 export default {
 	components: {
 		CardServiceList,
@@ -73,6 +76,7 @@ export default {
 		ReviewSliderList,
 		PhotoGallery,
 		CardArticleSlider,
+		ReviewCreate,
 	},
 
 	asyncData(ctx) {
