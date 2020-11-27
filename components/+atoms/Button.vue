@@ -14,7 +14,7 @@
 		]"
 		:disabled="button.disabled"
 		:title="button.title"
-		tag="button"
+		:tag="button.tag || 'button'"
 		class="button"
 	>
 		<icon-vue class="button__icon" v-if="button.icon" :icon="button.icon"></icon-vue>
