@@ -13,8 +13,8 @@
 			<span class="field-image__fill" v-if="multiple && true"></span>
 
 			<label class="field-image__action">
-				<span class="field-image__box" v-text="placeholder"></span>
-				<btn v-if="!multiple && true" class="field-image__change" :button="button"></btn>
+				<span v-if="visibleBox" class="field-image__box" v-text="placeholder"></span>
+				<btn v-else class="field-image__change" :button="button"></btn>
 				<input
 					class="field-image__input"
 					:name="name"
@@ -51,7 +51,10 @@ export default {
 			default: 'Сменить фото',
 		},
 		multiple: Boolean,
-		max: Number,
+		max: {
+			type: Number,
+			default: 10,
+		},
 	},
 
 	data: () => ({
@@ -72,6 +75,16 @@ export default {
 				src: file,
 				alt: `User image preview ${index}`,
 			}));
+		},
+
+		visibleBox() {
+			if (this.multiple) {
+				if (typeof this.value === 'string') return true;
+
+				return this.value.length < this.max;
+			} else {
+				return !this.value;
+			}
 		}
 	},
 
