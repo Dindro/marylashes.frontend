@@ -17,7 +17,6 @@
 				<btn v-if="!multiple && true" class="field-image__change" :button="button"></btn>
 				<input
 					class="field-image__input"
-					:value="value"
 					:name="name"
 					type="file"
 					accept="image/*"
@@ -40,7 +39,7 @@ export default {
 	},
 
 	props: {
-		value: String,
+		value: [String, Array],
 		label: String,
 		name: String,
 		placeholder: {
@@ -52,6 +51,7 @@ export default {
 			default: 'Сменить фото',
 		},
 		multiple: Boolean,
+		max: Number,
 	},
 
 	data: () => ({
@@ -77,7 +77,28 @@ export default {
 
 	methods: {
 		chooseFile(e) {
-			const { value, files } = e.target;
+			const { files } = e.target;
+			let value = '';
+
+			if (this.multiple) {
+				value = [...files];
+				// Урежем выбранные файлы
+				if (typeof this.max === 'number' && value.length > this.max) {
+					value.length = this.max;
+				}
+			}
+			else if (files[0]) value = files[0];
+
+			this.$emit('input', value);
+		}
+	},
+
+	watch: {
+		value(value) {
+			let files = value;
+			if (!this.multiple) {
+				files = [ value ];
+			}
 
 			this.files.length = 0;
 			if (files && files.length) {
@@ -90,8 +111,6 @@ export default {
 					reader.readAsDataURL(file);
 				});
 			}
-
-			this.$emit('input', value);
 		}
 	}
 }
