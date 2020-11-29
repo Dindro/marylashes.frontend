@@ -1,0 +1,6 @@
+// Smartphones, touchscreens
+@mixin mediaTouch() {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}

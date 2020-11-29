@@ -5,16 +5,20 @@
 			<div class="field-image__preview" v-for="(preview, i) in previews" :key="i">
 				<div class="field-image-preview">
 					<!-- Actions -->
+					<button type="button" class="field-image-preview__action" @click="removeFile(i)">
+						<icon-vue :icon="{ name: '24/cross' }"></icon-vue>
+					</button>
 					<image-vue :image="preview"></image-vue>
 				</div>
 			</div>
 
 			<!-- Fake fill -->
-			<span class="field-image__fill" v-if="multiple && true"></span>
+			<span class="field-image__fill" v-if="!visibleBox"></span>
 
 			<label class="field-image__action">
 				<span v-if="visibleBox" class="field-image__box" v-text="placeholder"></span>
 				<btn v-else class="field-image__change" :button="button"></btn>
+
 				<input
 					class="field-image__input"
 					:name="name"
@@ -31,15 +35,19 @@
 <script>
 import Btn from '+/Button';
 import ImageVue from '+/Image';
+import IconVue from '+/Icon';
+
+const VALUE_EMPTY = '';
 
 export default {
 	components: {
 		Btn,
 		ImageVue,
+		IconVue,
 	},
 
 	props: {
-		value: [String, Array],
+		value: {},
 		label: String,
 		name: String,
 		placeholder: {
@@ -59,6 +67,7 @@ export default {
 
 	data: () => ({
 		files: [],
+		valueWatch: true,
 	}),
 
 	computed: {
@@ -91,7 +100,7 @@ export default {
 	methods: {
 		chooseFile(e) {
 			const { files } = e.target;
-			let value = '';
+			let value;
 
 			if (this.multiple) {
 				value = [...files];
@@ -101,21 +110,39 @@ export default {
 				}
 			}
 			else if (files[0]) value = files[0];
+			else value = VALUE_EMPTY;
 
 			this.$emit('input', value);
+		},
+
+		async removeFile(index) {
+			// Оптимизация
+			this.valueWatch = false;
+
+			if (this.multiple) this.value.splice(index, 1);
+			else this.$emit('input', VALUE_EMPTY);
+			this.files.splice(index, 1);
+
+			// Оптимизация
+			await this.$nextTick();
+			this.valueWatch = true;
 		}
 	},
 
 	watch: {
 		value(value) {
+			if (!this.valueWatch) return;
+
 			let files = value;
 			if (!this.multiple) {
 				files = [ value ];
 			}
 
-			this.files.length = 0;
+			this.files = [];
 			if (files && files.length) {
 				[...files].forEach(file => {
+					if (!file) return;
+
 					const reader = new FileReader();
 					reader.onload = e => {
 						this.files.push(e.target.result);
@@ -131,6 +158,7 @@ export default {
 
 <style lang="scss">
 $height-box: 160;
+$height-box-sm: 128;
 
 .field-image {
 	&__label {
@@ -156,6 +184,10 @@ $height-box: 160;
 
 		@include text-default;
 		@include defaultTransition(border-color, color);
+
+		@include media-breakpoint-down(sm) {
+			height: rem($height-box-sm);
+		}
 
 		&:hover {
 			color: $color-dark;
@@ -183,10 +215,65 @@ $height-box: 160;
 }
 
 .field-image-preview {
+	$b: #{&};
+
 	height: rem($height-box);
+	position: relative;
+
+	@include media-breakpoint-down(sm) {
+		height: rem($height-box-sm);
+	}
+
+	&:hover {
+		&::before,
+		#{$b}__action {
+			opacity: 1;
+			pointer-events: initial;
+		}
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		background-image: linear-gradient(to bottom, rgba($color-dark, 0.65) 0%, rgba($color-dark, 0.15) 55%, rgba($color-dark, 0) 100%);
+		pointer-events: none;
+		opacity: 0;
+
+		@include defaultTransition(opacity);
+	}
+
+	&__action {
+		position: absolute;
+		display: inline-flex;
+		top: rem(4);
+		right: rem(4);
+		padding: rem(8);
+		border: none;
+		border-radius: 0;
+		background: none;
+		color: $color-white;
+		pointer-events: none;
+		opacity: 0;
+
+		@include defaultTransition(opacity);
+	}
+
+	&::before,
+	&__action {
+		@include mediaTouch {
+			opacity: 1;
+			pointer-events: initial;
+		}
+	}
 
 	.image {
+		height: 100%;
 		max-height: 100%;
+		object-fit: cover;
 	}
 }
 </style>
