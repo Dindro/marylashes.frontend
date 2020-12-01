@@ -212,6 +212,22 @@ $height-box-sm: 128;
 	&__fill {
 		width: 100%;
 	}
+
+	.has-error & {
+		&__label {
+			color: $color-red;
+		}
+
+		&__box {
+			border-color: rgba($color-red, 0.3);
+			color: rgba($color-red, 0.65);
+
+			&:hover {
+				color: $color-red;
+				border-color: $color-red;
+			}
+		}
+	}
 }
 
 .field-image-preview {

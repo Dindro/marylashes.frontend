@@ -206,5 +206,6 @@ export default {
 	right: 16px;
 	background-image: linear-gradient(to bottom, rgba($color-white, 1) 0%, rgba($color-white, 1) 75%, rgba($color-white, 0) 100%);
 	height: rem(36);
+	pointer-events: none;
 }
 </style>

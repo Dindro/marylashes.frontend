@@ -99,10 +99,11 @@ export default {
 				},
 				{
 					"image": true,
-					"multiple": true,
+					"multiple": false,
 					"label": "Фото*",
 					"placeholder": "Нажмите чтобы выбрать",
-					// "required": true,
+					"required": true,
+					"maxSize": 3072,
 					"name": "PHOTO",
 					"value": ""
 				},

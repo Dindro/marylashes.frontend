@@ -21,7 +21,7 @@
 
 <script>
 import { ValidationProvider, extend } from 'vee-validate';
-import { required, regex } from 'vee-validate/dist/rules.umd';
+import { required, regex, size, image } from 'vee-validate/dist/rules.umd';
 import { phone as phoneRegex } from '@/utils/regex';
 import FieldCheckbox from '+/FieldCheckbox';
 import FieldInput from '+/FieldInput';
@@ -36,6 +36,16 @@ extend('required', {
 extend('phone', {
 	validate: (value) => regex.validate(value, { regex: phoneRegex }),
 	message: 'Неверный телефонный номер',
+});
+
+extend('size', {
+	...size,
+	message: 'Изображение не должно превышать {size}КБ',
+});
+
+extend('image', {
+	...image,
+	message: 'Файл должен быть изображением',
 });
 
 export default {
@@ -58,6 +68,7 @@ export default {
 		required: Boolean,
 		type: String,
 		name: String,
+		maxSize: [String, Number],
 	},
 
 	data: () => ({
@@ -75,6 +86,8 @@ export default {
 			const rules = {};
 			if (this.required) rules.required = { allowFalse: false };
 			if (this.input && this.type === 'tel') rules.phone = true;
+			if (this.image) rules.image = true;
+			if (this.maxSize) rules.size = this.maxSize;
 
 			return rules;
 		},
