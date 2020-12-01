@@ -30,6 +30,8 @@ import Field from '+/Field';
 import Action from '+/Action';
 import CardReview from '^/CardReview';
 
+import { getImageFromFile } from '~/utils/image';
+
 export default {
 	components: {
 		Field,
@@ -188,7 +190,7 @@ export default {
 			const title = this.getValueByMap('title');
 			const text = this.getValueByMap('text');
 			const authorName = this.getValueByMap('name');
-			const imagePath = this.getValueByMap('photo');
+			const image = this.getValueByMap('image');
 
 			// Подготовка социальной сети автора
 			let authorSocials = [];
@@ -207,7 +209,7 @@ export default {
 				card: {
 					type: false,
 					image: {
-						src: imagePath,
+						src: await getImageFromFile(image),
 						alt: "User image",
 					},
 					title,

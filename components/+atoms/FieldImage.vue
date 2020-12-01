@@ -37,6 +37,8 @@ import Btn from '+/Button';
 import ImageVue from '+/Image';
 import IconVue from '+/Icon';
 
+import { actionReadFromFiles } from '~/utils/image';
+
 const VALUE_EMPTY = '';
 
 export default {
@@ -140,15 +142,8 @@ export default {
 
 			this.files = [];
 			if (files && files.length) {
-				[...files].forEach(file => {
-					if (!file) return;
-
-					const reader = new FileReader();
-					reader.onload = e => {
-						this.files.push(e.target.result);
-					};
-
-					reader.readAsDataURL(file);
+				actionReadFromFiles([...files], (image) => {
+					this.files.push(image);
 				});
 			}
 		}
