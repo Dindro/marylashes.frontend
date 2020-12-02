@@ -342,16 +342,4 @@ export default {
 		display: none;
 	}
 }
-
-@keyframes shake {
-	20%,
-	60% {
-		transform: translateX(#{rem(8)});
-	}
-
-	40%,
-	80% {
-		transform: translateX(#{rem(-8)});
-	}
-}
 </style>

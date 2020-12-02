@@ -1,5 +1,12 @@
 <template>
-	<tag-link :link="link" class="link-action" :class="[ link.loading && 'link-action--loading', link.small && 'link-action--small' ]">
+	<tag-link
+		:link="link"
+		class="link-action"
+		:class="[
+			link.loading && 'link-action--loading',
+			link.small && 'link-action--small',
+			link.shake && 'link-action--shake',
+		]">
 		<span class="link-action__text">{{ link.text }}</span>
 		<transition :duration="300" name="fade" mode="out-in">
 			<icon v-if="!link.loading" class="link-action__icon" :icon="link.icon" key="icon"></icon>
@@ -83,6 +90,10 @@ export default {
 		#{$b}__icon {
 			margin-left: rem(4);
 		}
+	}
+
+	&--shake {
+		animation: shake $timing $easing forwards;
 	}
 }
 

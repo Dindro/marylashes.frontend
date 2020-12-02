@@ -16,8 +16,8 @@
 				</div>
 
 				<div class="review-create__actions">
-					<action :action="review.action"></action>
-					<action :action="review.action_preview" @click.native.prevent="showPreview"></action>
+					<action :action="Object.assign({}, review.action, { shake: shakeSubmit, loading: loading })"></action>
+					<action :action="Object.assign({}, review.action_preview, { shake: shakePreview })" @click.native.prevent="showPreview"></action>
 				</div>
 			</form>
 		</validation-observer>
@@ -29,6 +29,7 @@ import { ValidationObserver } from 'vee-validate';
 import Field from '+/Field';
 import Action from '+/Action';
 import CardReview from '^/CardReview';
+import TextFactoid from '^/TextFactoid';
 
 import { getImageFromFile } from '~/utils/image';
 
@@ -48,6 +49,9 @@ export default {
 	},
 
 	data: () => ({
+		shakeSubmit: false,
+		shakePreview: false,
+		loading: false,
 		"review": {
 			"title": "Оставить отзыв",
 			"text": "Жду ваших отзывов.<br>После отправки отзыва, отзыв модерируется, после публикуется на сайте или в социальных сетях. Спасибо!",
@@ -144,6 +148,7 @@ export default {
 					"checkbox": true,
 					"label": "Согласен на <a href='#'>политику обработки персональных данных</a>*",
 					"required": true,
+					"value": false,
 					"name": "POLITICS"
 				}
 			]
@@ -185,7 +190,10 @@ export default {
 		async showPreview() {
 			// Проверка на валидность формы
 			const success = await this.validateReviewFields();
-			if (!success) return;
+			if (!success) {
+				this.shakeAction('shakePreview');
+				return;
+			};
 
 			const title = this.getValueByMap('title');
 			const text = this.getValueByMap('text');
@@ -260,15 +268,72 @@ export default {
 			return field.value;
 		},
 
+		shakeAction(name) {
+			clearTimeout(this[name]);
+			this[name] = setTimeout(() => this[name] = false, 350);
+		},
+
 		async onSubmit() {
 			process.env.NODE_ENV === 'development' && console.info('Review Create form submit');
 
 			// Проверка на валидность
 			const success = await this.$refs.form.validate();
 			if (!success) {
-				// this.shakeAction();
+				this.shakeAction('shakeSubmit');
 				return;
 			}
+
+			// Подготавливаем данные для отправки
+			const fields = this.getFieldsValue(this.review.fields);
+			const data = new FormData();
+			for (const key in fields) {
+				data.append(key, fields[key]);
+			}
+
+			// Вставим в ожидание
+			this.loading = true;
+
+			// Добавляем отзыв на сервер
+			this.$provide.review.add(data)
+				.then(res => {
+					const { data } = res;
+
+					// Закрываем текущую модалку
+					this.$emit('close');
+
+					// Открываем модалку об успешной операции
+					this.openSuccessMessage(data);
+				})
+				.catch(err => {
+					console.log('Error create review', err);
+				})
+				.finally(() => this.loading = false);
+		},
+
+		getFieldsValue(fields) {
+			let result = {};
+
+			for (const field of fields) {
+				if (field.group && field.fields && field.fields.length) {
+					const values = this.getFieldsValue(field.fields);
+					result = Object.assign({}, result, values);
+				} else {
+					if (field.value !== '') {
+						result[field.name] = field.value;
+					}
+				}
+			}
+
+			return result;
+		},
+
+		openSuccessMessage(data) {
+			// Подготавливаем данные
+			const modalOptions = {
+
+			};
+
+			this.$modal.show(TextFactoid, { text_factoid: data }, modalOptions);
 		}
 	}
 }
