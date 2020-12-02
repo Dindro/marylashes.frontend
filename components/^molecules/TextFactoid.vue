@@ -40,6 +40,27 @@ export default {
 
 <style lang="scss">
 .text-factoid {
+	&__title {
+		@include h2;
+		margin-bottom: rem(24);
+	}
 
+	&__content {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	&__text {
+		flex: 1;
+		@include text-default;
+	}
+
+	&__factoid {
+		margin-left: rem(32);
+	}
+
+	&__actions {
+		margin-top: rem(32);
+	}
 }
 </style>

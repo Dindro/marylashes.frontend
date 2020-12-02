@@ -330,7 +330,8 @@ export default {
 		openSuccessMessage(data) {
 			// Подготавливаем данные
 			const modalOptions = {
-
+				size: 'sm',
+				closeButton: false,
 			};
 
 			this.$modal.show(TextFactoid, { text_factoid: data }, modalOptions);

@@ -1,11 +1,17 @@
 <template>
 	<transition name="modal" @after-leave="onAfterClose">
-		<div v-if="visible" class="modal" @click.self.stop="onClickOverlay">
+		<div
+			v-if="visible"
+			class="modal"
+			:class="[
+				size && `modal--size--${size}`
+			]"
+			@click.self.stop="onClickOverlay">
 			<div class="modal__content">
 				<slot>
 					<component v-if="component" :is="component" v-bind="componentProps" @close="onComponentClose"></component>
 				</slot>
-				<btn :button="button" class="modal__action" @click.native="close"></btn>
+				<btn v-if="closeButton" :button="button" class="modal__action" @click.native="close"></btn>
 			</div>
 		</div>
 	</transition>
@@ -30,6 +36,17 @@ export default {
 		},
 		componentProps: {
 			type: [Object]
+		},
+		closeButton: {
+			type: [Boolean, Object],
+			default: true,
+		},
+		size: {
+			type: String,
+			default: 'lg',
+			validator: value => {
+				return ['sm', 'md', 'lg'].indexOf(value) !== -1
+			}
 		}
 	},
 
@@ -210,6 +227,32 @@ export default {
 		@include media-breakpoint-down(sm) {
 			top: rem(40 - $indent-arrows-sm);
 			right: rem($wrapper-gutter-sm-1 - $indent-arrows-sm);
+		}
+	}
+
+	&--size {
+		&--md {
+			#{$b}__content {
+				@include media-breakpoint-up(md) {
+					max-width: rem(768);
+				}
+			}
+		}
+
+		&--sm {
+			#{$b}__content {
+				@include media-breakpoint-up(lg) {
+					max-width: rem(768);
+				}
+
+				@include media-breakpoint-only(md) {
+					max-width: rem(640);
+				}
+
+				@include media-breakpoint-down(sm) {
+					max-width: rem(320);
+				}
+			}
 		}
 	}
 }
