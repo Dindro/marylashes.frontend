@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Week from '&/Week/Week';
+import Week from '=/Week/Week';
 import Action from '+/Action';
 
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';

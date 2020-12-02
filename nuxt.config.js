@@ -111,6 +111,7 @@ export default {
 		config.resolve.alias['&'] = path.join(__dirname, 'components/&organisms');
 		config.resolve.alias['^'] = path.join(__dirname, 'components/^molecules');
 		config.resolve.alias['+'] = path.join(__dirname, 'components/+atoms');
+		config.resolve.alias['='] = path.join(__dirname, 'components/=libs');
     },
   }
 }
