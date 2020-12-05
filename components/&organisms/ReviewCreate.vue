@@ -254,9 +254,16 @@ export default {
 		// Загружаем филды из localStorage
 		loadFields() {
 			for (const field of this.fieldsInline) {
-				if (field.save)
-					field.value = fieldsStorage.get('REVIEW', field.name);
+				if (field.save) {
+					const value = fieldsStorage.get('REVIEW', field.name);
+					if (value) field.value = value;
+				}
 			}
+		},
+
+		// Удаляем филды из localStorage
+		resetFields() {
+			fieldsStorage.removeGroup('REVIEW');
 		},
 
 		/**
@@ -324,6 +331,9 @@ export default {
 
 					// Закрываем текущую модалку
 					this.$emit('close');
+
+					// Обнуляем поля
+					this.resetFields();
 
 					// Открываем модалку об успешной операции
 					this.openSuccessMessage(data);
