@@ -575,7 +575,110 @@
           "color": "outline-dark",
           "text": "Оставить отзыв",
           "href": {
-            "hash": "review"
+            "hash": "review",
+            "query": {
+              "review": {
+                "title": "Оставить отзыв",
+                "text": "Жду ваших отзывов.<br>После отправки отзыва, отзыв модерируется, после публикуется на сайте или в социальных сетях. Спасибо!",
+                "action": {
+                  "type": "submit",
+                  "text": "Отправить отзыв",
+                  "color": "outline-dark"
+                },
+                "action_preview": {
+                  "text": "Быстрый просмотр",
+                  "icon": {
+                    "name": "16/link"
+                  }
+                },
+                "fields_map": {
+                  "title": "HEADLINE",
+                  "text": "TEXT",
+                  "name": "NAME",
+                  "image": "PHOTO",
+                  "vk": "SOCIAL_VK",
+                  "tt": "SOCIAL_TIKTOK",
+                  "in": "SOCIAL_INSTAGRAMM",
+                  "socials": ["vk", "tt", "in"],
+                  "review_fields": ["TEXT", "HEADLINE", "PHOTO", "NAME"]
+                },
+                "fields": [
+                  {
+                    "input": true,
+                    "label": "Заголовок*",
+                    "required": true,
+                    "name": "HEADLINE",
+                    "save": true,
+                    "value": ""
+                  },
+                  {
+                    "textarea": true,
+                    "label": "Текст*",
+                    "required": true,
+                    "name": "TEXT",
+                    "save": true,
+                    "value": ""
+                  },
+                  {
+                    "grid_half": true,
+                    "input": true,
+                    "label": "Имя и фамилия*",
+                    "required": true,
+                    "name": "NAME",
+                    "save": true,
+                    "value": ""
+                  },
+                  {
+                    "image": true,
+                    "multiple": false,
+                    "label": "Фото*",
+                    "placeholder": "Нажмите чтобы выбрать",
+                    "required": true,
+                    "maxSize": 3072,
+                    "name": "PHOTO",
+                    "value": ""
+                  },
+                  {
+                    "grid_half": true,
+                    "group": true,
+                    "label": "Ссылки на твои социальные сети",
+                    "fields": [
+                      {
+                        "input": true,
+                        "label": "Vk",
+                        "placeholder": "vk.com/",
+                        "name": "SOCIAL_VK",
+                        "save": true,
+                        "value": ""
+                      },
+                      {
+                        "input": true,
+                        "label": "In",
+                        "placeholder": "instagramm.com/",
+                        "name": "SOCIAL_INSTAGRAMM",
+                        "save": true,
+                        "value": ""
+                      },
+                      {
+                        "input": true,
+                        "label": "Tt",
+                        "placeholder": "tiktok.com/",
+                        "name": "SOCIAL_TIKTOK",
+                        "save": true,
+                        "value": ""
+                      }
+                    ]
+                  },
+                  {
+                    "checkbox": true,
+                    "label": "Согласен на <a href='#'>политику обработки персональных данных</a>*",
+                    "required": true,
+                    "value": false,
+                    "name": "POLITICS"
+                  }
+                ]
+              }
+            }
           }
         }
       ]

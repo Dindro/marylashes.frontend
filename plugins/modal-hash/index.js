@@ -5,14 +5,14 @@ const components = [
 	{
 		name: '#record',
 		component: () => import('&/Record/Record.vue'),
-		propName: false,
+		propComponentDisable: true,
 		propModal: false,
 		beforeShow: beforeShowRecord,
 	},
 	{
 		name: '#review',
 		component: () => import('&/ReviewCreate.vue'),
-		propName: 'review',
+		propComponentDisable: false,
 		propModal: { size: 'md' },
 		beforeShow: false,
 	},
@@ -49,7 +49,7 @@ export default (ctx, inject) => {
 			component.component,
 
 			// Параметры для динамического компонента
-			component.propName ? { [component.propName]:to.query } : {},
+			component.propComponentDisable ? {} : to.query,
 
 			// Параметры для модалки
 			{ name: component.name, ...component.propModal }
