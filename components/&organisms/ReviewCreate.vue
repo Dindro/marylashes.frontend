@@ -31,6 +31,7 @@ import Action from '+/Action';
 import CardReview from '^/CardReview';
 import TextFactoid from '^/TextFactoid';
 
+import fieldsStorage from '~/storage/fields';
 import { getImageFromFile } from '~/utils/image';
 
 export default {
@@ -158,6 +159,7 @@ export default {
 	computed: {
 		/**
 		 * Поля могут содержать себе внутри полей
+		 * Возвращает массив полей
 		 */
 		fieldsInline() {
 			const fields = [];
@@ -174,6 +176,12 @@ export default {
 		}
 	},
 
+	created() {
+		if (process.client) {
+			this.loadFields();
+		}
+	},
+
 	methods: {
 		inputField({ field, value }) {
 			let fieldNative = field;
@@ -183,6 +191,10 @@ export default {
 				fieldNative = field.fields[value.index];
 				valueNative = value.value;
 			}
+
+			// Сохраняем в localStorage
+			if (fieldNative.save)
+				fieldsStorage.add(valueNative, 'REVIEW', fieldNative.name);
 
 			fieldNative.value = valueNative;
 		},
@@ -232,7 +244,19 @@ export default {
 
 			process.env.NODE_ENV === 'development' && console.info('Review card', componentProps.card);
 
-			this.$modal.show(CardReview, componentProps);
+			const modalOptions = {
+				size: 'space-around',
+				indent: 'equal-action',
+			};
+			this.$modal.show(CardReview, componentProps, modalOptions);
+		},
+
+		// Загружаем филды из localStorage
+		loadFields() {
+			for (const field of this.fieldsInline) {
+				if (field.save)
+					field.value = fieldsStorage.get('REVIEW', field.name);
+			}
 		},
 
 		/**
@@ -331,6 +355,7 @@ export default {
 			// Подготавливаем данные
 			const modalOptions = {
 				size: 'sm',
+				indent: 'equal',
 				closeButton: false,
 			};
 
@@ -361,6 +386,15 @@ export default {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+
+		@include media-breakpoint-down(sm) {
+			flex-direction: column-reverse;
+			align-items: flex-start;
+
+			& > * + * {
+				margin-bottom: rem(24);
+			}
+		}
 	}
 
 	&__fields {

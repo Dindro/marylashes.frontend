@@ -17,6 +17,7 @@
 
 <script>
 import Modal from '&/Modal';
+import SpinnerBlock from '&/SpinnerBlock';
 
 const NAME_CLASS = 'modal--name--';
 
@@ -35,6 +36,16 @@ export default {
 
 	methods: {
 		async add(component, componentProps = {}, modalProps = {}, modalListeners = {}) {
+
+			// Если компонент функция, значит динамический компонент
+			if (typeof component === 'function') {
+				const getDynamicComponent = component;
+				component = () => ({
+					component: getDynamicComponent(),
+					loading: SpinnerBlock,
+				});
+			}
+
 			const id = Date.now();
 			const name = modalProps.name || NAME_CLASS + id;
 

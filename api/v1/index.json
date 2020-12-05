@@ -574,7 +574,9 @@
           "type": "button",
           "color": "outline-dark",
           "text": "Оставить отзыв",
-          "href": "#"
+          "href": {
+            "hash": "review"
+          }
         }
       ]
     },

@@ -4,7 +4,8 @@
 			v-if="visible"
 			class="modal"
 			:class="[
-				size && `modal--size--${size}`
+				size && `modal--size--${size}`,
+				indent && `modal--indent--${indent}`,
 			]"
 			@click.self.stop="onClickOverlay">
 			<div class="modal__content">
@@ -44,10 +45,13 @@ export default {
 		size: {
 			type: String,
 			default: 'lg',
-			validator: value => {
-				return ['sm', 'md', 'lg'].indexOf(value) !== -1
-			}
-		}
+			validator: value => ['sm', 'md', 'lg', 'space-around'].indexOf(value) !== -1,
+		},
+		indent: {
+			type: String,
+			default: 'default',
+			validator: value => ['equal', 'equal-action', 'default'].indexOf(value) !== -1,
+		},
 	},
 
 	data: () => ({
@@ -150,6 +154,14 @@ export default {
 	padding-bottom: rem(64);
 	overflow-y: auto;
 
+	@include make-container-padding;
+
+	@include media-breakpoint-down(md) {
+		display: block;
+		padding: 0;
+		backdrop-filter: none;
+	}
+
 	&-enter {
 		opacity: 0;
 
@@ -185,14 +197,6 @@ export default {
 	}
 
 
-	@include make-container-padding;
-
-	@include media-breakpoint-down(md) {
-		display: block;
-		padding: 0;
-		backdrop-filter: none;
-	}
-
 	&__content {
 		width: 100%;
 		margin: auto;
@@ -207,11 +211,15 @@ export default {
 		@include media-breakpoint-down(md) {
 			padding-left: rem($wrapper-gutter-md-1);
 			padding-right: rem($wrapper-gutter-md-1);
-			min-height: 100%;
+			min-height: $height-screen;
 		}
 
 		@include media-breakpoint-down(sm) {
 			padding: rem(40) rem($wrapper-gutter-sm-1);
+		}
+
+		& > .spinner-block {
+			min-height: rem(128);
 		}
 	}
 
@@ -231,9 +239,24 @@ export default {
 	}
 
 	&--size {
+		&--lg,
+		&--md {
+			// Делаем спиннер на всю область экрана
+			#{$b}__content > .spinner-block {
+				@include media-breakpoint-down(md) {
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					width: 100%;
+					pointer-events: none;
+				}
+			}
+		}
+
 		&--md {
 			#{$b}__content {
-				@include media-breakpoint-up(md) {
+				@include media-breakpoint-up(lg) {
 					max-width: rem(768);
 				}
 			}
@@ -244,6 +267,27 @@ export default {
 				@include media-breakpoint-up(lg) {
 					max-width: rem(768);
 				}
+			}
+		}
+
+		&--sm,
+		&--space-around {
+			@include media-breakpoint-down(md) {
+				display: flex;
+				padding-top: rem(64);
+				padding-bottom: rem(64);
+			}
+
+			@include media-breakpoint-down(sm) {
+				padding-top: rem(20);
+				padding-bottom: rem(20);
+			}
+
+			#{$b}__content {
+				@include media-breakpoint-down(md) {
+					margin: auto;
+					min-height: auto;
+				}
 
 				@include media-breakpoint-only(md) {
 					max-width: rem(640);
@@ -251,6 +295,49 @@ export default {
 
 				@include media-breakpoint-down(sm) {
 					max-width: rem(320);
+				}
+			}
+		}
+	}
+
+	&--indent {
+		&--equal,
+		&--equal-action {
+			#{$b}__content {
+				@include media-breakpoint-down(md) {
+					padding-top: rem($wrapper-gutter-md-1);
+					padding-bottom: rem($wrapper-gutter-md-1);
+				}
+
+				@include media-breakpoint-down(sm) {
+					padding-top: rem($wrapper-gutter-sm-1);
+					padding-bottom: rem($wrapper-gutter-sm-1);
+				}
+			}
+
+			#{$b}__action {
+				@include media-breakpoint-down(md) {
+					top: rem($wrapper-gutter-md-1 - $indent-arrows);
+				}
+
+				@include media-breakpoint-down(sm) {
+					top: rem($wrapper-gutter-sm-1 - $indent-arrows-sm);
+				}
+			}
+		}
+
+		&--equal-action {
+			#{$b}__content {
+				@include media-breakpoint-up(lg) {
+					padding-top: rem(120);
+				}
+
+				@include media-breakpoint-down(md) {
+					padding-top: rem(104);
+				}
+
+				@include media-breakpoint-down(sm) {
+					padding-top: rem(72);
 				}
 			}
 		}

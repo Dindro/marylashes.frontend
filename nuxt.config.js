@@ -52,7 +52,7 @@ export default {
 	{ src: '@/plugins/animations/index', mode: 'client' },
 	{ src: '@/plugins/cursor/index', mode: 'client' },
 	{ src: '@/plugins/modal/index', mode: 'client' },
-	{ src: '@/plugins/record' }
+	{ src: '@/plugins/modal-hash/index' }
   ],
   /*
   ** Auto import components
