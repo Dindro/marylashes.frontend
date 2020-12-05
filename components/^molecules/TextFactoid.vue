@@ -46,8 +46,10 @@ export default {
 	}
 
 	&__content {
-		display: flex;
-		justify-content: flex-end;
+		@include media-breakpoint-up(md) {
+			display: flex;
+			justify-content: flex-end;
+		}
 	}
 
 	&__text {
@@ -57,10 +59,15 @@ export default {
 
 	&__factoid {
 		margin-left: rem(32);
+
+		@include media-breakpoint-down(sm) {
+			margin-left: 0;
+			margin-top: rem(16);
+		}
 	}
 
-	&__actions {
-		margin-top: rem(32);
+	&__action {
+		margin-top: rem(24);
 	}
 }
 </style>
