@@ -81,7 +81,7 @@
 
     &__label {
       margin-top: rem(10);
-      max-width: rem(160);
+      max-width: rem(176);
     }
 
     &__top {
