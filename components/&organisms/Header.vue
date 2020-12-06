@@ -446,22 +446,26 @@
     }
   }
 
-  &__link {
-    pointer-events: all;
-    display: inline-block;
+	&__link {
+		pointer-events: none;
+		display: inline-block;
 
-    &:hover {
-      #{$b}__icon {
-        transform: translateY(#{rem(-6)});
-        opacity: 0.65;
-      }
-    }
+		&:hover {
+			#{$b}__icon {
+				transform: translateY(#{rem(-6)});
+				opacity: 0.65;
+			}
+		}
 
-    // Уменьшаем размер logo link
-    @at-root .is-fixed:not(.is-open) & {
-      width: rem(32);
-    }
-  }
+		// Уменьшаем размер logo link
+		@at-root .is-fixed:not(.is-open) & {
+			width: rem(32);
+		}
+	}
+
+  	a#{$b}__link {
+		pointer-events: all;
+	}
 
   &__icon {
     @include defaultTransition(opacity, transform);
