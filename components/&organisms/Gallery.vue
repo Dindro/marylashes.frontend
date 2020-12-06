@@ -28,6 +28,7 @@ import NavArrows from '+/NavArrows';
 import Btn from '+/Button';
 
 import { isMob } from '@/utils/breakpoints';
+import { disableScroll, enableScroll } from '~/utils/scroll';
 
 export default {
 	components: {
@@ -121,7 +122,9 @@ export default {
 				continuous: false,
 				index,
 				transitionDuration: 600,
-				onclose: () => this.$emit('close'),
+				hidePageScrollbars: false,
+				onopen: this.onOpen,
+				onclose: this.onClose,
 				onslide: (...args) => {
 					this.changeDescription(...args);
 					this.checkEdge(...args);
@@ -129,6 +132,15 @@ export default {
 			};
 
 			this.instance = this.blueimp(this.images, options);
+		},
+
+		onClose() {
+			this.$emit('close');
+			enableScroll();
+		},
+
+		onOpen() {
+			disableScroll();
 		},
 
 		next() {
@@ -164,7 +176,7 @@ export default {
 		},
 
 		async add() {
-			await Vue.$nextTick;
+			await Vue.$nextTick();
 			const index = this.instance.getIndex();
 			const images = this.images.slice(index, this.images.length);
 			this.instance.add(images);
