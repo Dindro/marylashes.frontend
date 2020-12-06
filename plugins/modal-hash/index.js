@@ -1,22 +1,41 @@
 import Vue from 'vue';
-import { beforeShow as beforeShowRecord } from './components/record';
+import { modalBeforeShow as modalBeforeShowRecord } from './components/record';
 
 const components = [
 	{
 		name: '#record',
 		component: () => import('&/Record/Record.vue'),
-		propComponentDisable: true,
-		propModal: false,
-		beforeShow: beforeShowRecord,
+		componentProp: false,
+		componentPropApi: false,
+		modalProp: false,
+		modalBeforeShow: modalBeforeShowRecord,
 	},
 	{
 		name: '#review',
 		component: () => import('&/ReviewCreate.vue'),
-		propComponentDisable: false,
-		propModal: { size: 'md' },
-		beforeShow: false,
+		componentProp: false,
+		componentPropApi: 'review-create',
+		modalProp: { size: 'md' },
+		modalBeforeShow: false,
 	},
 ];
+
+async function getComponentProp(component) {
+	if (component.componentProp) {
+		return component.componentProp;
+	}
+
+	if (component.componentPropApi) {
+		try {
+			const res = await this.$provide.component.get(component.componentPropApi);
+			return res.data;
+		} catch (err) {
+			return false;
+		}
+	}
+
+	return false;
+};
 
 export default (ctx, inject) => {
 	ctx.app.router.beforeEach(async (to, from, next) => {
@@ -40,8 +59,8 @@ export default (ctx, inject) => {
 		await Vue.nextTick();
 
 		// Если есть функция до открывания модалки
-		if (component.beforeShow && typeof component.beforeShow === 'function')
-			component.beforeShow.call(ctx, to.query);
+		if (component.modalBeforeShow && typeof component.modalBeforeShow === 'function')
+			component.modalBeforeShow.call(ctx, to.query);
 
 		// Открываем модалку
 		const props = [
@@ -49,10 +68,10 @@ export default (ctx, inject) => {
 			component.component,
 
 			// Параметры для динамического компонента
-			component.propComponentDisable ? {} : to.query,
+			await getComponentProp.call(ctx, component),
 
 			// Параметры для модалки
-			{ name: component.name, ...component.propModal }
+			{ name: component.name, ...component.modalProp }
 		];
 
 		ctx.app.router.app.$modal.show(...props);

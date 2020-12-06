@@ -1,4 +1,4 @@
-export function beforeShow(props) {
+export function modalBeforeShow(props) {
 	const { view_id } = props;
 	if (view_id) {
 		// Удаляем все выбранные
