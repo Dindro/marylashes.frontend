@@ -48,12 +48,12 @@ export default {
   plugins: [
 	{ src: '@/plugins/provide' },
 	{ src: '@/plugins/nuxt-client-init', mode: 'client' },
-    { src: '@/plugins/height', mode: 'client' },
-	{ src: '@/plugins/animations/index', mode: 'client' },
-	{ src: '@/plugins/cursor/index', mode: 'client' },
 	{ src: '@/plugins/modal/index', mode: 'client' },
-	{ src: '@/plugins/modal-hash/index' }
-  ],
+	{ src: '@/plugins/modal-hash/index' },
+	{ src: '@/plugins/height', mode: 'client' },
+	{ src: '@/plugins/cursor/index', mode: 'client' },
+	{ src: '@/plugins/animations/index', mode: 'client' },
+],
   /*
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components

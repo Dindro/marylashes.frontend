@@ -8,7 +8,7 @@
       </div>
     </section>
 
-    <section class="bg-white">
+    <section id="price" class="bg-white">
       <div class="container">
         <card-service-list :card_service_list="card_service_list"></card-service-list>
       </div>
@@ -20,25 +20,25 @@
       </div>
     </section>
 
-	<section class="bg-white pt-md-112 pb-md-112 pt-64 pb-96">
+	<section id="reviews" class="bg-white pt-md-112 pb-md-112 pt-64 pb-96">
       <div class="container">
         <review-slider-list :review_slider_list="review_slider_list"></review-slider-list>
       </div>
     </section>
 
-    <section class="bg-white">
+    <section id="contacts" class="bg-white">
       <div class="container">
         <contact-block :contact="contact"></contact-block>
       </div>
     </section>
 
-    <section class="bg-dark pb-64 pb-md-96">
+    <section id="action" class="bg-dark pb-64 pb-md-96">
       <div class="container">
         <card-action-slider :card_action_slider="card_action_slider"></card-action-slider>
       </div>
     </section>
 
-	<section class="bg-white pt-md-96 pb-md-96 pt-64 pb-64">
+	<section id="photo" class="bg-white pt-md-96 pb-md-96 pt-64 pb-64">
       <div class="container">
         <photo-gallery :photo_gallery="photo_gallery"></photo-gallery>
       </div>

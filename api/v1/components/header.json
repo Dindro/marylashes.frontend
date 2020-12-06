@@ -13,27 +13,33 @@
     },
     "items": [
       {
-        "href": "/#price",
+        "href": {
+          "hash": "price"
+        },
         "text": "цена"
       },
       {
-        "href": "/#reviews",
+        "href": {
+          "hash": "reviews"
+        },
         "text": "отзывы"
       },
       {
-        "href": "/#action",
+        "href": {
+          "hash": "action"
+        },
         "text": "акции"
       },
       {
-        "href": "/#photo",
+        "href": {
+          "hash": "photo"
+        },
         "text": "фото"
       },
       {
-        "href": "/#video",
-        "text": "видео"
-      },
-      {
-        "href": "/#contacts",
+        "href": {
+          "hash": "contacts"
+        },
         "text": "контакты"
       },
       {

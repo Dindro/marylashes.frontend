@@ -47,7 +47,19 @@ export default (ctx, inject) => {
 			return;
 		}
 
-		next({ name: to.name });
+		/**
+		 * В случае если заходим с бразуера localhost:3000#review
+		 * 		то у from нет hash и соответсвенно переходим в next({ name: to.name });
+		 * 		потомучто при next(false) ошибка рендеринга у клиента
+		 * Если переходим со страницы на страницу то next(false)
+		 */
+		if (from.hash) {
+			next(false);
+		} else {
+			next({ name: to.name });
+		}
+
+		await Vue.nextTick();
 
 		// Проверка что открыта модалка
 		const status = ctx.app.router.app.$modal.getStatus(component.name);
@@ -55,8 +67,6 @@ export default (ctx, inject) => {
 			next(false);
 			return;
 		}
-
-		await Vue.nextTick();
 
 		// Если есть функция до открывания модалки
 		if (component.modalBeforeShow && typeof component.modalBeforeShow === 'function')
