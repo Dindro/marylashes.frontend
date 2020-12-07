@@ -1,7 +1,5 @@
 <template>
   <div class="pt-96">
-    Привет
-    <nuxt-link to="/">Домой</nuxt-link>
 	<div class="container">
 		<hero-article :hero_article="hero_article"></hero-article>
 	</div>
