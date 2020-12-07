@@ -10,16 +10,18 @@
       </div>
     </div>
 
-    <div class="header" ref="header">
+    <div class="header" :class="[ color && `header--${color}` ]" ref="header">
       <div class="header__container container">
         <div class="header__menu" data-gap>
           <ul class="header__list">
             <li v-for="(item, index) in header.items" :key="index">
-              <tag-link class="header__link text-default" ref="link" :link="item">
-                <span class="header__text">
-                  {{ item.text }}
-                </span>
-              </tag-link>
+              <span class="header__link-shell" ref="link">
+                <tag-link class="header__link text-default" :link="item">
+                  <span class="header__text">
+                    {{ item.text }}
+                  </span>
+                </tag-link>
+              </span>
             </li>
           </ul>
           <div class="header__contacts">
@@ -38,14 +40,15 @@
 </template>
 
 <script>
-  import gsap from 'gsap';
-  import { mapState } from 'vuex';
-  import { isDesktop } from '@/utils/breakpoints';
-  import { disableScroll, enableScroll } from '@/utils/scroll';
+	import gsap from 'gsap';
+	import { mapState } from 'vuex';
+	import { isDesktop } from '@/utils/breakpoints';
+	import { disableScroll, enableScroll } from '@/utils/scroll';
 
-  import TagLink from '+/TagLink';
-  import Logo from '+/Logo';
-  import Burger from '+/Burger';
+	import TagLink from '+/TagLink';
+	import Logo from '+/Logo';
+	import Burger from '+/Burger';
+	import throttle from 'raf-throttle';
 
   export default {
     components: {
@@ -58,7 +61,8 @@
       isMenuFixed: false,
       isMenuOpen: false,
       isBurgerVisible: false, // Добавляет класс is-visible
-      menuAnimation: null,
+	  menuAnimation: null,
+	  color: 'default',
 
       leaveHeaderHandler: null,     // fn - callback при уходе из меню
     }),
@@ -189,9 +193,8 @@
       },
 
       createMenuAnimation() {
-        const { phone } = this.$refs;
-        let links = this.$refs.link;
-        const array = [ phone.$el, ...links.map((item) => item.$el).reverse() ];
+        const { phone, link: links } = this.$refs;
+        const array = [ phone.$el, ...links.reverse() ];
 
         return gsap.fromTo(array, {
           opacity: 0,
@@ -203,17 +206,40 @@
           duration: 0.3,
           delay: 0.2,
         });
-      }
+	  },
+
+		updateColor(to, from) {
+			const { routeColors, routeColorDefault } = this.header;
+			let color = routeColorDefault || 'default';
+
+			if (routeColors && routeColors.length) {
+				const routeColorTo = routeColors.find(item => item.name === to.name);
+				if (routeColorTo?.color) {
+					color = routeColorTo.color;
+				}
+			}
+
+			this.color = color;
+		}
     },
 
     mounted() {
       this.menuAnimation = this.createMenuAnimation();
       this.calculateMenuFixedPosition();
-      window.addEventListener('scroll', this.calculateMenuFixedPosition.bind(this), {
-        capture: true,
-        passive: true
-      });
-    }
+
+	 const calculateMenuFixedPositionThrottle = throttle(this.calculateMenuFixedPosition);
+      window.addEventListener('scroll', calculateMenuFixedPositionThrottle, {
+        passive: true,
+	  });
+	  this.$on('hook:beforeDestroy', calculateMenuFixedPositionThrottle);
+	},
+
+	watch: {
+		$route: {
+			handler: 'updateColor',
+			immediate: true,
+		}
+	}
   }
 </script>
 
@@ -254,6 +280,16 @@
       opacity: 1;
     }
   }
+
+	&:not(.is-fixed) {
+		.header--default {
+			@include media-breakpoint-up(lg) {
+				.header__link {
+					color: $color-dark;
+				}
+			}
+		}
+	}
 }
 
 .header {
@@ -281,7 +317,7 @@
     pointer-events: none;
     opacity: 1;
 
-    &__link {
+    &__link-shell {
       opacity: 0;
     }
   }
@@ -345,10 +381,15 @@
     }
   }
 
+  &__link-shell {
+	display: inline-block;
+	will-change: transform, opacity;
+  }
+
   &__link {
     display: inline-block;
     color: $color-white;
-    padding: rem(8) 0; // Область клика
+	padding: rem(8) 0; // Область клика
 
     @include media-breakpoint-down(md) {
       font-size: rem(26);
@@ -360,24 +401,27 @@
       padding: 0;
     }
 
-    &:hover {
-      #{$b}__text {
-        opacity: 0.65;
-
-        @include media-breakpoint-up(lg) {
-          transform: translateY(#{rem(-6)});
-        }
-
-        @include media-breakpoint-down(md) {
-          transform: translateX(1em);
-        }
-      }
-    }
   }
+
+  	a#{$b}__link {
+		&:hover {
+			#{$b}__text {
+				opacity: 0.65;
+
+				@include media-breakpoint-up(lg) {
+					transform: translateY(#{rem(-6)});
+				}
+
+				@include media-breakpoint-down(md) {
+					transform: translateX(1em);
+				}
+			}
+		}
+	}
 
   &__text {
     display: inline-block;
-    @include defaultTransition(opacity, transform);
+    @include defaultTransition(opacity, transform, color);
   }
 
   &__contacts {
@@ -463,7 +507,7 @@
 		}
 	}
 
-  	a#{$b}__link {
+  a#{$b}__link {
 		pointer-events: all;
 	}
 
