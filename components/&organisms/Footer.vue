@@ -64,23 +64,24 @@ export default {
 			gsap.registerPlugin(ScrollTrigger);
 
 			const { footer, footerContainer, overlay } = this.$refs;
-			const layoutContent = footer.previousElementSibling;
+			gsap.set(footerContainer, { yPercent: -50 });
 
-			const tm = gsap.timeline({
-				scrollTrigger: {
-					trigger: layoutContent,
-					start: 'bottom bottom',
-					endTrigger: document.documentElement,
-					end: 'bottom bottom',
-					scrub: true,
-				},
+			let uncover = gsap.timeline({ paused: true });
+			uncover.to(footerContainer, { yPercent: 0, ease: 'none' });
+
+			let effect = ScrollTrigger.create({
+				trigger: footer,
+				start: 'top bottom',
+				end: 'bottom bottom',
+				animation: uncover,
+				scrub: true,
 			});
 
-			tm.fromTo(footerContainer, { yPercent: -50 }, { yPercent: 0 }, 0);
-
 			this.$once('hook:beforeDestroy', () => {
-				tm.kill();
-				tm = null;
+				effect.kill();
+				effect = null;
+				uncover.kill();
+				uncover = null;
 			});
 		}
 	},
@@ -108,6 +109,7 @@ export default {
 
 	&__container {
 		@include make-container;
+		will-change: transform;
 		display: grid;
 		grid-auto-columns: 100 / 12 * 4% 100 / 12 * 7% 100 / 12 * 1%;
 		grid-auto-rows: auto auto rem(64) auto;
