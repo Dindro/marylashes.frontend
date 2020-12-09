@@ -44,7 +44,7 @@ export default {
 	&__image {
 		width: rem(64);
 		height: rem(64);
-		border-radius: rem(10);
+		border-radius: rem(2);
 		margin-right: rem(16);
 	}
 
