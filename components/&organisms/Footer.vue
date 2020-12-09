@@ -77,11 +77,22 @@ export default {
 				scrub: true,
 			});
 
+			// При переключении между страницами обновляем scroll trigger
+			const unwatch = this.$watch('$route', (to, from) => {
+				// Мини оптимизация
+				if (to.name === from.name) return;
+
+				// @see https://greensock.com/docs/v3/Plugins/ScrollTrigger/static.refresh()
+				// Ожидаем пока страница встроется
+				setTimeout(effect.refresh, 100);
+			});
+
 			this.$once('hook:beforeDestroy', () => {
 				effect.kill();
 				effect = null;
 				uncover.kill();
 				uncover = null;
+				unwatch();
 			});
 		}
 	},
