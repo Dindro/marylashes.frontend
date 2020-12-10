@@ -391,7 +391,10 @@
         {
           "type": "button",
           "text": "Записаться онлайн",
-          "color": "outline-dark"
+          "color": "outline-dark",
+          "href": {
+            "hash": "record"
+          }
         },
         {
           "type": "button",
