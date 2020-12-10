@@ -38,7 +38,7 @@
       </div>
     </section>
 
-	<section id="photo" class="bg-white pt-md-96 pb-md-96 pt-64 pb-64">
+	<section id="photo" class="bg-white pt-md-96 pt-64">
       <div class="container">
         <photo-gallery :photo_gallery="photo_gallery"></photo-gallery>
       </div>
