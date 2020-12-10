@@ -12,6 +12,7 @@ $content-width: 730;
 
   & > h2 {
     @include h2;
+    font-weight: 600;
     margin-top: rem(48);
     margin-bottom: rem(16);
   }

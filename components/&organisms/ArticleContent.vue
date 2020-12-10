@@ -59,7 +59,6 @@ export default {
 
 	&__title {
 		@include h2;
-		font-weight: 700;
 		max-width: rem(670);
 	}
 

@@ -66,7 +66,6 @@ export default {
 	&__title {
 		margin-bottom: rem(16);
 		@include h2;
-		font-weight: 700;
 	}
 
 	&__text {
