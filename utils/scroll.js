@@ -2,12 +2,13 @@ import { enablePageScroll, disablePageScroll, clearQueueScrollLocks, addFillGapS
 
 addFillGapSelector('[data-gap]');
 
-const disableScroll = () => {
-	disablePageScroll();
+// scrollableElement - Элемент который будет прокручиваться, касается touch устроств или использовать data-scroll-lock-scrollable
+const disableScroll = (scrollableElement) => {
+	disablePageScroll(scrollableElement);
 }
 
-const enableScroll = () => {
-	enablePageScroll();
+const enableScroll = (scrollableElement) => {
+	enablePageScroll(scrollableElement);
 }
 
 /**

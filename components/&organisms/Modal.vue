@@ -7,7 +7,8 @@
 				size && `modal--size--${size}`,
 				indent && `modal--indent--${indent}`,
 			]"
-			@click.self.stop="onClickOverlay">
+			@click.self.stop="onClickOverlay"
+			data-scroll-lock-scrollable>
 			<div class="modal__content">
 				<slot>
 					<component v-if="component" :is="component" v-bind="componentProps" @close="onComponentClose"></component>

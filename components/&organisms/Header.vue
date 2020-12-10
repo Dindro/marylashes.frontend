@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="header" :class="[ color && `header--${color}` ]" ref="header">
+    <div class="header" :class="[ color && `header--${color}` ]" ref="header" data-scroll-lock-scrollable>
       <div class="header__container container">
         <div class="header__menu" data-gap>
           <ul class="header__list">
