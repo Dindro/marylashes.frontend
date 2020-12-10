@@ -45,8 +45,6 @@ export default {
 	{ src: '@/plugins/nuxt-client-init', mode: 'client' },
 	{ src: '@/plugins/modal/index', mode: 'client' },
 	{ src: '@/plugins/modal-hash/index' },
-	{ src: '@/plugins/height', mode: 'client' },
-	{ src: '@/plugins/cursor/index', mode: 'client' },
 	{ src: '@/plugins/animations/index', mode: 'client' },
 ],
   /*
