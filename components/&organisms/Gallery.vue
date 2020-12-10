@@ -87,7 +87,7 @@ export default {
 				href: {
 					hash: 'record',
 					query: {
-						view_id: this.slide.view,
+						view_id: this.slide.view.toUpperCase(),
 					},
 				},
 			};
