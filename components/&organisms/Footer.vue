@@ -39,6 +39,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { isDesktop } from '~/utils/breakpoints';
 import Logo from '+/Logo';
 import IconVue from '+/Icon';
 import TagLink from '+/TagLink';
@@ -98,7 +99,7 @@ export default {
 	},
 
 	mounted() {
-		this.initAnimation();
+		if (isDesktop()) this.initAnimation();
 	}
 }
 </script>
