@@ -26,10 +26,14 @@
 		></gallery>
 
 		<!-- Photos -->
-		<transition-group name="photo-gallery-item" tag="div" class="photo-gallery__items">
-			<div class="photo-gallery__item" v-for="(item, index) in itemsFiltered" :key="item.id" @click="openPhoto(index)">
+		<transition-group name="photo-gallery-item" tag="div" ref="photosParent" class="photo-gallery__items" @before-leave="onBeforeLeavePhoto">
+			<div
+				class="photo-gallery__item"
+				v-for="(item, index) in itemsFiltered"
+				:key="item.id"
+				@click="openPhoto(index)"
+				ref="photo">
 				<image-vue
-					v-cursor:label="{ label: images[index].view, sublabel: images[index].effect }"
 					:image="Object.assign({}, item.image, { ratio: '1x1' })"
 				></image-vue>
 				<div class="photo-gallery__description" v-if="images[index]">
@@ -166,6 +170,19 @@ export default {
 			this.selectedPhotoIndex = index;
 		},
 
+		calculatePhotoPosition() {
+			for (const photo of this.$refs.photo) {
+				const { offsetLeft, offsetTop } = photo;
+				photo.style.left = offsetLeft + 'px';
+				photo.style.top = offsetTop + 'px';
+			}
+		},
+
+		onBeforeLeavePhoto(el) {
+			el.style.position = 'absolute';
+			el.style.transition = 'opacity .5s'
+		},
+
 		selectTab({ id }) {
 			const index = this.selectedTabs.indexOf(id);
 			const exist = index !== -1;
@@ -262,6 +279,14 @@ export default {
 	watch: {
 		isLoading(value) {
 			this.$refs.gallery.nav_arrows.nextLoading = value;
+		},
+
+		itemsFiltered(value, valueOld) {
+			if (value.length < valueOld.length) {
+				// Если фото уменьшилось пересчитываем top left и проставляем для анимации
+				// так как будет это все абсолютом
+				this.calculatePhotoPosition();
+			}
 		}
 	}
 }
@@ -294,6 +319,7 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		margin: rem(-32);
+		position: relative;
 
 		@include media-breakpoint-down(sm) {
 			margin: 0 rem(-$wrapper-gutter-sm-1);
@@ -303,6 +329,8 @@ export default {
 	&__item {
 		width: 33.333%;
 		padding: rem(32);
+		z-index: 1;
+		cursor: pointer;
 
 		@include media-breakpoint-down(md) {
 			width: 50%;
@@ -373,6 +401,20 @@ export default {
 }
 
 .photo-gallery-item {
+	&-enter {
+		opacity: 0;
+
+		&-active {
+			transition: opacity 1s;
+		}
+	}
+
+	&-leave {
+		&-to {
+			opacity: 0;
+		}
+	}
+
 	&-move {
 		transition: transform 1s;
 	}
