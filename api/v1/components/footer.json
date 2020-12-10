@@ -39,6 +39,12 @@
       {
         "href": "/themes",
         "text": "темы"
+      },
+      {
+        "href": {
+          "hash": "record"
+        },
+        "text": "записаться"
       }
     ],
     "socials": {
