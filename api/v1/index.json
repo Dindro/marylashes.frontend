@@ -433,7 +433,10 @@
         {
           "type": "button",
           "text": "Записаться онлайн",
-          "color": "outline-dark"
+          "color": "outline-dark",
+          "href": {
+            "hash": "record"
+          }
         },
         {
           "type": "button",
@@ -485,7 +488,9 @@
           "items": [
             {
               "type": "button",
-              "href": "/#zapich",
+              "href": {
+                "hash": "record"
+              },
               "color": "outline-saphire",
               "text": "Записаться онлайн"
             }
@@ -513,7 +518,9 @@
           "items": [
             {
               "type": "button",
-              "href": "#",
+              "href": {
+                "hash": "record"
+              },
               "color": "outline-saphire",
               "text": "Записаться онлайн"
             }
@@ -542,7 +549,9 @@
             {
               "color": "outline-saphire",
               "type": "button",
-              "href": "#",
+              "href": {
+                "hash": "record"
+              },
               "text": "Записаться онлайн"
             }
           ]
@@ -948,7 +957,7 @@
     },
     "views": {
       "ALL": "Все объемы",
-      "CLASSIC": "Classic",
+      "CLASSIC": "CLASSIC",
       "1.5D": "1.5D",
       "2D": "2D",
       "2.5D": "2.5D",

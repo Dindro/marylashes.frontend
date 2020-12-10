@@ -84,7 +84,13 @@ export default {
 		button() {
 			return {
 				text: isMob() ? this.button_text_mob : `${this.button_text} ${this.slide.view.toLowerCase()}`,
-			}
+				href: {
+					hash: 'record',
+					query: {
+						view_id: this.slide.view,
+					},
+				},
+			};
 		}
 	},
 
@@ -176,7 +182,7 @@ export default {
 		},
 
 		async add() {
-			await Vue.$nextTick();
+			await this.$nextTick();
 			const index = this.instance.getIndex();
 			const images = this.images.slice(index, this.images.length);
 			this.instance.add(images);
