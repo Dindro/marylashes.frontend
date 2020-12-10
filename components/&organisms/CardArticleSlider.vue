@@ -115,7 +115,6 @@ export default {
 		align-items: center;
 		grid-area: title;
 		@include h2;
-		font-weight: 700;
 
 		@include media-breakpoint-down(md) {
 			display: inline;
