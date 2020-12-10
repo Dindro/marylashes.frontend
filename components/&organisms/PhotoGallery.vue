@@ -180,7 +180,7 @@ export default {
 
 		onBeforeLeavePhoto(el) {
 			el.style.position = 'absolute';
-			el.style.transition = 'opacity .5s'
+			el.style.transition = 'opacity .5s';
 		},
 
 		selectTab({ id }) {

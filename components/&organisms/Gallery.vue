@@ -186,6 +186,7 @@ export default {
 			const index = this.instance.getIndex();
 			const images = this.images.slice(index, this.images.length);
 			this.instance.add(images);
+			this.nav_arrows.nextDisabled = false;
 		}
     },
 };
