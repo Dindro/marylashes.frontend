@@ -1,30 +1,20 @@
-const URL = '/api/v1/ajax/meet';
+const URL = '/meet';
 const URL_OPTION = `${URL}-option`;
 
-export default $axios => ({
+export default $api => ({
 	/**
 	 * Получить мит
 	 * @param {{ date: Number, duration: Number, type: [Boolean, String] }} options
 	 */
 	get(options) {
-		return new Promise(resolve => {
-			const f = $axios.get(URL, {
-				params: options,
-			});
-
-			setTimeout(() => {
-				resolve(f);
-			}, 1500);
-		});
-
-		return $axios.get(URL, {
+		return $api.$get('/meet', {
 			params: options,
 		});
 	},
 
 	add(form) {
 		return new Promise(resolve => {
-			const f = $axios.post(URL, form);
+			const f = $api.post(URL, form);
 
 			setTimeout(() => {
 				const res = {
@@ -43,7 +33,7 @@ export default $axios => ({
 			}, 1500);
 		});
 
-		return $axios.post(URL, form);
+		return $api.post(URL, form);
 	},
 
 	/**
@@ -53,7 +43,7 @@ export default $axios => ({
 	 */
 	getExist(options, optionsAxios) {
 		return new Promise(resolve => {
-			const resAxios = $axios.get(URL_OPTION, {
+			const resAxios = $api.get(URL_OPTION, {
 				params: options,
 				...optionsAxios,
 			});
@@ -63,7 +53,7 @@ export default $axios => ({
 			}, 1000);
 		});
 
-		return $axios.get(URL_OPTION, {
+		return $api.get(URL_OPTION, {
 			params: options,
 		});
 	}
