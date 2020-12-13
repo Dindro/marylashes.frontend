@@ -5,7 +5,7 @@ import component from '@/provide/component';
 
 export default (ctx, inject) => {
 	const api = ctx.$axios.create({
-		baseURL: process.env.API_URL || 'http://0.0.0.0:3001/api',
+		baseURL: process.env.API_SERVER_URL || 'http://0.0.0.0:3001/api',
 	});
 
 	const provide = {
