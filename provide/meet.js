@@ -7,7 +7,7 @@ export default $api => ({
 	 * @param {{ date: Number, duration: Number, type: [Boolean, String] }} options
 	 */
 	get(options) {
-		return $api.get('/meet', {
+		return $api.get('/meets', {
 			params: options,
 		});
 	},
