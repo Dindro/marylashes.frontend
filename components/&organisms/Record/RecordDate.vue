@@ -76,9 +76,8 @@ export default {
 
 		async loadMeets(date) {
 			const options = {
-				date: (date instanceof Date) ? date.getTime() : date,
-				duration: 7,
-				type: true,
+				date: (date instanceof Date) ? date.getTime() : date,	// Начало времени
+				duration: 7,	// Кол-во дней
 			};
 
 			try {

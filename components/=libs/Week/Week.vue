@@ -101,9 +101,12 @@ export default {
 
 		// Массив встреч для текущей недели
 		meetsWeek() {
-			return this.meets.filter(({ date }) => {
-				return this.week.some(day => equalDates(day.date, date));
-			});
+			return this.meets
+				.filter(({ date }) => {
+					return this.week.some(day => equalDates(day.date, date));
+				})
+				// Передаем свойство free, что это свободная запись
+				.map(meet => Object.assign({}, meet, { free: true }))
 		}
 	},
 
