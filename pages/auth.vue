@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<AuthBlock/>
+		<auth-block :auth="auth" />
 	</div>
 </template>
 
@@ -10,7 +10,13 @@ import AuthBlock from '&/AuthBlock';
 export default {
 	components: {
 		AuthBlock,
-	}
+	},
+
+	asyncData(ctx) {
+		return ctx.app.$axios.get('/api/v1/auth').then((res) => {
+			return res.data;
+		});
+  	}
 }
 </script>
 
