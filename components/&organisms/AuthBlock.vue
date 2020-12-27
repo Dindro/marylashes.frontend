@@ -1,24 +1,24 @@
 <template>
 	<div class="auth">
 		<div class="auth__form">
-			<validation-observer ref="form" slim>
+			<ValidationObserver ref="form" slim>
 				<div class="auth-form">
-					<form @submit="onSubmit">
+					<form @submit.prevent="onSubmit">
 						<div class="auth-form__header">
 							<h1 class="auth-form__title">{{ auth.title }}</h1>
 						</div>
 
 						<div class="auth-form__content">
-							<field class="auth-form__field" v-bind="auth.login" v-model="login"/>
-							<field class="auth-form__field" v-bind="auth.password" v-model="password"/>
+							<Field class="auth-form__field" v-bind="auth.login" v-model="login"/>
+							<Field class="auth-form__field" v-bind="auth.password" v-model="password"/>
 						</div>
 
 						<div class="auth-form__footer">
-							<btn :button="Object.assign({}, auth.submit, { fit: true })"/>
+							<Btn :button="action"/>
 						</div>
 					</form>
 				</div>
-			</validation-observer>
+			</ValidationObserver>
 		</div>
 	</div>
 </template>
@@ -42,13 +42,53 @@ export default {
 	},
 
 	data: () => ({
-		login: "",
-		password: "",
+		login: '',
+		password: '',
+		shake: false,
+		loading: false,
 	}),
 
-	methods: {
-		async onSubmit() {
+	computed: {
+		action() {
+			return Object.assign({}, this.auth.submit, {
+				shake: this.shake,
+				fit: true,
+				loading: this.loading,
+			});
+		}
+	},
 
+	methods: {
+		shakeAction() {
+			clearTimeout(this.shake);
+			this.shake = setTimeout(() => this.shake = false, 350);
+		},
+
+		async onSubmit(e) {
+			// Проверка на валидацию
+			const success = await this.$refs.form.validate();
+			if (!success) {
+				this.shakeAction();
+				return;
+			};
+
+			this.loading = true;
+
+			const userData = {
+				login: this.login,
+				password: this.password,
+			};
+
+			try {
+				// Отправка запроса на авторизацию
+				const { data: result } = await this.$provide.user.signin(userData);
+
+				// В случае успеха переводим в админку
+			} catch (err) {
+				// Иначае выводим ошибки
+			} finally {
+				this.loading = false;
+			}
 		}
 	},
 }
