@@ -3,7 +3,7 @@
 		<HeaderVue/>
 
 		<div class="layout-navbar__content container">
-			<div class="layout-navbar__navbar">d</div>
+			<aside class="layout-navbar__navbar">navbar</aside>
 			<Nuxt class="layout-navbar__page"/>
 		</div>
 
