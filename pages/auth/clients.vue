@@ -6,7 +6,7 @@
 
 <script>
 export default {
-	layouts: 'navbar',
+	layout: 'navbar',
 
 	components: {
 

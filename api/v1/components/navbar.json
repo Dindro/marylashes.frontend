@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "items": [
+      {
+        "href": "/auth/records",
+        "text": "Записи",
+        "count": {
+          "value": 3
+        }
+      },
+      {
+        "href": "/auth/clients",
+        "text": "Клиенты"
+      },
+      {
+        "href": "/auth/reviews",
+        "text": "Отзывы"
+      },
+      {
+        "href": "/auth/statistics",
+        "text": "Статистика"
+      },
+      {
+        "href": "/logout",
+        "text": "Выход"
+      }
+    ]
+  }
+}

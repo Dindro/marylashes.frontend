@@ -3,7 +3,7 @@
 		<HeaderVue/>
 
 		<div class="layout-navbar__content container">
-			<aside class="layout-navbar__navbar">navbar</aside>
+			<Navbar class="layout-navbar__navbar" :navbar="navbar"/>
 			<Nuxt class="layout-navbar__page"/>
 		</div>
 
@@ -14,12 +14,21 @@
 <script>
 import HeaderVue from '&/Header';
 import FooterVue from '&/Footer';
+import Navbar from '&/Navbar';
+import { mapState } from 'vuex';
 
 export default {
-  components: {
-	HeaderVue,
-	FooterVue,
-  }
+	components: {
+		HeaderVue,
+		FooterVue,
+		Navbar,
+	},
+
+	computed: {
+		...mapState([
+			'navbar',
+		]),
+	}
 }
 </script>
 
@@ -34,14 +43,20 @@ export default {
 	}
 
 	&__navbar {
-		width: rem(300);
+		width: rem(288);
 		padding-top: rem(112);
-		background-color: $color-light;
+		flex-shrink: 0;
 	}
 
 	&__page {
 		padding-top: rem(112);
 		flex: 1 1 auto;
+
+		&.container,
+		.container {
+			padding-right: 0;
+			padding-left: rem(80);
+		}
 	}
 }
 </style>
