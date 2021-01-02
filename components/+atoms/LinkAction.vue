@@ -6,9 +6,10 @@
 			link.loading && 'link-action--loading',
 			link.small && 'link-action--small',
 			link.shake && 'link-action--shake',
+			link.icon && 'has-icon'
 		]">
 		<span class="link-action__text">{{ link.text }}</span>
-		<transition :duration="300" name="fade" mode="out-in">
+		<transition v-if="link.icon" :duration="300" name="fade" mode="out-in">
 			<icon v-if="!link.loading" class="link-action__icon" :icon="link.icon" key="icon"></icon>
 			<spinner v-else class="link-action__spinner" :spinner="{ size: 'xss' }" key="spinner"></spinner>
 		</transition>
@@ -94,6 +95,30 @@ export default {
 
 	&--shake {
 		animation: shake $timing $easing forwards;
+	}
+
+	&:not(.has-icon) {
+		&#{$b}--loading {
+			#{$b}__text {
+				background-size: 0% 1px;
+				background-position: 50% 100%;
+				background-image: linear-gradient(currentColor, currentColor);
+				background-repeat: no-repeat;
+				animation: line-loading-animate .7s linear infinite;
+			}
+		}
+	}
+}
+
+@keyframes line-loading-animate {
+	0% {
+		background-size: 0% 1px;
+	}
+	50% {
+		background-size: 50% 1px;
+	}
+	100% {
+		background-size: 0% 1px;
 	}
 }
 
