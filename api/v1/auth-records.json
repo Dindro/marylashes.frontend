@@ -1,5 +1,25 @@
 {
   "hero": {
-    "title": "Записи"
+    "title": "Записи",
+    "action": {
+      "tag": "button",
+      "text": "Записать клиента",
+      "icon": {
+        "name": "16/plus"
+      }
+    },
+    "views": {
+      "title": "вид",
+      "items": [
+        {
+          "tag": "button",
+          "text": "список"
+        },
+        {
+          "tag": "button",
+          "text": "календарь"
+        }
+      ]
+    }
   }
 }

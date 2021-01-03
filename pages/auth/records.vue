@@ -1,7 +1,18 @@
 <template>
 	<div class="container">
-		<Hero :hero="hero">
+		<Hero :hero="hero" class="mb-48">
+			<div class="hero-inner">
+				<div class="hero-inner__action">
+					<LinkAction :link="hero.action"/>
+				</div>
+				<div v-if="hero.views" class="hero-inner__view">
+					<p v-if="hero.views.title" class="hero-inner__view-title">{{ hero.views.title }}</p>
 
+					<TabsHeaderSimple :items="hero.views.items" v-model="viewSelected" v-slot="scope">
+						<LinkAction :link="scope.item" @click.native="scope.onClick"/>
+					</TabsHeaderSimple>
+				</div>
+			</div>
 		</Hero>
 	</div>
 </template>
@@ -9,6 +20,7 @@
 <script>
 import Hero from '&/Hero';
 import LinkAction from '+/LinkAction';
+import TabsHeaderSimple from '^/TabsHeaderSimple';
 
 export default {
 	layout: 'navbar',
@@ -18,6 +30,10 @@ export default {
 		LinkAction,
 	},
 
+	data: () => ({
+		viewSelected: 0,
+	}),
+
 	asyncData(ctx) {
 		return ctx.app.$axios.get('/api/v1/auth-records').then((res) => {
 			return res.data;
@@ -26,6 +42,22 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.hero-inner {
+	display: flex;
 
+	> * + * {
+		margin-left: rem(40);
+	}
+
+	&__view {
+		display: flex;
+	}
+
+	&__view-title {
+		@include text-default;
+		margin-right: rem(16);
+		opacity: 0.3;
+	}
+}
 </style>

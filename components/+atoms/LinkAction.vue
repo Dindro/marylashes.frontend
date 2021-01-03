@@ -7,7 +7,8 @@
 			link.small && 'link-action--small',
 			link.shake && 'link-action--shake',
 			link.icon && 'has-icon'
-		]">
+		]"
+		:tag="link.tag || 'span'">
 		<span class="link-action__text">{{ link.text }}</span>
 		<transition v-if="link.icon" :duration="300" name="fade" mode="out-in">
 			<icon v-if="!link.loading" class="link-action__icon" :icon="link.icon" key="icon"></icon>
@@ -44,6 +45,10 @@ export default {
 	cursor: pointer;
 	display: inline-flex;
 	align-items: center;
+	padding: 0;
+	border: none;
+	background: none;
+	outline: none;
 
 	&__text {
 		@include defaultTransition(opacity);
