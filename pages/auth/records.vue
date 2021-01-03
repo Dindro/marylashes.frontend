@@ -14,6 +14,8 @@
 				</div>
 			</div>
 		</Hero>
+
+		<ListControl :list="list"/>
 	</div>
 </template>
 
@@ -21,6 +23,7 @@
 import Hero from '&/Hero';
 import LinkAction from '+/LinkAction';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
+import ListControl from '&/ListControl';
 
 export default {
 	layout: 'navbar',
@@ -28,6 +31,7 @@ export default {
 	components: {
 		Hero,
 		LinkAction,
+		ListControl,
 	},
 
 	data: () => ({

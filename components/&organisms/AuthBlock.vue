@@ -124,7 +124,6 @@ export default {
 
 	&__title {
 		@include h3;
-		opacity: 0.65;
 	}
 
 	&__header {
