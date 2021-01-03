@@ -5,7 +5,7 @@
 			<LinkAction v-if="action" :link="action" @click.native="toggleFilter" class="list-control__action"/>
 		</div>
 
-		<div v-if="filterActive" class="list-control__filter">
+		<div v-if="action && filterActive" class="list-control__filter">
 			<div class="list-filter">
 				<!-- ListFilter -->
 				<!-- От и до  -->
@@ -48,7 +48,7 @@ export default {
 	},
 
 	/**
-	 * actionDisable
+	 * filterDisable
 	 * action
 	 * 		text
 	 * 		activeText
@@ -68,7 +68,7 @@ export default {
 
 	computed: {
 		action() {
-			if (this.list.actionDisable) return null;
+			if (this.list.filterDisable) return null;
 
 			const def = {
 				tag: 'button',
