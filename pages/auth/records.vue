@@ -6,11 +6,7 @@
 					<LinkAction :link="hero.action"/>
 				</div>
 				<div v-if="hero.views" class="hero-inner__view">
-					<p v-if="hero.views.title" class="hero-inner__view-title">{{ hero.views.title }}</p>
-
-					<TabsHeaderSimple :items="hero.views.items" v-model="viewSelected" v-slot="scope">
-						<LinkAction :link="scope.item" @click.native="scope.onClick"/>
-					</TabsHeaderSimple>
+					<TabsHeaderSimple :title="hero.views.title" :items="hero.views.items" v-model="viewSelected"/>
 				</div>
 			</div>
 		</Hero>

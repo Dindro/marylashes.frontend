@@ -1,5 +1,6 @@
 <template>
 	<ul class="tabs-header">
+		<li v-if="title" class="tabs-header__title">{{ title }}</li>
 		<li
 			v-for="(item, i) in items"
 			:key="i"
@@ -17,6 +18,7 @@ import LinkAction from '+/LinkAction';
 
 export default {
 	props: {
+		title: String,
 		items: Array,
 		value: [String, Number],
 	},
@@ -39,6 +41,12 @@ export default {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+
+	&__title {
+		@include text-default;
+		opacity: 0.3;
+		margin-right: rem(16);
+	}
 }
 
 .tabs-header-item {

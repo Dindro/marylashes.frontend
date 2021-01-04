@@ -10,12 +10,12 @@
 				<!-- ListFilter -->
 				<!-- От и до  -->
 				<!-- Чекбокс статусы -->
-				Фильтры
+				<TabsHeaderSimple :title="list.filter_status.title" :items="list.filter_status.items"/>
 			</div>
 		</div>
 
 		<div class="list-control__settings">
-			<!-- Чекбокс сортировка -->
+			<TabsHeaderSimple v-model="sortSelected" :title="list.sort.title" :items="list.sort.items"/>
 		</div>
 
 		<div class="list-control__main">
@@ -26,10 +26,9 @@
 					<!-- Список -->
 				</div>
 
-				<div class="list-control__paginate">
-					<!-- PaginateControl -->
-					<!-- Показать еще и пагинация -->
-				</div>
+				<!-- <ListPaginate class="list-control__paginate"/> -->
+				<!-- Показать ещё -->
+
 			</div>
 
 			<slot name="aside"></slot>
@@ -40,11 +39,15 @@
 <script>
 import FieldInput from '+/FieldInput';
 import LinkAction from '+/LinkAction';
+import ListPaginate from '&/ListPaginate';
+import TabsHeaderSimple from '^/TabsHeaderSimple';
 
 export default {
 	components: {
 		FieldInput,
 		LinkAction,
+		ListPaginate,
+		TabsHeaderSimple,
 	},
 
 	/**
@@ -53,7 +56,9 @@ export default {
 	 * 		text
 	 * 		activeText
 	 * search(input)
-	 *
+	 * sort
+	 *  	title
+	 * 		items
 	 */
 	props: {
 		list: {
@@ -63,6 +68,7 @@ export default {
 
 	data: () => ({
 		search: '',
+		sortSelected: null,
 		filterActive: false,
 	}),
 
@@ -82,7 +88,14 @@ export default {
 	methods: {
 		toggleFilter() {
 			this.filterActive = !this.filterActive;
-		}
+		},
+
+		more() {
+			/**
+			 * Показать ещё
+			 * Меняем в пагинацию на +1
+			 */
+		},
 	},
 
 	created() {
@@ -108,6 +121,10 @@ export default {
 		position: absolute;
 		top: calc(100% + #{rem(8)});
 		right: 0;
+	}
+
+	&__settings {
+		margin-top: rem(40);
 	}
 
 	&__filter {
