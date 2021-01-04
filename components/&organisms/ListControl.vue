@@ -1,17 +1,12 @@
 <template>
 	<div class="list-control">
 		<div class="list-control__search">
-			<FieldInput v-model="search" v-bind="list.search" />
+			<FieldInput v-model="search" v-bind="list.search"/>
 			<LinkAction v-if="action" :link="action" @click.native="toggleFilter" class="list-control__action"/>
 		</div>
 
-		<div v-if="action && filterActive" class="list-control__filter">
-			<div class="list-filter">
-				<!-- ListFilter -->
-				<!-- От и до  -->
-				<!-- Чекбокс статусы -->
-				<TabsHeaderSimple :title="list.filter_status.title" :items="list.filter_status.items"/>
-			</div>
+		<div v-if="list.filter && action" v-show="filterActive" class="list-control__filter">
+			<ListFilter :filter="list.filter"/>
 		</div>
 
 		<div class="list-control__settings">
@@ -41,6 +36,7 @@ import FieldInput from '+/FieldInput';
 import LinkAction from '+/LinkAction';
 import ListPaginate from '&/ListPaginate';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
+import ListFilter from '&/ListFilter';
 
 export default {
 	components: {
@@ -48,6 +44,7 @@ export default {
 		LinkAction,
 		ListPaginate,
 		TabsHeaderSimple,
+		ListFilter,
 	},
 
 	/**

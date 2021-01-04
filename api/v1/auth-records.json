@@ -32,30 +32,32 @@
       "label": "Поиск по имени",
       "placeholder": "Например Ижуткина Мария"
     },
-    "filter_status": {
-      "title": "Статус",
-      "items": [
-        {
-          "tag": "button",
-          "text": "в ожидании"
-        },
-        {
-          "tag": "button",
-          "text": "в рассмотрении"
-        },
-        {
-          "tag": "button",
-          "text": "на отчет"
-        },
-        {
-          "tag": "button",
-          "text": "отменен"
-        },
-        {
-          "tag": "button",
-          "text": "завершен"
-        }
-      ]
+    "filter": {
+      "status": {
+        "title": "Статус",
+        "items": [
+          {
+            "tag": "button",
+            "text": "в ожидании"
+          },
+          {
+            "tag": "button",
+            "text": "в рассмотрении"
+          },
+          {
+            "tag": "button",
+            "text": "на отчет"
+          },
+          {
+            "tag": "button",
+            "text": "отменен"
+          },
+          {
+            "tag": "button",
+            "text": "завершен"
+          }
+        ]
+      }
     },
     "sort": {
       "title": "Сортировать по",
