@@ -4,7 +4,7 @@
 		<li
 			v-for="(item, i) in items"
 			:key="i"
-			:class="{ 'is-active': i === value }"
+			:class="{ 'is-active': isActive(i) }"
 			class="tabs-header-item">
 			<slot :item="item" :onClick="getOnClick(i)">
 				<LinkAction :link="item" @click.native="onClick(i)"/>
@@ -20,7 +20,8 @@ export default {
 	props: {
 		title: String,
 		items: Array,
-		value: [String, Number],
+		value: [String, Number, Array],
+		multiple: Boolean,
 	},
 
 	methods: {
@@ -28,8 +29,35 @@ export default {
 			return this.onClick.bind(this, index);
 		},
 
+		getValue(index) {
+			let value;
+
+			if (this.multiple) {
+				const isFind = this.value.includes(index);
+
+				if (isFind) {
+					value = this.value.filter(item => item !== index);
+				} else {
+					value = [...this.value, index];
+				}
+			} else {
+				value = index;
+			}
+
+			return value;
+		},
+
+		isActive(index) {
+			if (this.multiple) {
+				return this.value.includes(index);
+			} else {
+				return index === this.value;
+			}
+		},
+
 		onClick(index) {
-			this.$emit('input', index);
+			const value = this.getValue(index);
+			this.$emit('input', value);
 		}
 	}
 }
@@ -62,10 +90,6 @@ export default {
 		&:hover {
 			opacity: 1;
 		}
-	}
-
-	&.is-active {
-		pointer-events: none;
 	}
 }
 </style>

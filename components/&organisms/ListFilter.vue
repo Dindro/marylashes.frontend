@@ -6,7 +6,7 @@
 
 		<div class="list-filter-item" v-if="filter.status">
 			<!-- Status -->
-			<TabsHeaderSimple v-model="statusSelected" :title="filter.status.title" :items="filter.status.items"/>
+			<TabsHeaderSimple v-model="statusessSelected" :title="filter.status.title" :items="filter.status.items" multiple/>
 		</div>
 	</div>
 </template>
@@ -24,7 +24,7 @@ export default {
 	},
 
 	data: () => ({
-		statusSelected: null,
+		statusessSelected: [],
 	}),
 }
 </script>
