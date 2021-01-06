@@ -21,6 +21,7 @@
     "raf-throttle": "^2.0.5",
     "scroll-lock": "^2.1.4",
     "swiper": "^6.1.1",
+    "v-calendar": "^2.1.6",
     "v-mask": "^2.2.3",
     "v-runtime-template": "^1.10.0",
     "vee-validate": "^3.4.2",

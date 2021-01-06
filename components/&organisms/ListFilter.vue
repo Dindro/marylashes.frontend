@@ -1,7 +1,7 @@
 <template>
 	<div class="list-filter">
 		<div class="list-filter-item">
-			<!-- От и до -->
+			<FieldDateRange v-bind="records" v-model="recordsRange"/>
 		</div>
 
 		<div class="list-filter-item" v-if="filter.status">
@@ -16,10 +16,12 @@
 
 <script>
 import TabsHeaderSimple from '^/TabsHeaderSimple';
+import FieldDateRange from '+/FieldDateRange';
 
 export default {
 	components: {
 		TabsHeaderSimple,
+		FieldDateRange,
 	},
 
 	props: {
@@ -28,6 +30,16 @@ export default {
 
 	data: () => ({
 		statusessSelected: [],
+		recordsRange: {
+			start: null,
+			end: null,
+		},
+
+		records: {
+			labelFrom: 'Записи с',
+			labelTo: 'по',
+			visibleReset: true,
+		}
 	}),
 }
 </script>

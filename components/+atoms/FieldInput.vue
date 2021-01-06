@@ -14,7 +14,7 @@
 			:name="name"
 			:id="id"
 			:placeholder="placeholder"
-			@input="$emit('input', $event.target.value)"
+			v-on="listeners"
 		>
 		<template v-else>
 			<textarea
@@ -29,7 +29,7 @@
 				:name="name"
 				:id="id"
 				:placeholder="placeholder"
-				@input="$emit('input', $event.target.value)"
+				v-on="listeners"
 			>
 			</textarea>
 			<div class="input-shell-label-bg"></div>
@@ -52,9 +52,14 @@ export default {
 	props: {
 		value: {
 			type: String,
-			value: '',
+			default: '',
 		},
 		input: Boolean,
+		inputNative: {
+			// Нативый input событие вызывается по умолчанию
+			type: Boolean,
+			default: true,
+		},
 		textarea: Boolean,
 		type: {
 			type: String,
@@ -69,7 +74,9 @@ export default {
 		mask: String,
 		autocomplete: String,
 		pattern: String,
-		inputmode: String,			// Дает понять браузеру - какую клавиатуру вывести на экран
+
+		// Дает понять браузеру - какую клавиатуру вывести на экран
+		inputmode: String,
 	},
 
 	directives: {
@@ -82,7 +89,7 @@ export default {
 		},
 
 		isExist() {
-			return this.value !== '';
+			return !!this.value;
 		},
 
 		maskComputed() {
@@ -109,8 +116,27 @@ export default {
 
 			if (this.type === 'tel') return 'tel';
 			return null;
+		},
+
+		listeners() {
+			// События по умолчанию
+			const def = {
+				// Если включен нативный способ то вызываем его
+				...this.inputNative && { input: this.onInput },
+			};
+
+			return {
+				...this.$listeners,
+				...def,
+			};
 		}
 	},
+
+	methods: {
+		onInput(e) {
+			this.$emit('input', e.target.value);
+		}
+	}
 }
 </script>
 
