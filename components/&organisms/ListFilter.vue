@@ -5,8 +5,11 @@
 		</div>
 
 		<div class="list-filter-item" v-if="filter.status">
-			<!-- Status -->
-			<TabsHeaderSimple v-model="statusessSelected" :title="filter.status.title" :items="filter.status.items" multiple/>
+			<TabsHeaderSimple
+				v-model="statusessSelected"
+				:title="filter.status.title"
+				:items="filter.status.items"
+				multiple/>
 		</div>
 	</div>
 </template>
