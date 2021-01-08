@@ -3,6 +3,7 @@
 		<DatePicker
 			is-range
 			:mode="mode"
+			:popover="{ visibility: 'focus' }"
 			:masks="masks"
 			:value="value"
 			@input="input">
@@ -116,6 +117,16 @@ export default {
 
 	&__inputs {
 		display: flex;
+	}
+}
+
+.vc {
+	&-title {
+		@include text-default(!important);
+	}
+
+	&-popover-container {
+
 	}
 }
 </style>
