@@ -74,13 +74,13 @@
 
 // $i - !important
 @mixin text-default($i: '') {
-  font-size: rem(15) $i;
-  line-height: 1.53 $i;
-  font-weight: 400 $i;
-  font-family: $ff-montserrat $i;
+  font-size: rem(15) #{$i};
+  line-height: 1.53 #{$i};
+  font-weight: 400 #{$i};
+  font-family: $ff-montserrat #{$i};
 
   @include media-breakpoint-down(sm) {
-    font-size: rem(14) $i;
+    font-size: rem(14) #{$i};
   }
 }
 
