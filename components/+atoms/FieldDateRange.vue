@@ -2,9 +2,10 @@
 	<div class="date-range">
 		<DatePicker
 			is-range
+			trim-weeks
 			:mode="mode"
 			:popover="{ visibility: 'focus' }"
-			:masks="masks"
+			:masks="masksNormalize"
 			:value="value"
 			@input="input">
 			<template v-slot="{ inputValue, inputEvents }">
@@ -52,16 +53,7 @@ export default {
 
 	props: {
 		value: Object,
-		masks: {
-			type: Object,
-			default() {
-				return {
-        			input: 'DD.MM.YYYY',
-					title: 'MMMM YYYY',
-					weekdays: 'WW'
-				};
-			},
-		},
+		masks: Object,
 		mode: String,
 		labelFrom: String,
 		labelTo: String,
@@ -81,6 +73,16 @@ export default {
 	computed: {
 		showReset() {
 			return this.value.start || this.value.end;
+		},
+
+		masksNormalize() {
+			const def = {
+				input: 'DD.MM.YYYY',
+				title: 'MMMM YYYY',
+				weekdays: 'WW'
+			};
+
+			return Object.assign({}, def, this.masks);
 		}
 	},
 
@@ -185,16 +187,28 @@ export default {
 				border: 1px solid $color-dark;
 				background-color: transparent !important;
 			}
+
+			&:focus {
+				background-color: inherit !important;
+			}
+
+			.is-not-in-month & {
+				opacity: 0.3 !important;
+			}
 		}
 	}
 
 	&-highlight {
+		--blue-700: transparent !important;
+		--white: #{$color-saphire} !important;
+
+
 		width: rem(40) !important;
 		height: rem(40) !important;
 	}
 
-	&-popover-container {
-
+	&-popover-content-wrapper {
+		--popover-vertical-content-offset: #{rem(12)} !important;
 	}
 
 	&-popover-caret {
@@ -239,12 +253,13 @@ export default {
 		padding: rem(8) rem(8) 0 !important;
 	}
 
-	&-arrow {
+	&-arrow,
+	&-nav-arrow {
 		color: $color-dark !important;
 		width: rem(40) !important;
 		height: rem(40) !important;
 		border: 1px solid transparent !important;
-		@include defaultTransition(border-color);
+		flex-shrink: 0 !important;
 
 		&:hover {
 			border-color: $color-dark !important;
@@ -252,8 +267,20 @@ export default {
 		}
 
 		svg {
-			width: rem(24);
-			height: rem(24);
+			width: rem(26);
+			height: rem(26);
+		}
+	}
+
+	&-nav-title {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: none !important;
+
+		&:hover {
+			opacity: 0.65;
+			background-color: transparent !important;
 		}
 	}
 }
