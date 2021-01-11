@@ -158,6 +158,7 @@ export default {
 
 	&-header {
 		padding: rem(8) rem(8) 0 !important;
+		height: rem(48);
 	}
 
 	&-weeks {
@@ -236,6 +237,24 @@ export default {
 
 	&-arrows-container {
 		padding: rem(8) rem(8) 0 !important;
+	}
+
+	&-arrow {
+		color: $color-dark !important;
+		width: rem(40) !important;
+		height: rem(40) !important;
+		border: 1px solid transparent !important;
+		@include defaultTransition(border-color);
+
+		&:hover {
+			border-color: $color-dark !important;
+			background-color: transparent !important;
+		}
+
+		svg {
+			width: rem(24);
+			height: rem(24);
+		}
 	}
 }
 </style>
