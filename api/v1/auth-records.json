@@ -38,23 +38,28 @@
         "items": [
           {
             "tag": "button",
-            "text": "в ожидании"
+            "text": "в ожидании",
+            "id": "create"
           },
           {
             "tag": "button",
-            "text": "в рассмотрении"
+            "text": "в рассмотрении",
+            "id": "correct"
           },
           {
             "tag": "button",
-            "text": "на отчет"
+            "text": "на отчет",
+            "id": "report"
           },
           {
             "tag": "button",
-            "text": "отменен"
+            "text": "отменен",
+            "id": "complete"
           },
           {
             "tag": "button",
-            "text": "завершен"
+            "text": "завершен",
+            "id": "cancel"
           }
         ]
       }
