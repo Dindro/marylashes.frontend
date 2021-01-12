@@ -1,11 +1,11 @@
 <template>
-	<ul class="tabs-header">
+	<ul class="tabs-header" :class="[ multiple && 'tabs-header--multiple' ]">
 		<li v-if="title" class="tabs-header__title">{{ title }}</li>
 		<li
 			v-for="(item, i) in items"
 			:key="i"
 			:class="{ 'is-active': isActive(i) }"
-			class="tabs-header-item">
+			class="tabs-header__item">
 			<slot :item="item" :onClick="getOnClick(i)">
 				<LinkAction :link="item" @click.native="onClick(i)"/>
 			</slot>
@@ -65,6 +65,8 @@ export default {
 
 <style lang="scss">
 .tabs-header {
+	$b: #{&};
+
 	display: flex;
 	list-style: none;
 	margin: 0;
@@ -75,20 +77,27 @@ export default {
 		opacity: 0.3;
 		margin-right: rem(16);
 	}
-}
 
-.tabs-header-item {
-	@include defaultTransition(opacity);
+	&__item {
+		user-select: none;
+		@include defaultTransition(opacity);
 
-	& + & {
-		margin-left: rem(16);
+		& + & {
+			margin-left: rem(16);
+		}
+
+		&:not(.is-active) {
+			opacity: 0.3;
+
+			&:hover {
+				opacity: 0.3;
+			}
+		}
 	}
 
-	&:not(.is-active) {
-		opacity: 0.3;
-
-		&:hover {
-			opacity: 0.3;
+	&:not(#{$b}--multiple) {
+		#{$b}__item.is-active {
+			pointer-events: none;
 		}
 	}
 }
