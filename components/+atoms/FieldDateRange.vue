@@ -1,37 +1,46 @@
 <template>
 	<div class="date-range">
-		<DatePicker
-			is-range
-			trim-weeks
-			:mode="mode"
-			:popover="{ visibility: 'focus' }"
-			:masks="masksNormalize"
-			:value="value"
-			@input="input">
-			<template v-slot="{ inputValue, inputEvents }">
-				<div class="date-range__inputs">
-					<FieldInput
-						class="date-range__input"
-						:label="labelFrom"
-						:value="inputValue.start"
-						:inputNative="false"
-						v-on="inputEvents.start"/>
-					<FieldInput
-						class="date-range__input"
-						:label="labelTo"
-						:value="inputValue.end"
-						:inputNative="false"
-						v-on="inputEvents.end"
-						inputEventOverride/>
-					<LinkAction
-						v-if="visibleReset"
-						v-show="showReset"
-						class="date-range__reset"
-						@click.native="resetFields"
-						:link="reset"/>
-				</div>
-			</template>
-		</DatePicker>
+		<client-only>
+			<!-- Рендер на стороне сервера -->
+			<div class="date-range__inputs" slot="placeholder">
+				<FieldInput class="date-range__input" :label="labelFrom"/>
+				<FieldInput class="date-range__input" :label="labelTo"/>
+			</div>
+
+			<!-- Рендер на клиенте -->
+			<DatePicker
+				is-range
+				trim-weeks
+				:mode="mode"
+				:popover="{ visibility: 'focus' }"
+				:masks="masksNormalize"
+				:value="value"
+				@input="input">
+				<template v-slot="{ inputValue, inputEvents }">
+					<div class="date-range__inputs">
+						<FieldInput
+							class="date-range__input"
+							:label="labelFrom"
+							:value="inputValue.start"
+							:inputNative="false"
+							v-on="inputEvents.start"/>
+						<FieldInput
+							class="date-range__input"
+							:label="labelTo"
+							:value="inputValue.end"
+							:inputNative="false"
+							v-on="inputEvents.end"
+							inputEventOverride/>
+						<LinkAction
+							v-if="visibleReset"
+							v-show="showReset"
+							class="date-range__reset"
+							@click.native="resetFields"
+							:link="reset"/>
+					</div>
+				</template>
+			</DatePicker>
+		</client-only>
 	</div>
 </template>
 
