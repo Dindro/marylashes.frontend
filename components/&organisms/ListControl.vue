@@ -16,6 +16,11 @@
 		<div class="list-control__main">
 			<div class="list-control__content">
 				<div class="list-control__list">
+					<TableData :headers="headers" :data="data">
+						<template v-slot:name="{ value }">
+							<LinkAction :link="{ text: value }" />
+						</template>
+					</TableData>
 					<!-- ListView (double view) -->
 					<!-- Шапка -->
 					<!-- Список -->
@@ -37,6 +42,7 @@ import LinkAction from '+/LinkAction';
 import ListPaginate from '&/ListPaginate';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListFilter from '&/ListFilter';
+import TableData from '&/TableData';
 
 export default {
 	components: {
@@ -45,6 +51,7 @@ export default {
 		ListPaginate,
 		TabsHeaderSimple,
 		ListFilter,
+		TableData,
 	},
 
 	/**
@@ -67,6 +74,9 @@ export default {
 		search: '',
 		sortSelected: null,
 		filterActive: false,
+
+		headers: [{ value: 'name', text: 'Имя' }, { value: 'ball', text: 'Баллы' }],
+		data: [{ name: 'Сергей', ball: 4 }, { ball: 40, name: 'Маша' }]
 	}),
 
 	computed: {
