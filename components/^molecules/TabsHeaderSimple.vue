@@ -88,7 +88,7 @@ export default {
 		opacity: 0.3;
 
 		&:hover {
-			opacity: 1;
+			opacity: 0.3;
 		}
 	}
 }
