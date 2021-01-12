@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { modalBeforeShow as modalBeforeShowRecord } from './components/record';
+import { hookBeforeShow as hookBeforeShowRecord } from './components/record';
 
 const components = [
 	{
@@ -8,7 +8,7 @@ const components = [
 		componentProp: false,
 		componentPropApi: false,
 		modalProp: false,
-		modalBeforeShow: modalBeforeShowRecord,
+		hookBeforeShow: hookBeforeShowRecord,
 	},
 	{
 		name: '#review',
@@ -16,7 +16,7 @@ const components = [
 		componentProp: false,
 		componentPropApi: 'review-create',
 		modalProp: { size: 'md' },
-		modalBeforeShow: false,
+		hookBeforeShow: false,
 	},
 ];
 
@@ -69,8 +69,8 @@ export default (ctx, inject) => {
 		}
 
 		// Если есть функция до открывания модалки
-		if (component.modalBeforeShow && typeof component.modalBeforeShow === 'function')
-			component.modalBeforeShow.call(ctx, to.query);
+		if (component.hookBeforeShow && typeof component.hookBeforeShow === 'function')
+			component.hookBeforeShow.call(ctx, to.query);
 
 		// Открываем модалку
 		const props = [
