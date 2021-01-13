@@ -97,7 +97,8 @@ export default {
 			{ value: 'status', text: 'Статус' }],
 		data: [
 			{ id: 0, user: { name: 'Сергей' }, date: '05.12.2020 14:30', services: 'Classic - Снятие', price: '1400₽', status: 'create' },
-			{ id: 1, user: { name: 'Мария', image: 'https://sun7-8.userapi.com/impg/oseuvCEEF7tXzIngF-fWTbUFXSJBROjMGav9tA/3nU1u6JT-uo.jpg?size=50x0&quality=96&crop=6,533,1201,1201&sign=64b76d28f24af17f786b923b633b8984&ava=1' }, date: 'Помощь', services: '2D', price: '1200₽', status: 'cancel' }]
+			{ id: 1, user: { name: 'Мария', image: 'https://sun7-8.userapi.com/impg/oseuvCEEF7tXzIngF-fWTbUFXSJBROjMGav9tA/3nU1u6JT-uo.jpg?size=50x0&quality=96&crop=6,533,1201,1201&sign=64b76d28f24af17f786b923b633b8984&ava=1' }, date: 'Помощь', services: '2D', price: '1200₽', status: 'cancel' },
+			{ id: 3, user: { name: 'Анжелла Семенова', image: false }, date: 'Помощь', services: 'Classic', price: '1000₽', status: 'correct' },]
 	}),
 
 	computed: {
