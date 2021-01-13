@@ -14,7 +14,7 @@
 
 <script>
 import LinkAction from '+/LinkAction';
-import Paginate from '&/Paginate';
+import Paginate from '^/Paginate';
 
 export default {
 	components: {

@@ -34,7 +34,7 @@
 					<!-- Шапка -->
 					<!-- Список -->
 				</div>
-
+				<Paginate/>
 				<!-- <ListPaginate class="list-control__paginate"/> -->
 				<!-- Показать ещё -->
 
@@ -54,6 +54,7 @@ import ListFilter from '&/ListFilter';
 import TableData from '&/TableData';
 import UserInline from '^/UserInline';
 import Status from '+/Status';
+import Paginate from '^/Paginate';
 
 export default {
 	components: {
@@ -65,6 +66,7 @@ export default {
 		TableData,
 		UserInline,
 		Status,
+		Paginate,
 	},
 
 	/**
