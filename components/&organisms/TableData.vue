@@ -4,7 +4,7 @@
 			<table>
 				<thead>
 					<tr>
-						<th v-if="numerical" class="table-data-numerical">#</th>
+						<th v-if="numerical" class="table-data-numerical">{{ numericalHeader }}</th>
 						<th v-for="header in headers" :key="header.value">
 							{{ header.text }}
 						</th>
@@ -16,7 +16,11 @@
 						:key="item.id"
 						:class="{ 'is-selected': item.id === value }"
 						@click="onClickRow(item.id)">
-						<td v-if="numerical" class="table-data-numerical">{{ index + 1 }}</td>
+						<td v-if="numerical" class="table-data-numerical">
+							<slot name="numerical" :value="item[value]" :index="index">
+								{{ index + 1 }}
+							</slot>
+						</td>
 						<td v-for="{ value } in headers" :key="value">
 							<slot :name="value" :value="item[value]">
 								{{ item[value] }}
@@ -32,13 +36,17 @@
 <script>
 export default {
 	props: {
+		headers: Array,
+		data: Array,
+		value: Number,
 		numerical: {
 			type: Boolean,
 			default: true,
 		},
-		headers: Array,
-		data: Array,
-		value: Number,
+		numericalHeader: {
+			type: String,
+			default: '#',
+		},
 	},
 
 	computed: {
