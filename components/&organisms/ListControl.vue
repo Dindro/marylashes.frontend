@@ -16,9 +16,18 @@
 		<div class="list-control__main">
 			<div class="list-control__content">
 				<div class="list-control__list">
-					<TableData :headers="headers" :data="data">
-						<template v-slot:name="{ value }">
-							<LinkAction :link="{ text: value }" />
+					<TableData
+						:headers="headers"
+						:data="data"
+						v-model="listItemSelected">
+						<template #user="{ value: user }">
+							<UserInline
+								:image="user.image"
+								:name="user.name"/>
+						</template>
+
+						<template #status="{ value: status }">
+							<Status :id="status"/>
 						</template>
 					</TableData>
 					<!-- ListView (double view) -->
@@ -43,6 +52,8 @@ import ListPaginate from '&/ListPaginate';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListFilter from '&/ListFilter';
 import TableData from '&/TableData';
+import UserInline from '^/UserInline';
+import Status from '+/Status';
 
 export default {
 	components: {
@@ -52,6 +63,8 @@ export default {
 		TabsHeaderSimple,
 		ListFilter,
 		TableData,
+		UserInline,
+		Status,
 	},
 
 	/**
@@ -74,9 +87,17 @@ export default {
 		search: '',
 		sortSelected: null,
 		filterActive: false,
+		listItemSelected: null,
 
-		headers: [{ value: 'name', text: 'Имя' }, { value: 'ball', text: 'Баллы' }],
-		data: [{ name: 'Сергей', ball: 4 }, { ball: 40, name: 'Маша' }]
+		headers: [
+			{ value: 'user', text: 'Имя' },
+			{ value: 'date', text: 'Дата записи' },
+			{ value: 'services', text: 'Услуги' },
+			{ value: 'price', text: 'Цена' },
+			{ value: 'status', text: 'Статус' }],
+		data: [
+			{ id: 0, user: { name: 'Сергей' }, date: '05.12.2020 14:30', services: 'Classic - Снятие', price: '1400₽', status: 'create' },
+			{ id: 1, user: { name: 'Мария', image: 'https://sun7-8.userapi.com/impg/oseuvCEEF7tXzIngF-fWTbUFXSJBROjMGav9tA/3nU1u6JT-uo.jpg?size=50x0&quality=96&crop=6,533,1201,1201&sign=64b76d28f24af17f786b923b633b8984&ava=1' }, date: 'Помощь', services: '2D', price: '1200₽', status: 'cancel' }]
 	}),
 
 	computed: {
@@ -135,6 +156,10 @@ export default {
 	}
 
 	&__filter {
+		margin-top: rem(16);
+	}
+
+	&__main {
 		margin-top: rem(16);
 	}
 }

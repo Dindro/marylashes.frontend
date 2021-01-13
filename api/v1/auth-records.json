@@ -37,28 +37,18 @@
         "title": "Статус",
         "items": [
           {
-            "tag": "button",
-            "text": "в ожидании",
             "id": "create"
           },
           {
-            "tag": "button",
-            "text": "в рассмотрении",
             "id": "correct"
           },
           {
-            "tag": "button",
-            "text": "на отчет",
             "id": "report"
           },
           {
-            "tag": "button",
-            "text": "отменен",
             "id": "complete"
           },
           {
-            "tag": "button",
-            "text": "завершен",
             "id": "cancel"
           }
         ]

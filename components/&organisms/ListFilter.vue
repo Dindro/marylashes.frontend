@@ -11,8 +11,10 @@
 				:items="filter.status.items"
 				multiple
 				#default="{ item, onClick }">
-				<Status :status="item">
-					<LinkAction :link="item" @click.native="onClick"/>
+				<Status :id="item.id">
+					<LinkAction
+						:link="{ ...item, tag: 'button', text: statuses[item.id].toLowerCase() }"
+						@click.native="onClick"/>
 				</Status>
 			</TabsHeaderSimple>
 		</div>
@@ -24,6 +26,8 @@ import TabsHeaderSimple from '^/TabsHeaderSimple';
 import FieldDateRange from '+/FieldDateRange';
 import LinkAction from '+/LinkAction';
 import Status from '+/Status';
+
+import statuses from '@/utils/statuses';
 
 export default {
 	components: {
@@ -38,6 +42,7 @@ export default {
 	},
 
 	data: () => ({
+		statuses,
 		statusessSelected: [],
 		recordsRange: {
 			start: null,

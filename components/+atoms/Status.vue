@@ -1,12 +1,12 @@
 <script>
+import statuses from '@/utils/statuses';
+
 export default {
 	abstract: true,
 
 	props: {
-		status: {
-			type: Object,
-			required: true,
-		}
+		id: String,
+		textClass: String,
 	},
 
 	methods: {
@@ -43,13 +43,13 @@ export default {
 			return slot;
 		} catch (err) {
 			// Рендер по умолчанию обычный текст
-			const { text } = this.status;
-			return h('span', { class: 'text-default' }, text);
+			const text = statuses[this.id];
+			return h('span', { class: `text-default ${this.textClass}` }, text);
 		}
 	},
 
 	watch: {
-		'status.id': {
+		id: {
 			handler: 'updateStatus',
 			immediate: true,
 		}
