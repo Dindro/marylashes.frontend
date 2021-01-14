@@ -15,11 +15,20 @@ export default {
 	},
 
 	props: {
+		url: {
+			type: [String, Boolean],
+			default() {
+				return this.$route.path;
+			},
+		},
+		query: {
+			type: Object,
+		},
 		count: {
 			type: Number,
 			default: 412,
 		},
-		countView: {
+		total: {
 			type: Number,
 			default: 50,
 		},
@@ -43,7 +52,7 @@ export default {
 
 	computed: {
 		countPages() {
-			return Math.ceil(this.count / this.countView);
+			return Math.ceil(this.count / this.total);
 		},
 
 		prevDisabled() {
@@ -57,9 +66,9 @@ export default {
 
 		prev() {
 			return {
-				text: this.nextText,
-				disabled: this.nextDisabled,
-				value: this.nextValue,
+				text: this.prevText,
+				disabled: this.prevDisabled,
+				value: this.prevValue,
 			};
 		},
 
@@ -74,14 +83,23 @@ export default {
 
 		next() {
 			return {
-				text: this.prevText,
-				disabled: this.prevDisabled,
-				value: this.prevValue,
+				text: this.nextText,
+				disabled: this.nextDisabled,
+				value: this.nextValue,
 			};
 		},
 
 		items() {
-			return [this.prev, ...this.getPaginates(), this.next];
+			let paginates = [this.prev, ...this.getPaginates(), this.next];
+
+			// Генерируем href
+			if (this.url !== false) {
+				paginates = paginates.map(paginate => Object.assign({}, paginate, {
+					href: this.generateLink(paginate.value),
+				}));
+			}
+
+			return paginates;
 		}
 	},
 
@@ -139,11 +157,18 @@ export default {
 			const text = etc ? this.etc : value;
 
 			return {
-				text: text + ":" + value,
+				text,
 				value,
 			};
 		},
-	}
+
+		generateLink(page) {
+			return this.$axios.getUri({
+				url: this.url,
+				params: { ...this.query, page },
+			});
+		},
+	},
 }
 </script>
 
