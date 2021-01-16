@@ -1,7 +1,11 @@
 <template>
-	<ul class="paginate">
+	<ul class="paginate" :class="[ align && `paginate--${align}`]">
 		<li v-for="(item, i) in items" :key="i">
-			<LinkAction :link="item" />
+			<LinkAction
+				:link="item"
+				:class="{ 'is-active': !item.motion && item.value === value }"
+				class="paginate-item"
+				@click.native="onClick($event, item.value)"/>
 		</li>
 	</ul>
 </template>
@@ -24,17 +28,16 @@ export default {
 		query: {
 			type: Object,
 		},
-		count: {
-			type: Number,
-			default: 412,
-		},
 		total: {
+			type: Number,
+			default: 432,
+		},
+		count: {
 			type: Number,
 			default: 50,
 		},
 		value: {
 			type: Number,
-			default: 3,
 		},
 		prevText: {
 			type: String,
@@ -47,12 +50,16 @@ export default {
 		etc: {
 			type: String,
 			default: '...',
+		},
+		align: {
+			type: String,
+			validator: value => ['right'].indexOf(value) !== -1,
 		}
 	},
 
 	computed: {
 		countPages() {
-			return Math.ceil(this.count / this.total);
+			return Math.ceil(this.total / this.count);
 		},
 
 		prevDisabled() {
@@ -69,6 +76,7 @@ export default {
 				text: this.prevText,
 				disabled: this.prevDisabled,
 				value: this.prevValue,
+				motion: true,
 			};
 		},
 
@@ -86,13 +94,14 @@ export default {
 				text: this.nextText,
 				disabled: this.nextDisabled,
 				value: this.nextValue,
+				motion: true,
 			};
 		},
 
 		items() {
 			let paginates = [this.prev, ...this.getPaginates(), this.next];
 
-			// Генерируем href
+			// Генерация href
 			if (this.url !== false) {
 				paginates = paginates.map(paginate => Object.assign({}, paginate, {
 					href: this.generateLink(paginate.value),
@@ -117,7 +126,11 @@ export default {
 			// Максимальное количество когда нет точек
 			const MAX_COUNT_WITHOUT_ETC = 8;
 			if (count < MAX_COUNT_WITHOUT_ETC) {
-				paginates = this.getPaginatesArray(new Array(count).map(value => value + 1));
+
+				// Массив начиная с 1 до count
+				// Тоесть [1, 2, 3, 4 ... count]
+				const values = new Array(count).fill('').map((value, index) => index + 1);
+				paginates.push(...this.getPaginateArray(values));
 			} else {
 				let start;
 				let end;
@@ -168,12 +181,41 @@ export default {
 				params: { ...this.query, page },
 			});
 		},
+
+		onClick(e, value) {
+			this.$emit('input', value);
+		},
 	},
 }
 </script>
 
 <style lang="scss">
 .paginate {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 
+	li + li {
+		margin-left: rem(8);
+	}
+
+	&--right {
+		justify-content: flex-end;
+	}
+}
+
+.paginate-item {
+	min-width: rem(18);
+	justify-content: center;
+
+	&:not(.is-active) {
+		opacity: 0.3;
+	}
+
+	&.is-active {
+		pointer-events: none;
+	}
 }
 </style>

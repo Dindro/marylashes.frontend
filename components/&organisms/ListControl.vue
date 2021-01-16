@@ -30,14 +30,9 @@
 							<Status :id="status"/>
 						</template>
 					</TableData>
-					<!-- ListView (double view) -->
-					<!-- Шапка -->
-					<!-- Список -->
 				</div>
-				<Paginate/>
-				<!-- <ListPaginate class="list-control__paginate"/> -->
-				<!-- Показать ещё -->
 
+				<Paginate class="list-control__paginate" v-model="paginateSelected" align="right" :url="false"/>
 			</div>
 
 			<slot name="aside"></slot>
@@ -90,6 +85,7 @@ export default {
 		sortSelected: null,
 		filterActive: false,
 		listItemSelected: null,
+		paginateSelected: 1,
 
 		headers: [
 			{ value: 'user', text: 'Имя' },
@@ -163,6 +159,10 @@ export default {
 	}
 
 	&__main {
+		margin-top: rem(16);
+	}
+
+	&__paginate {
 		margin-top: rem(16);
 	}
 }

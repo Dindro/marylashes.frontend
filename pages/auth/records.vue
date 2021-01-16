@@ -11,7 +11,11 @@
 			</div>
 		</Hero>
 
-		<ListControl :list="list"/>
+		<ListControl v-if="viewSelected === 0" :list="list"/>
+
+		<template v-else-if="viewSelected === 1">
+			Calendar
+		</template>
 	</div>
 </template>
 
@@ -30,15 +34,15 @@ export default {
 		ListControl,
 	},
 
-	data: () => ({
-		viewSelected: 0,
-	}),
-
 	asyncData(ctx) {
 		return ctx.app.$axios.get('/api/v1/auth-records').then((res) => {
 			return res.data;
 		});
-  	}
+  	},
+
+	data: () => ({
+		viewSelected: 0,
+	}),
 }
 </script>
 
