@@ -7,7 +7,7 @@
 		</template>
 
 		<template #default>
-			Контент
+
 		</template>
 
 		<template #footer>
@@ -32,6 +32,13 @@ export default {
 			default() {
 				return {
 					id: 'create',
+					name: 'Ижуткина Мария',
+					was: true,
+					services: [],
+					date: 'Помощь',
+					socials: [
+
+					]
 				}
 			}
 		},

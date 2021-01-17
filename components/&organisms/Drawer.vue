@@ -69,7 +69,8 @@ export default {
 		padding-bottom: rem(48);
 		height: 100%;
 		width: rem(592);
-		background-color: rgba($color-white, 0.8);
+		background-color: rgba($color-white, 0.65);
+		backdrop-filter: blur(#{rem(3)});
 		pointer-events: none;
 		overflow-y: auto;
 		transform: translateX(100%);
