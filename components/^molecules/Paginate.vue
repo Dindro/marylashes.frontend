@@ -1,5 +1,5 @@
 <template>
-	<ul class="paginate" :class="[ align && `paginate--${align}`]">
+	<ul v-if="total" class="paginate" :class="[ align && `paginate--${align}`]">
 		<li v-for="(item, i) in items" :key="i">
 			<LinkAction
 				:link="item"
@@ -30,7 +30,6 @@ export default {
 		},
 		total: {
 			type: Number,
-			default: 432,
 		},
 		count: {
 			type: Number,

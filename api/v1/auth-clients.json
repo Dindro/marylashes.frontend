@@ -1,0 +1,12 @@
+{
+  "hero": {
+    "title": "Клиенты",
+    "action": {
+      "tag": "button",
+      "text": "Добавить клиента",
+      "icon": {
+        "name": "16/plus"
+      }
+    }
+  }
+}

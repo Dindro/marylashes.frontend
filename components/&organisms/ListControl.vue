@@ -15,24 +15,14 @@
 
 		<div class="list-control__main">
 			<div class="list-control__content">
-				<div class="list-control__list">
-					<TableData
-						:headers="headers"
-						:data="data"
-						v-model="listItemSelected">
-						<template #user="{ value: user }">
-							<UserInline
-								:image="user.image"
-								:name="user.name"/>
-						</template>
+				<component :is="listViewComponent" :data="listData" v-model="listSelected"/>
 
-						<template #status="{ value: status }">
-							<Status :id="status"/>
-						</template>
-					</TableData>
-				</div>
-
-				<Paginate class="list-control__paginate" v-model="paginateSelected" align="right" :url="false"/>
+				<Paginate
+					class="list-control__paginate"
+					align="right"
+					v-model="paginateSelected"
+					:total="listTotal"
+					:url="false"/>
 			</div>
 
 			<slot name="aside"></slot>
@@ -46,9 +36,7 @@ import LinkAction from '+/LinkAction';
 import ListPaginate from '&/ListPaginate';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListFilter from '&/ListFilter';
-import TableData from '&/TableData';
-import UserInline from '^/UserInline';
-import Status from '+/Status';
+import ListRecords from '&/ListRecords';
 import Paginate from '^/Paginate';
 
 export default {
@@ -58,9 +46,7 @@ export default {
 		ListPaginate,
 		TabsHeaderSimple,
 		ListFilter,
-		TableData,
-		UserInline,
-		Status,
+		ListRecords,
 		Paginate,
 	},
 
@@ -77,23 +63,21 @@ export default {
 	props: {
 		list: {
 			type: Object,
-		}
+		},
+		listViewComponent: {
+			type: Object,
+		},
 	},
 
 	data: () => ({
 		search: '',
 		sortSelected: null,
 		filterActive: false,
-		listItemSelected: null,
+		listSelected: null,
 		paginateSelected: 1,
 
-		headers: [
-			{ value: 'user', text: 'Имя' },
-			{ value: 'date', text: 'Дата записи' },
-			{ value: 'services', text: 'Услуги' },
-			{ value: 'price', text: 'Цена' },
-			{ value: 'status', text: 'Статус' }],
-		data: [
+		listTotal: 0,
+		listData: [
 			{ id: 0, user: { name: 'Сергей' }, date: '05.12.2020 14:30', services: 'Classic - Снятие', price: '1400₽', status: 'create' },
 			{ id: 1, user: { name: 'Мария', image: 'https://sun7-8.userapi.com/impg/oseuvCEEF7tXzIngF-fWTbUFXSJBROjMGav9tA/3nU1u6JT-uo.jpg?size=50x0&quality=96&crop=6,533,1201,1201&sign=64b76d28f24af17f786b923b633b8984&ava=1' }, date: 'Помощь', services: '2D', price: '1200₽', status: 'cancel' },
 			{ id: 3, user: { name: 'Анжелла Семенова', image: false }, date: 'Помощь', services: 'Classic', price: '1000₽', status: 'correct' },]
@@ -115,13 +99,41 @@ export default {
 	methods: {
 		toggleFilter() {
 			this.filterActive = !this.filterActive;
+
+			if (!this.filterActive) {
+				// Сбросить фильтры
+			}
 		},
 
-		more() {
-			/**
-			 * Показать ещё
-			 * Меняем в пагинацию на +1
-			 */
+		// Грузить данные
+		async loadList() {
+			// Валидация данных
+
+			// Подготовка данных
+			const params = {
+				search: this.search,
+				'record-from': null,
+				'record-to': null,
+				status: [],
+				sort: this.sortSelected,
+				by: null,
+				page: this.paginateSelected,
+			};
+
+			const { getList } = this.list;
+
+			try {
+				// Запрос
+				const res = await getList(params);
+				const { list, result } = res.data;
+
+				// Запись данных
+				this.listTotal = result;
+				this.listData = list;
+
+			} catch (err) {
+				console.error('Error load data', err);
+			}
 		},
 	},
 
@@ -134,7 +146,14 @@ export default {
 		//   Назначаем данные
 
 		// Получаем список
+		this.loadList();
 	},
+
+	watch: {
+		listSelected(value) {
+			this.$emit('select', value);
+		}
+	}
 }
 </script>
 
@@ -163,7 +182,7 @@ export default {
 	}
 
 	&__paginate {
-		margin-top: rem(16);
+		margin-top: rem(16) !important;
 	}
 }
 </style>

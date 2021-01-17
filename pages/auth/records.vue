@@ -11,7 +11,14 @@
 			</div>
 		</Hero>
 
-		<ListControl v-if="viewSelected === 0" :list="list"/>
+		<template v-if="viewSelected === 0">
+			<ListControl
+				:list="list"
+				:listViewComponent="listViewComponent"
+				@select="onSelectRecord">
+
+			</ListControl>
+		</template>
 
 		<template v-else-if="viewSelected === 1">
 			Calendar
@@ -24,6 +31,7 @@ import Hero from '&/Hero';
 import LinkAction from '+/LinkAction';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListControl from '&/ListControl';
+import ListRecords from '&/ListRecords';
 
 export default {
 	layout: 'navbar',
@@ -42,7 +50,16 @@ export default {
 
 	data: () => ({
 		viewSelected: 0,
+		recordSelected: null,
+		// Компонент таблица
+		listViewComponent: ListRecords,
 	}),
+
+	methods: {
+		onSelectRecord(record) {
+			process.env.NODE_ENV === 'development' && console.log('Select record ' + record);
+		},
+	},
 }
 </script>
 

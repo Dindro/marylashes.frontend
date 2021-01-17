@@ -1,6 +1,8 @@
 <template>
 	<div class="container">
-
+		<Hero :hero="hero" class="mb-48">
+			<LinkAction :link="hero.action"/>
+		</Hero>
 	</div>
 </template>
 
@@ -13,7 +15,7 @@ export default {
 	},
 
 	asyncData(ctx) {
-		return ctx.app.$axios.get('/api/v1/auth').then((res) => {
+		return ctx.app.$axios.get('/api/v1/auth-clients').then((res) => {
 			return res.data;
 		});
   	}
