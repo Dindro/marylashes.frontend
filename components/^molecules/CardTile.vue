@@ -25,6 +25,10 @@ export default {
 
 <style lang="scss">
 .card-tile {
+	& + & {
+		margin-top: rem(48);
+	}
+
 	&__header {
 		display: flex;
 		align-items: flex-end;
@@ -37,6 +41,7 @@ export default {
 
 	&__header-slot {
 		flex: 1 1 auto;
+		text-align: right
 	}
 
 	&__title {
@@ -51,6 +56,7 @@ export default {
 
 	&__footer {
 		margin-top: rem(16);
+		text-align: right
 	}
 }
 </style>

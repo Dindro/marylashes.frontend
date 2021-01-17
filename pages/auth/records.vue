@@ -21,10 +21,8 @@
 			</ListControl>
 
 			<Drawer v-model="showDrawer">
-				<div class="records-drawer">
-					Плитки
-					Плитки
-				</div>
+				<CardTileRecord/>
+				<CardTileClient/>
 			</Drawer>
 		</template>
 
@@ -41,6 +39,8 @@ import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListControl from '&/ListControl';
 import ListRecords from '&/ListRecords';
 import Drawer from '&/Drawer';
+import CardTileRecord from '^/CardTileRecord';
+import CardTileClient from '^/CardTileClient';
 
 export default {
 	layout: 'navbar',
@@ -50,6 +50,8 @@ export default {
 		LinkAction,
 		ListControl,
 		Drawer,
+		CardTileRecord,
+		CardTileClient,
 	},
 
 	asyncData(ctx) {
