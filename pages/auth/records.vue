@@ -13,6 +13,7 @@
 
 		<template v-if="viewSelected === 0">
 			<ListControl
+				ref="list"
 				:list="list"
 				:listViewComponent="listViewComponent"
 				@select="onSelectRecord">
@@ -60,16 +61,39 @@ export default {
 	data: () => ({
 		viewSelected: 0,
 		recordSelected: null,
-		showDrawer: true,
+		showDrawer: false,
 		// Компонент таблица
 		listViewComponent: ListRecords,
 	}),
 
 	methods: {
 		onSelectRecord(record) {
-			process.env.NODE_ENV === 'development' && console.log('Select record ' + record);
+			process.env.NODE_ENV === 'development' && console.log('Select record', record);
+
+			let showDrawer;
+
+			if (!record) {
+				showDrawer = false;
+			} else {
+				// Получаем детальную запись
+
+				// Получаем детальную карточку клиентку
+
+				showDrawer = true;
+			}
+
+			this.showDrawer = showDrawer;
 		},
 	},
+
+	watch: {
+		showDrawer(value) {
+			// Скрываем выбранный запись
+			if (!value) {
+				this.$refs.list.listSelected = null;
+			}
+		}
+	}
 }
 </script>
 

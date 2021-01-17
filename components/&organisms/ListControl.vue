@@ -135,6 +135,11 @@ export default {
 				console.error('Error load data', err);
 			}
 		},
+
+		onListSelected(id) {
+			let item = this.listData.find(item => item.id === id);
+			this.$emit('select', item);
+		}
 	},
 
 	created() {
@@ -150,9 +155,7 @@ export default {
 	},
 
 	watch: {
-		listSelected(value) {
-			this.$emit('select', value);
-		}
+		listSelected: 'onListSelected'
 	}
 }
 </script>
