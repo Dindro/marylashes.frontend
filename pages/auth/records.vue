@@ -18,6 +18,13 @@
 				@select="onSelectRecord">
 
 			</ListControl>
+
+			<Drawer v-model="showDrawer">
+				<div class="records-drawer">
+					Плитки
+					Плитки
+				</div>
+			</Drawer>
 		</template>
 
 		<template v-else-if="viewSelected === 1">
@@ -32,6 +39,7 @@ import LinkAction from '+/LinkAction';
 import TabsHeaderSimple from '^/TabsHeaderSimple';
 import ListControl from '&/ListControl';
 import ListRecords from '&/ListRecords';
+import Drawer from '&/Drawer';
 
 export default {
 	layout: 'navbar',
@@ -40,6 +48,7 @@ export default {
 		Hero,
 		LinkAction,
 		ListControl,
+		Drawer,
 	},
 
 	asyncData(ctx) {
@@ -51,6 +60,7 @@ export default {
 	data: () => ({
 		viewSelected: 0,
 		recordSelected: null,
+		showDrawer: true,
 		// Компонент таблица
 		listViewComponent: ListRecords,
 	}),

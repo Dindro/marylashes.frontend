@@ -4,8 +4,10 @@ $z-index-preloader: $z-index-header-logo + 500;
 
 $z-index-gallery: $z-index-header + 500;
 $z-index-modal: $z-index-gallery;
+$z-index-drawer: $z-index-gallery;
 
 $z-index-cursor: $z-index-gallery + 500;
+
 
 
 $indent-arrows: 28;
