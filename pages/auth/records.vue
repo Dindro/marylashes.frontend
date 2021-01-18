@@ -11,6 +11,7 @@
 			</div>
 		</Hero>
 
+		<!-- List view -->
 		<template v-if="viewSelected === 0">
 			<ListControl
 				ref="list"
@@ -26,8 +27,9 @@
 			</Drawer>
 		</template>
 
+		<!-- Calendar view -->
 		<template v-else-if="viewSelected === 1">
-			Calendar
+			<WorkCalendar/>
 		</template>
 	</div>
 </template>
@@ -41,6 +43,7 @@ import ListRecords from '&/ListRecords';
 import Drawer from '&/Drawer';
 import CardTileRecord from '^/CardTileRecord';
 import CardTileClient from '^/CardTileClient';
+import WorkCalendar from '&/WorkCalendar';
 
 export default {
 	layout: 'navbar',
@@ -52,6 +55,7 @@ export default {
 		Drawer,
 		CardTileRecord,
 		CardTileClient,
+		WorkCalendar,
 	},
 
 	asyncData(ctx) {
@@ -61,7 +65,7 @@ export default {
   	},
 
 	data: () => ({
-		viewSelected: 0,
+		viewSelected: 1,
 		recordSelected: null,
 		showDrawer: false,
 		// Компонент таблица
