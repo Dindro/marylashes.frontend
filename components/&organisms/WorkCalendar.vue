@@ -46,6 +46,8 @@
 		<div class="work-calendar__footer">
 			<div class="work-calendar__labels"></div>
 			<div class="work-calendar__actions">
+
+				<!-- Добавить свободные дни -->
 				<template v-if="mode === modeAvailableDay.id">
 					<LinkAction
 						v-if="visibleAddDefaultAvailableDays"
@@ -53,6 +55,14 @@
 						@click.native="addDefaultAvailableDays"/>
 				</template>
 
+				<!-- Включить/Отключить редактирование -->
+				<template v-if="mode === modeRecord.id">
+					<LinkAction
+						:link="Object.assign({}, { tag: 'button' }, { text: eventEditText })"
+						@click.native="toggleEventEdit"/>
+				</template>
+
+				<!-- Режим -->
 				<LinkAction
 					:link="Object.assign({}, { tag: 'button' }, { text: modeToggleText })"
 					@click.native="toggleMode"/>
@@ -113,6 +123,7 @@ export default {
 			modeAvailableDay: MODE_AVAILABLE_DAY,
 			modeToggleText: '',
 			mode: MODE_RECORD.id,
+			enableEventEdit: false,
 			calendarTimeCellHeight: 40,
 			availableDays: {
 				1: { from: 13 * 60, to: 18 * 60 }
@@ -146,6 +157,10 @@ export default {
 	},
 
 	computed: {
+		eventEditText() {
+			return this.enableEventEdit ? 'Отключить редактирование' : 'Включить редактирование';
+		},
+
 		availableDaysNormalize() {
 			return this.getAvailableDaysNormalize(this.availableDays);
 		},
@@ -206,6 +221,10 @@ export default {
 	},
 
 	methods: {
+		toggleEventEdit() {
+			this.enableEventEdit = !this.enableEventEdit;
+		},
+
 		getShouldMode(mode) {
 			return mode === this.modeRecord.id ? this.modeAvailableDay.id : this.modeRecord.id;
 		},
@@ -233,6 +252,7 @@ export default {
 		setOptionsAvailableDayMode() {
 			this.mode = this.modeAvailableDay.id;
 			this.modeToggleText = this.modeAvailableDay.text;
+			this.enableEventEdit = false;
 
 			// Убираем availablesDays
 			// Формируем из них events
