@@ -3,10 +3,10 @@
 		<client-only>
 			<VueCal
 				ref="vuecal"
+				locale="ru"
 				hide-view-selector
 				:time-from="timeFrom"
 				:time-to="timeTo"
-				:time-step="30"
 				:disable-views="['years', 'year', 'month', 'day']"
 				:snap-to-time="30"
 				:special-hours="availableDaysNormalize"
@@ -16,7 +16,30 @@
 				:on-event-click="onEventClick"
 				:overlaps-per-time-step="true"
 				:drag-to-create-threshold="0"
+				:timeCellHeight="calendarTimeCellHeight"
 				@event-drop="onEventDrop">
+				<template #title="{ view }">
+					<p class="work-calendar__title">{{ view.startDate.format('MMMM YYYY') }}</p>
+				</template>
+
+				<template #arrow-prev>
+					<Btn :button="buttonPrev"/>
+				</template>
+
+				<template #arrow-next>
+					<Btn :button="buttonNext"/>
+				</template>
+
+				<template #weekday-heading="{ heading }">
+					<WeekDayHeader
+						:name="getWeekDay(+heading.date.format('d') - 1)"
+						:number="+heading.date.format('D')"
+						:active="isCurrentDay(heading.date)"/>
+				</template>
+
+				<template #event>
+					<WorkCalendarEvent/>
+				</template>
 			</VueCal>
 		</client-only>
 
@@ -39,16 +62,33 @@
 </template>
 
 <script>
+import Btn from '+/Button';
 import LinkAction from '+/LinkAction';
+import WeekDayHeader from '=/Week/WeekDayHeader';
+import WorkCalendarEvent from '^/WorkCalendarEvent';
 import 'vue-cal/dist/vuecal.css';
+
+import { convertToScalingPx } from '@/utils/convert';
+import { equalDates, dateLocales } from '@/utils/dates';
 
 let VueCal;
 if (process.client) {
 	VueCal = require('vue-cal');
 	require('vue-cal/dist/drag-and-drop');
+	require('vue-cal/dist/i18n/ru');
 }
 
 const AVAILABLE_DAY_CLASS = 'wc-available-day';
+
+const MODE_RECORD = {
+	id: 'record',
+	text: 'Режим записи'
+};
+
+const MODE_AVAILABLE_DAY = {
+	id: 'availableDay',
+	text: 'Режим доступные дни'
+}
 
 /**
  * При первичной загрузке
@@ -62,24 +102,18 @@ export default {
 	components: {
 		VueCal,
 		LinkAction,
+		Btn,
+		WeekDayHeader,
+		WorkCalendarEvent,
 	},
 
 	data: (ctx) => {
-		const modeRecord = {
-			id: 'record',
-			text: 'Режим записи'
-		};
-
-		const modeAvailableDay = {
-			id: 'availableDay',
-			text: 'Режим доступные дни'
-		};
-
 		return {
-			modeRecord,
-			modeAvailableDay,
+			modeRecord: MODE_RECORD,
+			modeAvailableDay: MODE_AVAILABLE_DAY,
 			modeToggleText: '',
-			mode: modeRecord.id,
+			mode: MODE_RECORD.id,
+			calendarTimeCellHeight: 40,
 			availableDays: {
 				1: { from: 13 * 60, to: 18 * 60 }
 			},
@@ -133,8 +167,38 @@ export default {
 		},
 
 		timeTo() {
-			return 17 * 60;
+			return 19 * 60;
 		},
+
+		buttonNavigation() {
+			return {
+				color: 'transparent-dark',
+				round: true,
+				size: 'lg',
+			};
+		},
+
+		buttonPrev() {
+			const button = {
+				icon: { name: '24/arrow-left' },
+				title: 'Назад',
+			};
+
+			return Object.assign({}, button, this.buttonNavigation);
+		},
+
+		buttonNext() {
+			const button = {
+				icon: { name: '24/arrow-right' },
+				title: 'Вперед',
+			};
+
+			return Object.assign({}, button, this.buttonNavigation);
+		}
+	},
+
+	beforeMount() {
+		this.calendarTimeCellHeight = convertToScalingPx(48);
 	},
 
 	created() {
@@ -239,6 +303,14 @@ export default {
 		getExistAvailableDays(from = this.$refs.vuecal.view.startDate, to = this.$refs.vuecal.view.endDate) {
 			return false;
 		},
+
+		isCurrentDay(value) {
+			return equalDates(value, new Date());
+		},
+
+		getWeekDay(weekDayNumber) {
+			return dateLocales.ru.days[weekDayNumber];
+		}
 	},
 }
 </script>
@@ -265,6 +337,11 @@ export default {
 			margin-top: rem(16);
 		}
 	}
+
+	&__title {
+		@include text-default;
+		white-space: nowrap;
+	}
 }
 
 .wc {
@@ -274,6 +351,90 @@ export default {
 }
 
 .vuecal {
+	box-shadow: none;
 
+	&__title-bar {
+		justify-content: flex-end;
+		background-color: transparent;
+		border: none;
+		min-height: auto;
+	}
+
+	&__title {
+		width: auto !important;
+		flex: none !important;
+		order: -1;
+		margin-right: rem(24);
+	}
+
+	&__arrow {
+		margin: 0;
+		padding: 0;
+		margin-top: rem(-$indent-arrows);
+		margin-bottom: rem(-$indent-arrows);
+
+		&--next {
+			margin-right: rem(-$indent-arrows);
+		}
+	}
+
+	&__weekdays-headings {
+		margin-top: rem(32);
+		margin-bottom: rem(4) !important;
+		margin-bottom: 0;
+		padding-right: 0 !important;
+		padding-left: 0 !important;
+		border-bottom: none;
+	}
+
+	&__body {
+		overflow: visible;
+	}
+
+	&__bg {
+		overflow: visible;
+		border-bottom: none;
+		background-color: $color-light;
+	}
+
+	&__heading {
+		height: auto;
+	}
+
+	&__cell {
+		&::before {
+			border-color: $color-white !important;
+		}
+	}
+
+	&__time-column {
+		margin-left: -3em;
+	}
+
+	&__time-cell {
+		padding-right: rem(2);
+	}
+
+	&__time-cell-label {
+		@include text-small;
+		color: $color-dark;
+		opacity: 0.3;
+	}
+
+	&__time-cell-line {
+		&::before {
+			border-color: $color-white !important;
+		}
+	}
+
+	&__no-event {
+		display: none;
+	}
+
+	&__event {
+		background: transparent;
+		padding: 1px;
+		box-shadow: none !important;
+	}
 }
 </style>

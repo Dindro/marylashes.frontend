@@ -17,7 +17,10 @@ export default {
 		Avatar,
 	},
 	props: {
-		image: [String, Boolean],
+		image: {
+			type: [String, Boolean],
+			default: undefined,
+		},
 		name: String,
 	}
 }
@@ -26,7 +29,6 @@ export default {
 <style lang="scss">
 .user-inline {
 	display: flex;
-	align-items: center;
 
 	&__avatar {
 		flex-shrink: 0;
@@ -34,6 +36,8 @@ export default {
 	}
 
 	&__name {
+		text-align: left;
+		align-self: center;
 		@include text-default;
 	}
 }
