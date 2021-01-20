@@ -256,6 +256,7 @@ export default {
 
 			// Убираем availablesDays
 			// Формируем из них events
+			const eventsAvailableDays = this.createEventsAvailableDays(this.availableDays);
 			// Присваевываем events
 
 			// Сделаем редактируемым
@@ -278,14 +279,22 @@ export default {
 		},
 
 		createEventsAvailableDaysByObject(week) {
+			const events = [];
+
 			for (const key in week) {
 				const day = week[key];
 
-				const event = this.createEventAvailableDayByObject(day);
+				if (Array.isArray(day)) {
+					events.push(...day.map(item => this.createEventAvailableDayByObject(item, key)));
+				} else if (day) {
+					events.push(this.createEventAvailableDayByObject(day, key));
+				}
 			}
+
+			return events;
 		},
 
-		createEventAvailableDayByObject(timeline) {
+		createEventAvailableDayByObject(timeline, weekDayNumber) {
 			const eventDefault = {
 
 			};
@@ -294,6 +303,8 @@ export default {
 				start: timeline.from,
 				end: timeline.to,
 			}
+
+			return event;
 		},
 
 		// Получить полные доступные дни для доступных дней
