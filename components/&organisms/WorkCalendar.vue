@@ -157,6 +157,10 @@ export default {
 	},
 
 	computed: {
+		eventsView() {
+			// TODO: Данные для отображения
+		},
+
 		eventEditText() {
 			return this.enableEventEdit ? 'Отключить редактирование' : 'Включить редактирование';
 		},
