@@ -411,7 +411,8 @@ export default {
 
 .wc {
 	&-available-day {
-		background-color: red;
+		background-color: rgba($color-green, 0.15);
+		border-radius: rem(2);
 	}
 }
 
@@ -469,6 +470,14 @@ export default {
 	&__cell {
 		&::before {
 			border-color: $color-white !important;
+		}
+
+		&--selected  {
+			background: none;
+		}
+
+		&--today {
+			background-color: rgba($color-saphire, 0.15);
 		}
 	}
 

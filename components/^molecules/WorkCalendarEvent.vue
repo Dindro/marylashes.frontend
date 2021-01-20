@@ -1,5 +1,5 @@
 <template>
-	<div class="wc-event" :class="[ `wc-event--${size.event}`, `is-status-${status}` ]">
+	<div class="wc-event" :class="[ `wc-event--${size.event}`, status && `is-status-${status}` ]">
 		<div class="wc-event__user wc-user" :class="[ `wc-user--${size.event}` ]">
 			<Avatar
 				:size="size.avatar"
@@ -25,7 +25,7 @@ export default {
 
 	data: () => ({
 		mode: 'default',
-		status: 'correct',
+		status: '',
 	}),
 
 	computed: {
@@ -69,6 +69,8 @@ export default {
 	padding: rem(4);
 	color: $color-dark;
 	overflow: hidden;
+	background-color: rgba($color-dark, 0.2);
+	border: 1px solid $color-dark;
 
 	@include text-small;
 
@@ -93,10 +95,26 @@ export default {
 		padding-bottom: rem(2);
 	}
 
+	& + .vuecal__event-resize-handle {
+		height: rem(6);
+		border-bottom-left-radius: rem(2);
+		border-bottom-right-radius: rem(2);
+		left: 1px;
+		right: 1px;
+		bottom: 1px;
+		border-top: 1px solid rgba($color-dark, 0.5);
+		background-color: rgba($color-dark, 0.1);
+	}
+
 	@each $key, $value in $statuses {
 		&.is-status-#{$key} {
 			background-color: rgba($value, 0.2);
 			border: 1px solid $value;
+
+			& + .vuecal__event-resize-handle {
+				border-top: 1px solid rgba($value, 0.5);
+				background-color: rgba($value, 0.1);
+			}
 		}
 	}
 }
@@ -109,6 +127,10 @@ export default {
 	&__avatar {
 		flex-shrink: 0;
 		margin-right: rem(4);
+
+		img:not([src])::after {
+			background-color: $color-white;
+		}
 	}
 
 	&__name {
