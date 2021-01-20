@@ -124,7 +124,7 @@ export default {
 			modeToggleText: '',
 			mode: MODE_RECORD.id,
 			enableEventEdit: false,
-			calendarTimeCellHeight: 40,
+			calendarTimeCellHeight: 48,
 			availableDays: {
 				1: { from: 13 * 60, to: 18 * 60 }
 			},
@@ -266,6 +266,36 @@ export default {
 			this.modeToggleText = this.modeRecord.text;
 		},
 
+		createEventsAvailableDays(week) {
+			let events;
+			if (Array.isArray(week)) {
+
+			} else if (typeof week === 'object') {
+				events = this.createEventsAvailableDaysByObject(week);
+			}
+
+			return events;
+		},
+
+		createEventsAvailableDaysByObject(week) {
+			for (const key in week) {
+				const day = week[key];
+
+				const event = this.createEventAvailableDayByObject(day);
+			}
+		},
+
+		createEventAvailableDayByObject(timeline) {
+			const eventDefault = {
+
+			};
+
+			const event = {
+				start: timeline.from,
+				end: timeline.to,
+			}
+		},
+
 		// Получить полные доступные дни для доступных дней
 		getAvailableDaysNormalize(week) {
 			/**
@@ -302,14 +332,17 @@ export default {
 
 		onEventClick(event) {
 			console.log('Event', event);
+			// TODO:
 		},
 
 		onEventDrop(event) {
 			console.log('Event drop', event);
+			// TODO:
 		},
 
 		// Добавить доступные дни по умолчанию
 		addDefaultAvailableDays() {
+			// TODO:
 			const defaultAvailableDay = {
 
 			};
@@ -321,6 +354,7 @@ export default {
 
 		// Существует ли свободные дни на этой неделе
 		getExistAvailableDays(from = this.$refs.vuecal.view.startDate, to = this.$refs.vuecal.view.endDate) {
+			// TODO:
 			return false;
 		},
 
