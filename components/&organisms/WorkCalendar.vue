@@ -5,16 +5,16 @@
 				ref="vuecal"
 				locale="ru"
 				hide-view-selector
+				overlaps-per-time-step
 				:time-from="timeFrom"
 				:time-to="timeTo"
 				:disable-views="['years', 'year', 'month', 'day']"
 				:snap-to-time="30"
 				:special-hours="availableDaysNormalize"
 				:drag-to-create-event="false"
-				:events="eventsView"
+				:events="events"
 				editable-events
 				:on-event-click="onEventClick"
-				:overlaps-per-time-step="true"
 				:drag-to-create-threshold="0"
 				:timeCellHeight="calendarTimeCellHeight"
 				@event-drop="onEventDrop">
@@ -79,7 +79,7 @@ import WorkCalendarEvent from '^/WorkCalendarEvent';
 import 'vue-cal/dist/vuecal.css';
 
 import { convertToScalingPx } from '@/utils/convert';
-import { equalDates, dateLocales } from '@/utils/dates';
+import { equalDates, dateLocales, getTimeByMinutesCount, getMinutesCount, getWeekDayIndex } from '@/utils/dates';
 
 let VueCal;
 if (process.client) {
@@ -125,10 +125,10 @@ export default {
 			mode: MODE_RECORD.id,
 			enableEventEdit: false,
 			calendarTimeCellHeight: 48,
+			availableDaysAddDefaultText: 'Добавить свободные дни',
 			availableDays: {
 				1: { from: 13 * 60, to: 18 * 60 }
 			},
-			availableDaysAddDefaultText: 'Добавить свободные дни',
 			records: [
 				{
 					start: '2021-01-19 14:00',
@@ -143,22 +143,26 @@ export default {
 					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
 				}
 			],
+
+			// Сообытия, имя ссылающее на массив событий
+			eventsSourceName: null,
 		}
 	},
 
 	computed: {
-		eventsView() {
-			let events = [];
+		events() {
+			const events = this[this.eventsSourceName];
 
-			events = this.records;
-			events = events.map(event => Object.assign({}, event, {
-				editable: false,
+			const editable = this.modeAvailableDay.id === this.mode || this.enableEventEdit;
+
+			const setting = {
 				deletable: false,
-				resizable: false,
-				draggable: false,
-			}));
+				editable: false,
+				draggable: editable,
+				resizable: editable,
+			};
 
-			return events;
+			return events.map(event => Object.assign({}, event, setting));
 		},
 
 		eventEditText() {
@@ -258,31 +262,73 @@ export default {
 			this.modeToggleText = this.modeAvailableDay.text;
 			this.enableEventEdit = false;
 
-			// Убираем availablesDays
 			// Формируем из них events
-			const eventsAvailableDays = this.createEventsAvailableDays(this.availableDays);
-			// Присваевываем events
+			const eventsAvailableDays = this.createEventsAvailableDaysByObject(this.availableDays);
 
-			// Сделаем редактируемым
+			// Присваевываем events
+			this.availableDays = eventsAvailableDays;
+
+			// Назначаем источника событий
+			this.eventsSourceName = 'availableDays';
 		},
 
 		setOptionsRecordMode() {
 			this.mode = this.modeRecord.id;
 			this.modeToggleText = this.modeRecord.text;
+
+			// Формируем из них объект
+			this.availableDays = this.createAvailableDaysByEvents(this.availableDays);
+
+			// Назначаем источника событий
+			this.eventsSourceName = 'records';
 		},
 
-		createEventsAvailableDays(week) {
-			let events;
-			if (Array.isArray(week)) {
+		createAvailableDaysByEvents(events) {
+			// Если events объект возвращаем его же
+			if (events && !Array.isArray(events)) return events;
 
-			} else if (typeof week === 'object') {
-				events = this.createEventsAvailableDaysByObject(week);
+			const week = {};
+
+			for (const event of events) {
+				const eventDay = this.createAvailableDayByEvent(event);
+
+				// Расчитать какой день недели
+				const countWeekDay = getWeekDayIndex(event.start) + 1;
+
+				// Нужно событие добавить в week
+				// Получаем день
+				const weekDay = week[countWeekDay];
+
+				// Если событие уже записано и оно не массив, то превращаем в массив
+				if (weekDay && !weekDay.length) {
+					weekDay = [weekDay];
+				}
+
+				// Добавляем событие
+				if (Array.isArray(weekDay)) {
+					weekDay.push(eventDay);
+				} else {
+					week[countWeekDay] = eventDay;
+				}
 			}
 
-			return events;
+			return week;
+		},
+
+		// Получаем формат availableDay
+		createAvailableDayByEvent(event) {
+			const { start, end } = event;
+
+			return {
+				from: getMinutesCount(start),
+				to: getMinutesCount(end),
+			};
 		},
 
 		createEventsAvailableDaysByObject(week) {
+			// Если week массив возвращаем его же
+			if (Array.isArray(week)) return week;
+
 			const events = [];
 
 			for (const key in week) {
@@ -299,20 +345,35 @@ export default {
 		},
 
 		createEventAvailableDayByObject(timeline, weekDayNumber) {
-			const eventDefault = {
+			// Минусуем день, так как начинается с 1
+			weekDayNumber = weekDayNumber - 1;
+			const start = getTimeByMinutesCount(timeline.from);
+			const end = getTimeByMinutesCount(timeline.to);
 
-			};
+			// День начало недели
+			const startWeekDay = new Date(this.$refs.vuecal.view.startDate.getTime());
+
+			// Получаем день нужной недели
+			const weekDay = startWeekDay.setDate(startWeekDay.getDate() + weekDayNumber);
+
+			let startEvent = new Date(weekDay);
+			startEvent = new Date(startEvent.setHours(start.hour, start.minutes, 0, 0));
+
+			let endEvent = new Date(weekDay);
+			endEvent = new Date(endEvent.setHours(end.hour, end.minutes, 0, 0));
 
 			const event = {
-				start: timeline.from,
-				end: timeline.to,
-			}
+				start: startEvent,
+				end: endEvent,
+			};
 
 			return event;
 		},
 
 		// Получить полные доступные дни для доступных дней
 		getAvailableDaysNormalize(week) {
+			if (Array.isArray(week)) return null;
+
 			/**
 			 * Структура week: {
 			 *   1: {},
@@ -357,20 +418,29 @@ export default {
 
 		// Добавить доступные дни по умолчанию
 		addDefaultAvailableDays() {
-			// TODO:
 			const defaultAvailableDay = {
-
+				from: 12 * 60,
+				to: 17 * 60,
 			};
 
-			for (const weekDayNumber of 7) {
-				// Добавить день
+			const week = {};
+
+			for (let weekDayNumber = 1; weekDayNumber < 8; weekDayNumber++) {
+				week[weekDayNumber] = defaultAvailableDay;
 			}
+
+			const events = this.createEventsAvailableDaysByObject(week);
+			this.availableDays.push(...events);
 		},
 
 		// Существует ли свободные дни на этой неделе
 		getExistAvailableDays(from = this.$refs.vuecal.view.startDate, to = this.$refs.vuecal.view.endDate) {
-			// TODO:
-			return false;
+			const events = this.availableDays;
+
+			if (!Array.isArray(events)) return false;
+
+			const eventsDaysBetween = events.filter(event => from < event.start && event.end < to);
+			return !!eventsDaysBetween.length;
 		},
 
 		isCurrentDay(value) {

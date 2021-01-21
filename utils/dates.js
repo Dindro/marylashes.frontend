@@ -66,6 +66,27 @@ const formatDayMonthTime = (date = new Date()) => {
 	return `${day} ${month} ${time}`;
 };
 
+/**
+ * Получить часы и минуты по количеству минут
+ * @param {Number} count Количество минут
+ */
+const getTimeByMinutesCount = (count) => {
+	const hour = +(count / 60).toFixed();
+	const minutes = count % 60;
+
+	return {
+		hour,
+		minutes,
+	};
+};
+
+//
+const getMinutesCount = (date = new Date()) => {
+	const hours = date.getHours();
+	const minutes = date.getMinutes();
+	return hours * 60 + minutes;
+};
+
 export {
 	dateLocales,
 	getWeekDayIndex,
@@ -74,4 +95,6 @@ export {
 	getCompleteTime,
 	equalDates,
 	formatDayMonthTime,
+	getTimeByMinutesCount,
+	getMinutesCount,
 }
