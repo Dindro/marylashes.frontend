@@ -11,7 +11,7 @@
 				:snap-to-time="30"
 				:special-hours="availableDaysNormalize"
 				:drag-to-create-event="false"
-				:events="records"
+				:events="eventsView"
 				editable-events
 				:on-event-click="onEventClick"
 				:overlaps-per-time-step="true"
@@ -135,22 +135,12 @@ export default {
 					end: '2021-01-19 17:30',
 					title: 'Boring event',
 					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
-					class: 'blue-event',
-					editable: false,
-					deletable: true,
-					resizable: true,
-					draggable: true
 				},
 				{
 					start: '2021-01-20 14:00',
 					end: '2021-01-20 17:30',
 					title: 'Сосать',
 					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
-					class: 'blue-event',
-					editable: false,
-					deletable: true,
-					resizable: true,
-					draggable: true
 				}
 			],
 		}
@@ -158,7 +148,17 @@ export default {
 
 	computed: {
 		eventsView() {
-			// TODO: Данные для отображения
+			let events = [];
+
+			events = this.records;
+			events = events.map(event => Object.assign({}, event, {
+				editable: false,
+				deletable: false,
+				resizable: false,
+				draggable: false,
+			}));
+
+			return events;
 		},
 
 		eventEditText() {
