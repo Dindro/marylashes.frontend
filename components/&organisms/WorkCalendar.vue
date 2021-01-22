@@ -6,6 +6,7 @@
 				locale="ru"
 				hide-view-selector
 				overlaps-per-time-step
+				:todayButton="todayVisible"
 				:time-from="timeFrom"
 				:time-to="timeTo"
 				:disable-views="['years', 'year', 'month', 'day']"
@@ -17,7 +18,8 @@
 				:on-event-click="onEventClick"
 				:drag-to-create-threshold="0"
 				:timeCellHeight="calendarTimeCellHeight"
-				@event-drop="onEventDrop">
+				@event-drop="onEventDrop"
+				@view-change="onViewChange">
 				<template #title="{ view }">
 					<p class="work-calendar__title">{{ view.startDate.format('MMMM YYYY') }}</p>
 				</template>
@@ -28,6 +30,10 @@
 
 				<template #arrow-next>
 					<Btn :button="buttonNext"/>
+				</template>
+
+				<template #today-button>
+					<span>{{ todayText }}</span>
 				</template>
 
 				<template #weekday-heading="{ heading }">
@@ -98,7 +104,7 @@ const MODE_RECORD = {
 const MODE_AVAILABLE_DAY = {
 	id: 'availableDay',
 	text: 'Режим доступные дни'
-}
+};
 
 /**
  * При первичной загрузке
@@ -125,6 +131,8 @@ export default {
 			mode: MODE_RECORD.id,
 			enableEventEdit: false,
 			calendarTimeCellHeight: 48,
+			todayVisible: false,
+			todayText: 'Перейти в текующую неделю',
 			availableDaysAddDefaultText: 'Добавить свободные дни',
 			availableDays: {
 				1: { from: 13 * 60, to: 18 * 60 }
@@ -416,6 +424,12 @@ export default {
 			// TODO:
 		},
 
+		onViewChange(e) {
+			const { startDate, endDate } = e;
+			const now = new Date();
+			this.todayVisible = (startDate <= now && now <= endDate) === false;
+		},
+
 		// Добавить доступные дни по умолчанию
 		addDefaultAvailableDays() {
 			const defaultAvailableDay = {
@@ -507,6 +521,20 @@ export default {
 		margin-right: rem(24);
 	}
 
+	&__today-btn {
+		order: -2;
+		padding: 0;
+		margin-right: rem(24);
+		opacity: 0.3;
+		@include text-default;
+
+		@include defaultTransition(opacity);
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
 	&__arrow {
 		margin: 0;
 		padding: 0;
@@ -583,6 +611,26 @@ export default {
 		background: transparent;
 		padding: 1px;
 		box-shadow: none !important;
+	}
+
+	&__now-line {
+		color: $color-dark;
+		opacity: 1;
+
+		&.slide-fade--left-leave-active,
+		&.slide-fade--right-leave-active {
+			opacity: 0;
+		}
+
+		&::before {
+			background-color: $color-dark;
+			border-radius: 50%;
+			border: 1px solid $color-white;
+			width: rem(9);
+			height: rem(9);
+			top: 0;
+			transform: translate(-50%, -50%);
+		}
 	}
 }
 </style>
