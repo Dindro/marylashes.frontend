@@ -1,40 +1,71 @@
 <template>
-	<div class="wc-event" :class="[ `wc-event--${size.event}`, status && `is-status-${status}` ]">
-		<div class="wc-event__user wc-user" :class="[ `wc-user--${size.event}` ]">
-			<Avatar
-				:size="size.avatar"
-				class="wc-user__avatar"/>
-			<span class="wc-user__name">Мария Ижуткина</span>
-		</div>
+	<div class="wc-event" :class="[ `wc-event--${size.event}`, event.status && `is-status-${event.status}` ]">
+		<slot :time="time" :duration="duration">
+			<div v-if="event.user" class="wc-event__user wc-user" :class="[ `wc-user--${size.event}` ]">
+				<Avatar
+					:size="size.avatar"
+					class="wc-user__avatar"/>
+				<span class="wc-user__name">{{ event.user.name }}</span>
+			</div>
 
-		<div class="wc-event__info">
-			<div class="wc-event__item">14:00 2ч</div>
-			<div class="wc-event__item">Вывод</div>
-			<div class="wc-event__item">Работа</div>
-		</div>
+			<div class="wc-event__info">
+				<div class="wc-event__item">{{ time }} {{ duration }}ч</div>
+				<div class="wc-event__item">Вывод</div>
+				<div class="wc-event__item">Работа</div>
+			</div>
+		</slot>
 	</div>
 </template>
 
 <script>
 import Avatar from '+/Avatar';
 
+const MODE_DEFAULT = 'default';
+const MODE_SMALL = 'small';
+
 export default {
 	components: {
 		Avatar,
 	},
 
-	data: () => ({
-		mode: 'default',
-		status: '',
-	}),
-
-	computed: {
-		size() {
-			return this.getSize(this.mode);
+	props: {
+		event: {
+			type: Object,
 		}
 	},
 
+	computed: {
+		mode() {
+			return this.getMode(this.duration);
+		},
+
+		size() {
+			return this.getSize(this.mode);
+		},
+
+		time() {
+			const reactiveEmptyExpression = this.event.endTimeMinutes;
+			const start = this.event.start.formatTime('HH:mm');
+			const end = this.event.end.formatTime('HH:mm');
+			return `${start} - ${end}`;
+		},
+
+		duration() {
+			const start = this.event.startTimeMinutes;
+			const end = this.event.endTimeMinutes;
+			return (end - start) / 60;
+		},
+	},
+
 	methods: {
+		getMode() {
+			if (this.duration <= 1) {
+				return MODE_SMALL;
+			} else {
+				return MODE_DEFAULT;
+			}
+		},
+
 		getSize(mode) {
 			let size;
 
@@ -55,7 +86,7 @@ export default {
 			}
 
 			return size;
-		}
+		},
 	}
 }
 </script>

@@ -12,14 +12,16 @@
 				:disable-views="['years', 'year', 'month', 'day']"
 				:snap-to-time="30"
 				:special-hours="availableDaysNormalize"
-				:drag-to-create-event="false"
+				:drag-to-create-event="dragToCreateEvent"
 				:events="events"
 				editable-events
 				:on-event-click="onEventClick"
 				:drag-to-create-threshold="0"
 				:timeCellHeight="calendarTimeCellHeight"
 				@event-drop="onEventDrop"
-				@view-change="onViewChange">
+				@view-change="onViewChange"
+				@event-duration-change="onEventDurationChange"
+				@event-drag-create="onEventDragCreate">
 				<template #title="{ view }">
 					<p class="work-calendar__title">{{ view.startDate.format('MMMM YYYY') }}</p>
 				</template>
@@ -43,8 +45,8 @@
 						:active="isCurrentDay(heading.date)"/>
 				</template>
 
-				<template #event>
-					<WorkCalendarEvent/>
+				<template #event="{ event }">
+					<component :is="eventComponent" :event="getNormalizeEvent(event)" @delete="onEventDelete"/>
 				</template>
 			</VueCal>
 		</client-only>
@@ -82,6 +84,7 @@ import Btn from '+/Button';
 import LinkAction from '+/LinkAction';
 import WeekDayHeader from '=/Week/WeekDayHeader';
 import WorkCalendarEvent from '^/WorkCalendarEvent';
+import WorkCalendarAvailableEvent from '^/WorkCalendarAvailableEvent';
 import 'vue-cal/dist/vuecal.css';
 
 import { convertToScalingPx } from '@/utils/convert';
@@ -98,13 +101,20 @@ const AVAILABLE_DAY_CLASS = 'wc-available-day';
 
 const MODE_RECORD = {
 	id: 'record',
-	text: 'Режим записи'
+	component: WorkCalendarEvent,
+	text: 'Режим записи',
+	sourceName: 'records',
 };
 
 const MODE_AVAILABLE_DAY = {
 	id: 'availableDay',
-	text: 'Режим доступные дни'
+	component: WorkCalendarAvailableEvent,
+	text: 'Режим доступные дни',
+	sourceName: 'availableDays',
 };
+
+const MIN_TIME = 10 * 60;
+const MAX_TIME = 19 * 60;
 
 /**
  * При первичной загрузке
@@ -129,31 +139,39 @@ export default {
 			modeAvailableDay: MODE_AVAILABLE_DAY,
 			modeToggleText: '',
 			mode: MODE_RECORD.id,
+			eventComponent: MODE_RECORD.component,
+			dragToCreateEvent: false,
 			enableEventEdit: false,
 			calendarTimeCellHeight: 48,
 			todayVisible: false,
 			todayText: 'Перейти в текующую неделю',
 			availableDaysAddDefaultText: 'Добавить свободные дни',
 			availableDays: {
-				1: { from: 13 * 60, to: 18 * 60 }
+				6: { from: 13 * 60, to: 18 * 60 }
 			},
 			records: [
 				{
+					id: 10,
 					start: '2021-01-19 14:00',
 					end: '2021-01-19 17:30',
-					title: 'Boring event',
-					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
+					status: 'report',
+					user: {
+						name: 'Мария Ижуткина',
+					},
 				},
 				{
+					id: 11,
 					start: '2021-01-20 14:00',
 					end: '2021-01-20 17:30',
-					title: 'Сосать',
-					content: '<i class="icon material-icons">block</i><br>I am not draggable, not resizable and not deletable.',
+					status: 'correct',
+					user: {
+						name: 'Семенова Ирина',
+					},
 				}
 			],
 
 			// Сообытия, имя ссылающее на массив событий
-			eventsSourceName: null,
+			eventsSourceName: MODE_RECORD.sourceName,
 		}
 	},
 
@@ -194,11 +212,11 @@ export default {
 		},
 
 		timeFrom() {
-			return 10 * 60;
+			return MIN_TIME;
 		},
 
 		timeTo() {
-			return 19 * 60;
+			return MAX_TIME;
 		},
 
 		buttonNavigation() {
@@ -271,13 +289,12 @@ export default {
 			this.enableEventEdit = false;
 
 			// Формируем из них events
-			const eventsAvailableDays = this.createEventsAvailableDaysByObject(this.availableDays);
-
-			// Присваевываем events
-			this.availableDays = eventsAvailableDays;
+			this.availableDays = this.createEventsAvailableDaysByObject(this.availableDays);
 
 			// Назначаем источника событий
-			this.eventsSourceName = 'availableDays';
+			this.eventsSourceName = this.modeAvailableDay.sourceName;
+			this.eventComponent = this.modeAvailableDay.component;
+			this.dragToCreateEvent = true;
 		},
 
 		setOptionsRecordMode() {
@@ -288,7 +305,9 @@ export default {
 			this.availableDays = this.createAvailableDaysByEvents(this.availableDays);
 
 			// Назначаем источника событий
-			this.eventsSourceName = 'records';
+			this.eventsSourceName = this.modeRecord.sourceName;
+			this.eventComponent = this.modeRecord.component;
+			this.dragToCreateEvent = false;
 		},
 
 		createAvailableDaysByEvents(events) {
@@ -355,8 +374,9 @@ export default {
 		createEventAvailableDayByObject(timeline, weekDayNumber) {
 			// Минусуем день, так как начинается с 1
 			weekDayNumber = weekDayNumber - 1;
-			const start = getTimeByMinutesCount(timeline.from);
-			const end = getTimeByMinutesCount(timeline.to);
+			const { from, to } = timeline;
+			const start = getTimeByMinutesCount(from);
+			const end = getTimeByMinutesCount(to);
 
 			// День начало недели
 			const startWeekDay = new Date(this.$refs.vuecal.view.startDate.getTime());
@@ -415,19 +435,67 @@ export default {
 		},
 
 		onEventClick(event) {
-			console.log('Event', event);
+			console.log('Event click', event);
 			// TODO:
 		},
 
-		onEventDrop(event) {
-			console.log('Event drop', event);
+		onEventDrop(e) {
+			process.env.NODE_ENV === 'development' && console.log('Event drop', e);
+			const { event } = e;
+
+			const { id } = event;
+			if (!id) return;
+
+			const eventBase = this.findEvent(id);
+			if (!eventBase) return;
+
+			eventBase.start = event.start;
+			eventBase.end = event.end;
 			// TODO:
 		},
 
-		onViewChange(e) {
-			const { startDate, endDate } = e;
+		onViewChange(event) {
+			const { startDate, endDate } = event;
 			const now = new Date();
 			this.todayVisible = (startDate <= now && now <= endDate) === false;
+		},
+
+		onEventDurationChange(e) {
+			process.env.NODE_ENV === 'development' && console.log('Event duration change', e);
+			const { event } = e;
+
+			const { id } = event;
+			if (!id) return;
+
+			const eventBase = this.findEvent(id);
+			if (!eventBase) return;
+
+			const { endTimeMinutes } = event;
+
+			// Проверка на минимальную длину
+			if (this.timeTo < endTimeMinutes) {
+				const time = getTimeByMinutesCount(this.timeTo);
+				let date = new Date(event.end.getTime());
+				date = new Date(date.setHours(time.hour, time.minutes, 0 ,0));
+
+				eventBase.end = date;
+			} else {
+				eventBase.end = event.end;
+			}
+		},
+
+		findEvent(id) {
+			return this[this.eventsSourceName].find(event => event.id === id);
+		},
+
+		onEventDragCreate(event) {
+			console.log('Event drag create', event);
+			// TODO: Проверка на минимальную длину
+			// TODO: Назначаем small или large
+		},
+
+		onEventDelete() {
+			console.log('Event delete');
 		},
 
 		// Добавить доступные дни по умолчанию
@@ -463,7 +531,12 @@ export default {
 
 		getWeekDay(weekDayNumber) {
 			return dateLocales.ru.days[weekDayNumber];
-		}
+		},
+
+		getNormalizeEvent(event) {
+			const eventNormalize = event;
+			return eventNormalize;
+		},
 	},
 }
 </script>
@@ -611,11 +684,15 @@ export default {
 		background: transparent;
 		padding: 1px;
 		box-shadow: none !important;
+
+		// Минимальная высота 30м
+		min-height: rem(24);
 	}
 
 	&__now-line {
 		color: $color-dark;
 		opacity: 1;
+		z-index: 3;
 
 		&.slide-fade--left-leave-active,
 		&.slide-fade--right-leave-active {
