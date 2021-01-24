@@ -505,9 +505,29 @@ export default {
 		},
 
 		onEventDragCreate(event) {
-			console.log('Event drag create', event);
+			process.env.NODE_ENV === 'development' && console.log('Event drag create', event);
+			let { start, end } = event;
 			// TODO: Проверка на минимальную длину
-			// TODO: Назначаем small или large
+			// TODO: Проверка на наложение
+
+			const availableDay = {
+				start,
+				end,
+				draggable: false,
+				resizable: false,
+			};
+
+			// TODO: Переделать
+			setTimeout(() => {
+				// Добавляем на сервере, получаем id
+				const id = 34;
+
+				this.$set(availableDay, 'id', id);
+				this.$delete(availableDay, 'draggable');
+				this.$delete(availableDay, 'resizable');
+			}, 500);
+
+			this.availableDays.push(availableDay);
 		},
 
 		onEventDelete(id) {

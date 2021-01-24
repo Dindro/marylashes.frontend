@@ -110,6 +110,8 @@ export default {
 		flex-direction: column-reverse;
 		margin-top: auto;
 		overflow-y: auto;
+		margin-bottom: rem(-4);
+		padding-bottom: rem(4);
 
 		&::-webkit-scrollbar {
 			-webkit-appearance: none;
