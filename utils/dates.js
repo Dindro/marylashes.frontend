@@ -71,7 +71,7 @@ const formatDayMonthTime = (date = new Date()) => {
  * @param {Number} count Количество минут
  */
 const getTimeByMinutesCount = (count) => {
-	const hour = +(count / 60).toFixed();
+	const hour = Math.floor(count / 60);
 	const minutes = count % 60;
 
 	return {

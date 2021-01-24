@@ -10,7 +10,7 @@
 				:time-from="timeFrom"
 				:time-to="timeTo"
 				:disable-views="['years', 'year', 'month', 'day']"
-				:snap-to-time="30"
+				:snap-to-time="snapToTime"
 				:special-hours="availableDaysNormalize"
 				:drag-to-create-event="dragToCreateEvent"
 				:events="events"
@@ -143,6 +143,7 @@ export default {
 			dragToCreateEvent: false,
 			enableEventEdit: false,
 			calendarTimeCellHeight: 48,
+			snapToTime: 30,
 			todayVisible: false,
 			todayText: 'Перейти в текующую неделю',
 			availableDaysAddDefaultText: 'Добавить свободные дни',
@@ -152,8 +153,8 @@ export default {
 			records: [
 				{
 					id: 10,
-					start: '2021-01-19 14:00',
-					end: '2021-01-19 17:30',
+					start: new Date(2021, 0, 19, 14, 0),
+					end: new Date(2021, 0, 19, 17, 30),
 					status: 'report',
 					user: {
 						name: 'Мария Ижуткина',
@@ -161,8 +162,8 @@ export default {
 				},
 				{
 					id: 11,
-					start: '2021-01-20 14:00',
-					end: '2021-01-20 17:30',
+					start: new Date(2021, 0, 20, 14, 0),
+					end: new Date(2021, 0, 20, 17, 30),
 					status: 'correct',
 					user: {
 						name: 'Семенова Ирина',
@@ -441,7 +442,7 @@ export default {
 
 		onEventDrop(e) {
 			process.env.NODE_ENV === 'development' && console.log('Event drop', e);
-			const { event } = e;
+			const { event, originalEvent } = e;
 
 			const { id } = event;
 			if (!id) return;
@@ -449,9 +450,17 @@ export default {
 			const eventBase = this.findEvent(id);
 			if (!eventBase) return;
 
-			eventBase.start = event.start;
-			eventBase.end = event.end;
-			// TODO:
+			const { startTimeMinutes, endTimeMinutes } = event;
+			if (startTimeMinutes < this.timeFrom || this.timeTo < endTimeMinutes || this.getIsOverlayEvents(event)) {
+				// Проверка перемещение больше таймлайна или меньше
+				// ИЛИ проверка на наложение друг на друга
+				eventBase.start = new Date(originalEvent.start);
+				eventBase.end = new Date(originalEvent.end);
+
+			} else {
+				eventBase.start = event.start;
+				eventBase.end = event.end;
+			}
 		},
 
 		onViewChange(event) {
@@ -470,22 +479,29 @@ export default {
 			const eventBase = this.findEvent(id);
 			if (!eventBase) return;
 
-			const { endTimeMinutes } = event;
+			const { startTimeMinutes, endTimeMinutes } = event;
 
-			// Проверка на минимальную длину
 			if (this.timeTo < endTimeMinutes) {
+				// Проверка на максимальную длину
 				const time = getTimeByMinutesCount(this.timeTo);
 				let date = new Date(event.end.getTime());
 				date = new Date(date.setHours(time.hour, time.minutes, 0 ,0));
 
 				eventBase.end = date;
+
+			} else if (endTimeMinutes - startTimeMinutes < this.snapToTime) {
+				// Проврека на минимальную длину
+				const endMinSnapMinutes = startTimeMinutes + this.snapToTime;
+				const time = getTimeByMinutesCount(endMinSnapMinutes);
+
+				let date = new Date(event.start.getTime());
+				date = new Date(date.setHours(time.hour, time.minutes, 0 ,0));
+
+				eventBase.end = date;
+
 			} else {
 				eventBase.end = event.end;
 			}
-		},
-
-		findEvent(id) {
-			return this[this.eventsSourceName].find(event => event.id === id);
 		},
 
 		onEventDragCreate(event) {
@@ -494,8 +510,30 @@ export default {
 			// TODO: Назначаем small или large
 		},
 
-		onEventDelete() {
-			console.log('Event delete');
+		onEventDelete(id) {
+			process.env.NODE_ENV === 'development' && console.log('Event delete', id);
+		},
+
+		findEvent(id) {
+			return this[this.eventsSourceName].find(event => event.id === id);
+		},
+
+		getIsOverlayEvents(event) {
+			// Находим события кроме текущей
+			// Находим события в текущий день
+			// Находим события которые на перекрест
+			const events = this[this.eventsSourceName]
+				.filter(item => item.id !== event.id)
+				.filter(item => equalDates(item.start, event.start))
+				.filter(item => this.getIsOverlayEvent(item, event));
+
+			return !!events.length;
+		},
+
+		getIsOverlayEvent(a, b) {
+			return (a.start < b.start && b.start < a.end)
+				|| (a.start < b.end && b.end < a.end)
+				|| (b.start <= a.start && a.end <= b.end);
 		},
 
 		// Добавить доступные дни по умолчанию
