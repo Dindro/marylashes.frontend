@@ -481,6 +481,8 @@ export default {
 
 			const { startTimeMinutes, endTimeMinutes } = event;
 
+			// TODO: Проверка на наложение
+
 			if (this.timeTo < endTimeMinutes) {
 				// Проверка на максимальную длину
 				const time = getTimeByMinutesCount(this.timeTo);
