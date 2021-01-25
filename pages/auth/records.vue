@@ -29,7 +29,7 @@
 
 		<!-- Calendar view -->
 		<template v-else-if="viewSelected === 1">
-			<WorkCalendar/>
+			<WorkCalendar v-model="recordSelected"/>
 		</template>
 	</div>
 </template>

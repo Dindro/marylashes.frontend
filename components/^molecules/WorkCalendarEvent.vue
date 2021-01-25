@@ -1,5 +1,5 @@
 <template>
-	<div class="wc-event" :class="[ `wc-event--${size.event}`, event.status && `is-status-${event.status}` ]">
+	<div class="wc-event" :class="[ `wc-event--${size.event}`, event.status && `is-status-${event.status}`, event.selected && 'wc-event--selected' ]">
 		<slot :time="time" :duration="duration">
 			<div v-if="event.user" class="wc-event__user wc-user" :class="[ `wc-user--${size.event}` ]">
 				<Avatar
@@ -93,6 +93,8 @@ export default {
 
 <style lang="scss">
 .wc-event {
+	$b: #{&};
+
 	display: flex;
 	flex-direction: column;
 	border-radius: rem(2);
@@ -147,6 +149,10 @@ export default {
 			& + .vuecal__event-resize-handle {
 				border-top: 1px solid rgba($value, 0.5);
 				background-color: rgba($value, 0.1);
+			}
+
+			&#{$b}--selected {
+				background-color: rgba($value, 0.4);
 			}
 		}
 	}

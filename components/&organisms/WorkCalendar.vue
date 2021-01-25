@@ -133,6 +133,10 @@ export default {
 		WorkCalendarEvent,
 	},
 
+	props: {
+		value: Number,
+	},
+
 	data: (ctx) => {
 		return {
 			modeRecord: MODE_RECORD,
@@ -148,13 +152,13 @@ export default {
 			todayText: 'Перейти в текующую неделю',
 			availableDaysAddDefaultText: 'Добавить свободные дни',
 			availableDays: {
-				6: { from: 13 * 60, to: 18 * 60 }
+				6: { from: 13 * 60, to: 18 * 60, id: 1 }
 			},
 			records: [
 				{
 					id: 10,
-					start: new Date(2021, 0, 19, 14, 0),
-					end: new Date(2021, 0, 19, 17, 30),
+					start: new Date(2021, 0, 26, 14, 0),
+					end: new Date(2021, 0, 26, 17, 30),
 					status: 'report',
 					user: {
 						name: 'Мария Ижуткина',
@@ -162,8 +166,8 @@ export default {
 				},
 				{
 					id: 11,
-					start: new Date(2021, 0, 20, 14, 0),
-					end: new Date(2021, 0, 20, 17, 30),
+					start: new Date(2021, 0, 27, 14, 0),
+					end: new Date(2021, 0, 27, 17, 30),
 					status: 'correct',
 					user: {
 						name: 'Семенова Ирина',
@@ -178,18 +182,7 @@ export default {
 
 	computed: {
 		events() {
-			const events = this[this.eventsSourceName];
-
-			const editable = this.modeAvailableDay.id === this.mode || this.enableEventEdit;
-
-			const setting = {
-				deletable: false,
-				editable: false,
-				draggable: editable,
-				resizable: editable,
-			};
-
-			return events.map(event => Object.assign({}, event, setting));
+			return this.getEvents();
 		},
 
 		eventEditText() {
@@ -256,6 +249,27 @@ export default {
 	},
 
 	methods: {
+		getEvents() {
+			const events = this[this.eventsSourceName];
+
+			// Редактировать вожмноно в Свободные дни И в режиме Редактирования
+			const editable = this.modeAvailableDay.id === this.mode || this.enableEventEdit;
+
+			// Настройки
+			const setting = {
+				deletable: false,
+				editable: false,
+				draggable: editable,
+				resizable: editable,
+			};
+
+			return events.map(event => Object.assign(
+				{},
+				setting,
+				event,
+				{ selected: this.value === event.id }));
+		},
+
 		toggleEventEdit() {
 			this.enableEventEdit = !this.enableEventEdit;
 		},
@@ -296,6 +310,7 @@ export default {
 			this.eventsSourceName = this.modeAvailableDay.sourceName;
 			this.eventComponent = this.modeAvailableDay.component;
 			this.dragToCreateEvent = true;
+			this.$emit('input', null);
 		},
 
 		setOptionsRecordMode() {
@@ -345,11 +360,12 @@ export default {
 
 		// Получаем формат availableDay
 		createAvailableDayByEvent(event) {
-			const { start, end } = event;
+			const { start, end, ...other } = event;
 
 			return {
 				from: getMinutesCount(start),
 				to: getMinutesCount(end),
+				...other,
 			};
 		},
 
@@ -375,7 +391,7 @@ export default {
 		createEventAvailableDayByObject(timeline, weekDayNumber) {
 			// Минусуем день, так как начинается с 1
 			weekDayNumber = weekDayNumber - 1;
-			const { from, to } = timeline;
+			const { from, to, ...other } = timeline;
 			const start = getTimeByMinutesCount(from);
 			const end = getTimeByMinutesCount(to);
 
@@ -394,6 +410,7 @@ export default {
 			const event = {
 				start: startEvent,
 				end: endEvent,
+				...other,
 			};
 
 			return event;
@@ -436,8 +453,20 @@ export default {
 		},
 
 		onEventClick(event) {
-			console.log('Event click', event);
-			// TODO:
+			process.env.NODE_ENV === 'development' && console.log('Event click', event);
+
+			// Проверка на режим
+			if (this.mode !== this.modeRecord.id) return;
+
+			// Вызываем событие
+			this.$emit('input', event.id);
+		},
+
+		onViewChange(e) {
+			// Обновляем показ кнопки "Перейти в сегодня"
+			const { startDate, endDate } = e;
+			const now = new Date();
+			this.todayVisible = (startDate <= now && now <= endDate) === false;
 		},
 
 		onEventDrop(e) {
@@ -463,12 +492,6 @@ export default {
 			}
 		},
 
-		onViewChange(event) {
-			const { startDate, endDate } = event;
-			const now = new Date();
-			this.todayVisible = (startDate <= now && now <= endDate) === false;
-		},
-
 		onEventDurationChange(e) {
 			process.env.NODE_ENV === 'development' && console.log('Event duration change', e);
 			const { event } = e;
@@ -481,9 +504,13 @@ export default {
 
 			const { startTimeMinutes, endTimeMinutes } = event;
 
-			// TODO: Проверка на наложение
+			if (this.getIsOverlayEvents(event)) {
+				// Проверка на наложение
+				const nextEvent = this.getNextEvent(event);
+				const nextEventStart = nextEvent.start;
+				eventBase.end = new Date(nextEventStart.getTime());
 
-			if (this.timeTo < endTimeMinutes) {
+			} else if (this.timeTo < endTimeMinutes) {
 				// Проверка на максимальную длину
 				const time = getTimeByMinutesCount(this.timeTo);
 				let date = new Date(event.end.getTime());
@@ -492,7 +519,7 @@ export default {
 				eventBase.end = date;
 
 			} else if (endTimeMinutes - startTimeMinutes < this.snapToTime) {
-				// Проврека на минимальную длину
+				// Проверка на минимальную длину
 				const endMinSnapMinutes = startTimeMinutes + this.snapToTime;
 				const time = getTimeByMinutesCount(endMinSnapMinutes);
 
@@ -508,9 +535,20 @@ export default {
 
 		onEventDragCreate(event) {
 			process.env.NODE_ENV === 'development' && console.log('Event drag create', event);
-			let { start, end } = event;
-			// TODO: Проверка на минимальную длину
-			// TODO: Проверка на наложение
+
+			// Метод должен работать только в available mode
+			if (this.mode !== this.modeAvailableDay.id) return;
+
+			let { start, end, startTimeMinutes, endTimeMinutes } = event;
+
+			// Проверка на минимальную длину
+			// Проверка на наложение
+			if (this.getIsOverlayEvents(event) || startTimeMinutes < this.timeFrom || this.timeTo < endTimeMinutes) {
+				// Удаляем событие используя метод библиотеки
+				// Остальные манипуляции невозможны
+				this.$refs.vuecal.utils.event.deleteAnEvent(event);
+				return;
+			}
 
 			const availableDay = {
 				start,
@@ -522,7 +560,7 @@ export default {
 			// TODO: Переделать
 			setTimeout(() => {
 				// Добавляем на сервере, получаем id
-				const id = 34;
+				const id = Math.random();
 
 				this.$set(availableDay, 'id', id);
 				this.$delete(availableDay, 'draggable');
@@ -541,15 +579,29 @@ export default {
 		},
 
 		getIsOverlayEvents(event) {
-			// Находим события кроме текущей
 			// Находим события в текущий день
+			// Находим события кроме текущей
 			// Находим события которые на перекрест
-			const events = this[this.eventsSourceName]
-				.filter(item => item.id !== event.id)
+			const isOverlay = this[this.eventsSourceName]
 				.filter(item => equalDates(item.start, event.start))
-				.filter(item => this.getIsOverlayEvent(item, event));
+				.filter(item => item.id !== event.id)
+				.some(item => this.getIsOverlayEvent(item, event));
 
-			return !!events.length;
+			return isOverlay;
+		},
+
+		getNextEvent(event) {
+			// Находим события в текущий день
+			// Сортируем по возрастанию
+			const eventsDay = this[this.eventsSourceName]
+				.filter(item => equalDates(item.start, event.start))
+				.sort((a, b) => a.start - b.start);
+
+			// Получаем событие после текущей
+			const currentEventIndex = eventsDay.findIndex(item => item.id === event.id);
+			const nextEvent = eventsDay[currentEventIndex + 1];
+
+			return nextEvent;
 		},
 
 		getIsOverlayEvent(a, b) {
@@ -634,6 +686,8 @@ export default {
 	&-available-day {
 		background-color: rgba($color-green, 0.15);
 		border-radius: rem(2);
+		border-top: rem(2) solid rgba($color-green, 0.3);
+		border-bottom: rem(2) solid rgba($color-green, 0.3);
 	}
 }
 
