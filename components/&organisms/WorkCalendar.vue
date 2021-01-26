@@ -542,6 +542,14 @@ export default {
 			let { start, end, startTimeMinutes, endTimeMinutes } = event;
 
 			// Проверка на минимальную длину
+			if (endTimeMinutes - startTimeMinutes < this.snapToTime) {
+				const endMinSnapMinutes = startTimeMinutes + this.snapToTime;
+				const time = getTimeByMinutesCount(endMinSnapMinutes);
+
+				let date = new Date(event.start.getTime());
+				end = new Date(date.setHours(time.hour, time.minutes, 0 ,0));
+			}
+
 			// Проверка на наложение
 			if (this.getIsOverlayEvents(event) || startTimeMinutes < this.timeFrom || this.timeTo < endTimeMinutes) {
 				// Удаляем событие используя метод библиотеки
