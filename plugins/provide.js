@@ -3,6 +3,7 @@ import meet from '@/provide/meet';
 import review from '@/provide/review';
 import component from '@/provide/component';
 import user from '@/provide/user';
+import { setApi, setCtx } from '@/provide/utils';
 
 export default (ctx, inject) => {
 	const api = ctx.$axios.create({
@@ -16,6 +17,9 @@ export default (ctx, inject) => {
 		component: component(api),
 		user: user(api),
 	};
+
+	setApi(api);
+	setCtx(ctx);
 
 	inject('provide', provide);
 };
