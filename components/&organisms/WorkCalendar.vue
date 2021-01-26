@@ -124,6 +124,21 @@ const MAX_TIME = 19 * 60;
  * Проблема - перетаскивание на следующие недели
  */
 
+/**
+ * Структура api
+ *
+ * Записи
+ * 		Получить(Старт даты, Конец даты)
+ * 		Получить по id
+ * 		Обновить (время)
+ *
+ * Свободные дни
+ * 		Получить(Старт даты, Конец даты)
+ * 		Создать
+ * 		Удалить
+ * 		Обновить
+ */
+
 export default {
 	components: {
 		VueCal,
@@ -156,6 +171,15 @@ export default {
 			},
 			records: [
 				{
+					id: 9,
+					start: new Date(2021, 0, 25, 10, 0),
+					end: new Date(2021, 0, 25, 12, 30),
+					status: 'complete',
+					user: {
+						name: 'Лена Ижуткина',
+					},
+				},
+				{
 					id: 10,
 					start: new Date(2021, 0, 26, 14, 0),
 					end: new Date(2021, 0, 26, 17, 30),
@@ -171,6 +195,15 @@ export default {
 					status: 'correct',
 					user: {
 						name: 'Семенова Ирина',
+					},
+				},
+				{
+					id: 12,
+					start: new Date(2021, 0, 30, 12, 0),
+					end: new Date(2021, 0, 30, 13, 30),
+					status: 'create',
+					user: {
+						name: 'Serega',
 					},
 				}
 			],
@@ -251,23 +284,31 @@ export default {
 	methods: {
 		getEvents() {
 			const events = this[this.eventsSourceName];
+			return events.map(this.getEvent);
+		},
 
-			// Редактировать вожмноно в Свободные дни И в режиме Редактирования
-			const editable = this.modeAvailableDay.id === this.mode || this.enableEventEdit;
+		getEvent(event) {
+			// Редактировать возможно в Свободные дни ИЛИ в режиме Редактирования с разрешенными статусами
+			const editable = this.modeAvailableDay.id === this.mode || (this.enableEventEdit && this.isEditableEvent(event));
+			const selected = this.value === event.id;
 
-			// Настройки
 			const setting = {
 				deletable: false,
 				editable: false,
 				draggable: editable,
 				resizable: editable,
+				selected,
 			};
 
-			return events.map(event => Object.assign(
-				{},
-				setting,
-				event,
-				{ selected: this.value === event.id }));
+			return {
+				...setting,
+				...event,
+			};
+		},
+
+		isEditableEvent(event) {
+			const enableOnStatuses = ['correct', 'create', 'report'];
+			return enableOnStatuses.some(status => status === event.status);
 		},
 
 		toggleEventEdit() {
