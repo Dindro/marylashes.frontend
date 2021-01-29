@@ -52,9 +52,11 @@
 		</client-only>
 
 		<div class="work-calendar__footer">
-			<div class="work-calendar__labels"></div>
-			<div class="work-calendar__actions">
+			<div class="work-calendar__labels">
+				<WeekPointList :items="points"/>
+			</div>
 
+			<div class="work-calendar__actions">
 				<!-- Добавить свободные дни -->
 				<template v-if="mode === modeAvailableDay.id">
 					<LinkAction
@@ -85,6 +87,7 @@ import LinkAction from '+/LinkAction';
 import WeekDayHeader from '=/Week/WeekDayHeader';
 import WorkCalendarEvent from '^/WorkCalendarEvent';
 import WorkCalendarAvailableEvent from '^/WorkCalendarAvailableEvent';
+import WeekPointList from '=/Week/WeekPointList';
 import 'vue-cal/dist/vuecal.css';
 
 import { convertToScalingPx } from '@/utils/convert';
@@ -146,6 +149,7 @@ export default {
 		Btn,
 		WeekDayHeader,
 		WorkCalendarEvent,
+		WeekPointList,
 	},
 
 	props: {
@@ -210,6 +214,9 @@ export default {
 
 			// Сообытия, имя ссылающее на массив событий
 			eventsSourceName: MODE_RECORD.sourceName,
+			points: [
+				{ text: 'Свободные дни', color: 'green' },
+			],
 		}
 	},
 

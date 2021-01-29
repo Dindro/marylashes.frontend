@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container mb-64">
 		<Hero :hero="hero" class="mb-48">
 			<div class="hero-inner">
 				<div class="hero-inner__action">
@@ -30,6 +30,7 @@
 		<!-- Calendar view -->
 		<template v-else-if="viewSelected === 1">
 			<WorkCalendar v-model="recordSelected"/>
+			<WorkRecords class="mt-64" :value="recordSelected"/>
 		</template>
 	</div>
 </template>
@@ -44,6 +45,7 @@ import Drawer from '&/Drawer';
 import CardTileRecord from '^/CardTileRecord';
 import CardTileClient from '^/CardTileClient';
 import WorkCalendar from '&/WorkCalendar';
+import WorkRecords from '&/WorkRecords';
 
 export default {
 	layout: 'navbar',
@@ -56,6 +58,7 @@ export default {
 		CardTileRecord,
 		CardTileClient,
 		WorkCalendar,
+		WorkRecords,
 	},
 
 	asyncData(ctx) {

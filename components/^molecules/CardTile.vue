@@ -1,5 +1,5 @@
 <template>
-	<div class="card-tile">
+	<div class="card-tile" :class="theme && `card-tile--${theme}`">
 		<div v-if="title || $slots.header" class="card-tile__header">
 			<span v-if="title" class="card-tile__title">{{ title }}</span>
 			<div v-if="$slots.header" class="card-tile__header-slot">
@@ -18,13 +18,20 @@
 <script>
 export default {
 	props: {
-		title: String,
+		title: [String, Boolean],
+		theme: {
+			type: String,
+			default: 'default',
+			validator: value => ['border', 'default'].indexOf(value) !== -1,
+		}
 	},
 }
 </script>
 
 <style lang="scss">
 .card-tile {
+	$b: #{&};
+
 	& + & {
 		margin-top: rem(48);
 	}
@@ -57,6 +64,17 @@ export default {
 	&__footer {
 		margin-top: rem(16);
 		text-align: right
+	}
+
+	&--border {
+		& + & {
+			margin-top: rem(16);
+		}
+
+		#{$b}__box {
+			padding: rem(16);
+			border: 1px solid rgba($color-dark, 0.3);
+		}
 	}
 }
 </style>

@@ -17,6 +17,10 @@
 import LinkAction from '+/LinkAction';
 
 export default {
+	components: {
+		LinkAction,
+	},
+
 	props: {
 		title: String,
 		items: Array,
