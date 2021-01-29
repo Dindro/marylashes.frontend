@@ -50,7 +50,7 @@ export default {
 				</div>
 
 				<div class="tabs-simple__body">
-					{slots.map(slot => slot)}
+					{slots}
 				</div>
 			</div>
 		);
