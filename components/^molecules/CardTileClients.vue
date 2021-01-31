@@ -8,8 +8,11 @@
 				:card="item"
 				:title="false"
 				:header="false"
+				collapse
 				theme="border">
-
+				<template #user-action>
+					<LinkAction :link="{ text: 'Привязать', tag: 'button' }"/>
+				</template>
 			</CardTileClient>
 		</template>
 	</CardTile>

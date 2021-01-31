@@ -22,7 +22,7 @@ export default {
 		theme: {
 			type: String,
 			default: 'default',
-			validator: value => ['border', 'default'].indexOf(value) !== -1,
+			validator: value => ['clear', 'border', 'default'].indexOf(value) !== -1,
 		}
 	},
 }
@@ -73,7 +73,27 @@ export default {
 
 		#{$b}__box {
 			padding: rem(16);
-			border: 1px solid rgba($color-dark, 0.3);
+			border: 1px solid rgba($color-dark, 0.15);
+		}
+	}
+
+	&--clear {
+		& + & {
+			margin-top: rem(16);
+		}
+
+		#{$b}__header {
+			margin-bottom: rem(8);
+		}
+
+		#{$b}__footer {
+			margin-top: rem(8);
+		}
+
+		#{$b}__box {
+			background-color: transparent;
+			padding: 0;
+			border: none;
 		}
 	}
 }

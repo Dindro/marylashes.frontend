@@ -95,5 +95,16 @@ export default {
 			font-size: rem(10);
 		}
 	}
+
+	&--lg {
+		#{$b}__image {
+			width: rem(64);
+			height: rem(64);
+		}
+
+		img:not([src])::after {
+			font-size: rem(28);
+		}
+	}
 }
 </style>

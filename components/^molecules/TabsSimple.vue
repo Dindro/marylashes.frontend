@@ -31,7 +31,12 @@ export default {
 	},
 
 	created() {
-		let activeIndex = this.slots.findIndex(item => typeof item.data.attrs['active'] === 'string');
+		let activeIndex = this.slots.findIndex(item => {
+			const isActive = typeof item.data.attrs.active === 'string';
+			isActive && delete item.data.attrs.active;
+			return isActive
+		});
+
 		this.value = activeIndex === -1 ? 0 : activeIndex;
 	},
 
