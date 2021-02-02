@@ -43,7 +43,9 @@
 		</template>
 
 		<template #footer>
-			Футер
+			<div>
+				<Dropdown></Dropdown>
+			</div>
 		</template>
 	</CardTile>
 </template>
@@ -51,11 +53,13 @@
 <script>
 import CardTile from '^/CardTile';
 import Status from '+/Status';
+import Dropdown from '^/Dropdown';
 
 export default {
 	components: {
 		CardTile,
 		Status,
+		Dropdown,
 	},
 
 	props: {

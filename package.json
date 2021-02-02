@@ -24,6 +24,7 @@
     "v-calendar": "^2.1.6",
     "v-mask": "^2.2.3",
     "v-runtime-template": "^1.10.0",
+    "v-tooltip": "^3.0.0-alpha.21",
     "vee-validate": "^3.4.2",
     "vue-cal": "^3.10.0",
     "vue-yandex-maps": "^0.10.9"
