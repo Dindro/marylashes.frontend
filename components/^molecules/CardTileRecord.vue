@@ -43,9 +43,7 @@
 		</template>
 
 		<template #footer>
-			<div>
-				<Dropdown></Dropdown>
-			</div>
+			<Dropdown text="еще" :items="[{ text: 'Редактировать' },{ text: 'Отменить' }]"></Dropdown>
 		</template>
 	</CardTile>
 </template>

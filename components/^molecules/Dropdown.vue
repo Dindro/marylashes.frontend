@@ -1,19 +1,29 @@
 <template>
 	<VDropdown
+		class="dropdown"
 		:offset="offset"
 		:placement="placement">
 		<slot>
-			<span>ещё</span>
+			<LinkAction :link="Object.assign({}, { tag: 'button', text: text })"/>
 		</slot>
 
 		<template #popper>
-			<div>dfwefw</div>
+			<div class="dropdown__content">
+				<slot name="content" :items="items">
+					<LinkAction
+						v-close-popper
+						v-for="(item, index) in items"
+						:key="index"
+						@click.native="item.handler ? item.handler : null"
+						:link="Object.assign({}, { tag: 'button' }, item)"/>
+				</slot>
+			</div>
 		</template>
 	</VDropdown>
 </template>
 
 <script>
-import { Dropdown as VDropdown } from 'v-tooltip';
+import { Dropdown as VDropdown, VClosePopper as ClosePopper } from 'v-tooltip';
 import LinkAction from '+/LinkAction';
 import { convertToScalingPx } from '~/utils/convert';
 
@@ -27,10 +37,18 @@ const getDefaultConfig = () => {
 
 export default {
 	components: {
-		VDropdown
+		VDropdown,
+		LinkAction,
+	},
+
+	directives: {
+		ClosePopper,
 	},
 
 	props: {
+		text: String,
+		items: Array,
+
 		placement: {
 			type: String,
 			default: 'bottom-end',
@@ -47,6 +65,18 @@ export default {
 </script>
 
 <style lang="scss">
+.dropdown {
+	&__content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+
+		> * + * {
+			margin-top: rem(4);
+		}
+	}
+}
+
 .v-popper {
 	$b: #{&};
 
