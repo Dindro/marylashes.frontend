@@ -2,6 +2,8 @@
 	<div class="work-records">
 		<div class="work-records__event">
 			<CardTileRecord/>
+			<CardTileReport/>
+			<CardTileReportCancel/>
 		</div>
 
 		<div class="work-records__user">
@@ -17,6 +19,8 @@ import CardTileRecord from '^/CardTileRecord';
 import CardTileClient from '^/CardTileClient';
 import CardTileClients from '^/CardTileClients';
 import CardTileCreate from '^/CardTileCreate';
+import CardTileReport from '^/CardTileReport';
+import CardTileReportCancel from '^/CardTileReportCancel';
 
 export default {
 	components: {
@@ -24,6 +28,8 @@ export default {
 		CardTileClient,
 		CardTileClients,
 		CardTileCreate,
+		CardTileReportCancel,
+		CardTileReport,
 	},
 
 	props: {

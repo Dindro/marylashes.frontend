@@ -6,8 +6,8 @@
 			:id="id"
 			:name="name"
 			:disabled="disabled"
-			:checked="value"
-			@change="$emit('input', $event.target.checked)"
+			:checked="isChecked"
+			@change="onChange"
 		>
 		<span class="checkbox__cube"></span>
 		<span class="checkbox__label" v-if="label" v-html="label"></span>
@@ -15,20 +15,40 @@
 </template>
 
 <script>
+// @see https://kirillurgant.com/notes/creating-custom-inputs-vue-js
+
 export default {
 	inheritAttrs: false,
+
+	model: {
+		prop: 'checked',
+		event: 'change'
+	},
 
 	props: {
 		type: {
 			type: String,
 			default: 'checkbox'
 		},
-		value: Boolean,
+		checked: [Boolean, String, Number],
+		value: [Boolean, String, Number],
 		label: String,
 		disabled: Boolean,
 		id: String,
 		name: String,
 	},
+
+	computed: {
+		isChecked() {
+			return this.checked === this.value;
+		}
+	},
+
+	methods: {
+		onChange(e) {
+			this.$emit('change', this.value);
+		},
+	}
 }
 </script>
 

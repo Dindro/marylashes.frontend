@@ -30,17 +30,42 @@
 		</div>
 
 		<div class="card-record-mini__actions">
-			еще
+			<Dropdown text="еще" :items="dropdownItems"/>
 		</div>
 	</div>
 </template>
 
 <script>
 import Box from '+/Box';
+import Dropdown from '^/Dropdown';
+import recordActions from '~/utils/mixins/record-actions';
 
 export default {
 	components: {
 		Box,
+		Dropdown,
+	},
+
+	mixins: [
+		recordActions,
+	],
+
+	props: {
+		card: {
+			type: Object,
+			default: () => ({
+				id: 40,
+				statusId: 'create',
+				clientId: null,
+				name: 'Ижуткина Мария',
+				was: true,
+				services: [0, 2, 4],
+				date: 'Помощь',
+				socials: [
+
+				]
+			})
+		},
 	},
 }
 </script>

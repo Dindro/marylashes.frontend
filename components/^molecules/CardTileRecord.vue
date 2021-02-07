@@ -3,7 +3,7 @@
 		title="Информация о записи"
 		class="tile-record">
 		<template #header>
-			<Status :id="card.id"/>
+			<Status :id="card.statusId"/>
 		</template>
 
 		<template #default>
@@ -25,6 +25,11 @@
 			</div>
 
 			<div class="tile-record-row">
+				<p class="tile-record-row__title">Цена</p>
+				<p class="tile-record-row__content">1600 ₽</p>
+			</div>
+
+			<div class="tile-record-row">
 				<p class="tile-record-row__title">Социальные сети</p>
 				<table class="tile-record-row__content">
 					<tbody>
@@ -40,10 +45,36 @@
 					</tbody>
 				</table>
 			</div>
+
+			<div class="tile-record-row">
+				<p class="tile-record-row__title">Комментарии отчета</p>
+				<p class="tile-record-row__content">Все супер, но не понравилось клиенту так как лисий эффект. В следующий раз сделать беличий</p>
+			</div>
+
+			<div class="tile-record-row">
+				<p class="tile-record-row__title">Фото отчета</p>
+				<p class="tile-record-row__content">
+					Фотки
+				</p>
+			</div>
+
+			<div class="tile-record-row">
+				<p class="tile-record-row__title">Инициатор отмены</p>
+				<p class="tile-record-row__content">
+					Клиент
+				</p>
+			</div>
+
+			<div class="tile-record-row">
+				<p class="tile-record-row__title">Причина отмены</p>
+				<p class="tile-record-row__content">
+					Клиента решила отменить
+				</p>
+			</div>
 		</template>
 
 		<template #footer>
-			<Dropdown text="еще" :items="[{ text: 'Редактировать' },{ text: 'Отменить' }]"></Dropdown>
+			<Dropdown text="еще" :items="dropdownItems"/>
 		</template>
 	</CardTile>
 </template>
@@ -52,6 +83,7 @@
 import CardTile from '^/CardTile';
 import Status from '+/Status';
 import Dropdown from '^/Dropdown';
+import recordActions from '~/utils/mixins/record-actions';
 
 export default {
 	components: {
@@ -60,12 +92,18 @@ export default {
 		Dropdown,
 	},
 
+	mixins: [
+		recordActions,
+	],
+
 	props: {
 		card: {
 			type: Object,
 			default() {
 				return {
-					id: 'create',
+					id: 40,
+					statusId: 'create',
+					clientId: null,
 					name: 'Ижуткина Мария',
 					was: true,
 					services: [0, 2, 4],

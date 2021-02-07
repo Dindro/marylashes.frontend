@@ -6,7 +6,7 @@
 		class="tile-client">
 		<template #header v-if="header">
 			<slot name="header">
-				<LinkAction :link="{ tag: 'button', text: textHeaderAction }" @click.native="onClickHeaderAction"/>
+				<Dropdown text="еще" :items="headerDropdownItems"/>
 			</slot>
 		</template>
 
@@ -96,6 +96,7 @@ import LinkAction from '+/LinkAction';
 import TabsSimple from '^/TabsSimple';
 import CardTileRecordList from '^/CardTileRecordList';
 import Avatar from '+/Avatar';
+import Dropdown from '^/Dropdown';
 
 export default {
 	components: {
@@ -104,6 +105,7 @@ export default {
 		TabsSimple,
 		CardTileRecordList,
 		Avatar,
+		Dropdown,
 	},
 
 	props: {
@@ -159,14 +161,27 @@ export default {
 	}),
 
 	computed: {
-		textHeaderAction() {
-			return 'Редактировать';
+		headerDropdownItems() {
+			return this.getHeaderDropdownItems();
 		},
 	},
 
 	methods: {
-		onClickHeaderAction() {
-
+		getHeaderDropdownItems() {
+			return [
+				{
+					text: 'Редактировать',
+					handler: null,
+				},
+				{
+					text: 'Удалить клиента',
+					handler: null,
+				},
+				{
+					text: 'Удалить все',
+					handler: null,
+				}
+			]
 		},
 
 		actionCollapse(action = true) {

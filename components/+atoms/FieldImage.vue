@@ -1,6 +1,6 @@
 <template>
-	<div class="field-image">
-		<p class="field-image__label">{{ label }}</p>
+	<div class="field-image" :class="[size && `field-image--${size}`]">
+		<p v-if="label" class="field-image__label">{{ label }}</p>
 		<div class="field-image__content">
 			<div class="field-image__preview" v-for="(preview, i) in previews" :key="i">
 				<div class="field-image-preview">
@@ -60,7 +60,13 @@ export default {
 			type: String,
 			default: 'Сменить фото',
 		},
+		additional: Boolean,
 		multiple: Boolean,
+		size: {
+			type: String,
+			default: 'default',
+			validator: value => ['default', 'sm'].indexOf(value) !== -1,
+		},
 		max: {
 			type: Number,
 			default: 10,
@@ -105,7 +111,12 @@ export default {
 			let value;
 
 			if (this.multiple) {
-				value = [...files];
+				if (this.additional) {
+					value = [...files, ...this.value];
+				} else {
+					value = [...files];
+				}
+
 				// Урежем выбранные файлы
 				if (typeof this.max === 'number' && value.length > this.max) {
 					value.length = this.max;
@@ -156,6 +167,8 @@ $height-box: 160;
 $height-box-sm: 128;
 
 .field-image {
+	$b: #{&};
+
 	&__label {
 		@include text-default;
 		opacity: 0.65;
@@ -220,6 +233,34 @@ $height-box-sm: 128;
 			&:hover {
 				color: $color-red;
 				border-color: $color-red;
+			}
+		}
+	}
+
+	&--sm {
+		#{$b}__box {
+			height: rem(60);
+		}
+
+		#{$b}__content {
+			margin: rem(-4);
+		}
+
+		#{$b}__action,
+		#{$b}__preview {
+			padding: rem(4);
+		}
+
+		.field-image-preview {
+			height: rem(60);
+			width: rem(60);
+			border-radius: rem(2);
+			overflow: hidden;
+
+			&__action {
+				top: 50%;
+				right: 50%;
+				transform: translate(50%, -50%);
 			}
 		}
 	}
