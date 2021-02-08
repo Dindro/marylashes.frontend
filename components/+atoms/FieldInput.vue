@@ -36,6 +36,11 @@
 		</template>
 
 		<label class="input-shell-label" :class="[ isExist && 'input-shell-label--exist' ]">{{ label }}</label>
+
+		<span v-if="prefix" class="input-prefix">
+			<span class="input-prefix__value" v-text="value"/>
+			<span class="input-prefix__prefix" v-text="prefix"/>
+		</span>
 	</div>
 </template>
 
@@ -74,6 +79,7 @@ export default {
 		mask: String,
 		autocomplete: String,
 		pattern: String,
+		prefix: String,
 
 		// Дает понять браузеру - какую клавиатуру вывести на экран
 		inputmode: String,
@@ -233,5 +239,21 @@ export default {
 	background-image: linear-gradient(to bottom, rgba($color-white, 1) 0%, rgba($color-white, 1) 75%, rgba($color-white, 0) 100%);
 	height: rem(36);
 	pointer-events: none;
+}
+
+.input-prefix {
+	pointer-events: none;
+	position: absolute;
+	top: rem(30);
+	left: calc(#{rem(24)} + 1px);
+	right: 0;
+	white-space: nowrap;
+	overflow: hidden;
+
+	&__value {
+		opacity: 0;
+	}
+
+	@include text-default;
 }
 </style>

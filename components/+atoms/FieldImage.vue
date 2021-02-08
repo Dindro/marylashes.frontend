@@ -262,6 +262,10 @@ $height-box-sm: 128;
 				right: 50%;
 				transform: translate(50%, -50%);
 			}
+
+			img {
+				width: 100%;
+			}
 		}
 	}
 }

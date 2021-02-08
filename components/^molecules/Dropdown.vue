@@ -88,12 +88,14 @@ export default {
 			visibility: hidden;
 			opacity: 0;
 			@include defaultTransition(opacity, visibility);
+			transition-duration: $timing / 2;
 		}
 
 		&--shown {
 			visibility: visible;
 			opacity: 1;
 			@include defaultTransition(opacity);
+			transition-duration: $timing / 2;
 		}
 
 		&--skip-transition,

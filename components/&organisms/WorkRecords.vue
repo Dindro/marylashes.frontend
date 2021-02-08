@@ -2,6 +2,7 @@
 	<div class="work-records">
 		<div class="work-records__event">
 			<CardTileRecord/>
+			<CardTileRecordEdit/>
 			<CardTileReport/>
 			<CardTileReportCancel/>
 		</div>
@@ -16,6 +17,7 @@
 
 <script>
 import CardTileRecord from '^/CardTileRecord';
+import CardTileRecordEdit from '^/CardTileRecordEdit';
 import CardTileClient from '^/CardTileClient';
 import CardTileClients from '^/CardTileClients';
 import CardTileCreate from '^/CardTileCreate';
@@ -25,6 +27,7 @@ import CardTileReportCancel from '^/CardTileReportCancel';
 export default {
 	components: {
 		CardTileRecord,
+		CardTileRecordEdit,
 		CardTileClient,
 		CardTileClients,
 		CardTileCreate,
