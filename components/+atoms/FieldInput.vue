@@ -38,7 +38,7 @@
 		<label class="input-shell-label" :class="[ isExist && 'input-shell-label--exist' ]">{{ label }}</label>
 
 		<span v-if="prefix" class="input-prefix">
-			<span class="input-prefix__value" v-text="value"/>
+			<span class="input-prefix__value" v-html="valueHTML"/>
 			<span class="input-prefix__prefix" v-text="prefix"/>
 		</span>
 	</div>
@@ -135,6 +135,10 @@ export default {
 				...this.$listeners,
 				...def,
 			};
+		},
+
+		valueHTML() {
+			return this.value.replace(/ /g, '\u00A0');
 		}
 	},
 
@@ -242,16 +246,25 @@ export default {
 }
 
 .input-prefix {
+	display: flex;
 	pointer-events: none;
 	position: absolute;
 	top: rem(30);
 	left: calc(#{rem(24)} + 1px);
 	right: 0;
+	opacity: 0;
 	white-space: nowrap;
 	overflow: hidden;
 
+	@at-root input:focus ~ &,
+	textarea:focus ~ &,
+	.input-shell-label--exist ~ & {
+		opacity: 1;
+	}
+
 	&__value {
 		opacity: 0;
+		margin-right: 0.25em;
 	}
 
 	@include text-default;
